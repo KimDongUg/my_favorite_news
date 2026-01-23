@@ -1,5 +1,5 @@
 /**
- * 인증 API 라우트
+ * 인증 API 라우트 (PostgreSQL)
  */
 
 import { Router } from 'express';
@@ -107,7 +107,7 @@ router.post('/register', signupLimiter, async (req, res) => {
     }
 
     // 기존 사용자 확인
-    const existingUser = User.findUserByEmail(email);
+    const existingUser = await User.findUserByEmail(email);
     if (existingUser) {
       return res.status(409).json({
         success: false,
@@ -118,7 +118,7 @@ router.post('/register', signupLimiter, async (req, res) => {
 
     // 사용자명 중복 확인
     if (username) {
-      const existingUsername = User.findUserByUsername(username);
+      const existingUsername = await User.findUserByUsername(username);
       if (existingUsername) {
         return res.status(409).json({
           success: false,
@@ -132,7 +132,7 @@ router.post('/register', signupLimiter, async (req, res) => {
     const passwordHash = await bcrypt.hash(password, passwordPolicy.saltRounds);
 
     // 사용자 생성
-    const user = User.createUser({
+    const user = await User.createUser({
       email,
       passwordHash,
       username: username || null,
@@ -141,7 +141,7 @@ router.post('/register', signupLimiter, async (req, res) => {
     });
 
     // 이메일 인증 토큰 생성 및 발송
-    const verificationToken = tokenService.createEmailVerificationToken(user.id);
+    const verificationToken = await tokenService.createEmailVerificationToken(user.id);
     try {
       await sendVerificationEmail(email, verificationToken.token);
     } catch (emailError) {
@@ -150,7 +150,7 @@ router.post('/register', signupLimiter, async (req, res) => {
     }
 
     // 세션 생성
-    const session = tokenService.createSession(user.id, req);
+    const session = await tokenService.createSession(user.id, req);
 
     // Access Token 생성
     const { accessToken } = tokenService.generateTokenPair(user);
@@ -184,7 +184,7 @@ router.post('/register', signupLimiter, async (req, res) => {
  * 이메일/비밀번호 로그인
  */
 router.post('/login', loginLimiter, (req, res, next) => {
-  passport.authenticate('local', { session: false }, (err, user, info) => {
+  passport.authenticate('local', { session: false }, async (err, user, info) => {
     if (err) {
       return res.status(500).json({
         success: false,
@@ -201,27 +201,36 @@ router.post('/login', loginLimiter, (req, res, next) => {
       });
     }
 
-    // 세션 제한 체크
-    tokenService.enforceSessionLimit(user.id);
+    try {
+      // 세션 제한 체크
+      await tokenService.enforceSessionLimit(user.id);
 
-    // 세션 생성
-    const session = tokenService.createSession(user.id, req);
+      // 세션 생성
+      const session = await tokenService.createSession(user.id, req);
 
-    // 토큰 생성
-    const { accessToken } = tokenService.generateTokenPair(user);
+      // 토큰 생성
+      const { accessToken } = tokenService.generateTokenPair(user);
 
-    // 마지막 로그인 시간 업데이트
-    User.updateLastLogin(user.id);
+      // 마지막 로그인 시간 업데이트
+      await User.updateLastLogin(user.id);
 
-    res.json({
-      success: true,
-      data: {
-        user: User.getPublicProfile(user),
-        accessToken,
-        refreshToken: session.token,
-        expiresAt: session.expiresAt
-      }
-    });
+      res.json({
+        success: true,
+        data: {
+          user: User.getPublicProfile(user),
+          accessToken,
+          refreshToken: session.token,
+          expiresAt: session.expiresAt
+        }
+      });
+    } catch (error) {
+      console.error('[Auth] 로그인 처리 오류:', error);
+      res.status(500).json({
+        success: false,
+        error: '로그인 처리 중 오류가 발생했습니다.',
+        code: 'LOGIN_ERROR'
+      });
+    }
   })(req, res, next);
 });
 
@@ -229,12 +238,12 @@ router.post('/login', loginLimiter, (req, res, next) => {
  * POST /auth/logout
  * 로그아웃
  */
-router.post('/logout', authenticate, (req, res) => {
+router.post('/logout', authenticate, async (req, res) => {
   try {
     const refreshToken = req.body.refreshToken;
 
     if (refreshToken) {
-      tokenService.deleteSession(refreshToken);
+      await tokenService.deleteSession(refreshToken);
     }
 
     res.json({
@@ -254,9 +263,9 @@ router.post('/logout', authenticate, (req, res) => {
  * POST /auth/logout-all
  * 모든 세션에서 로그아웃
  */
-router.post('/logout-all', authenticate, (req, res) => {
+router.post('/logout-all', authenticate, async (req, res) => {
   try {
-    tokenService.deleteAllUserSessions(req.user.id);
+    await tokenService.deleteAllUserSessions(req.user.id);
 
     res.json({
       success: true,
@@ -275,7 +284,7 @@ router.post('/logout-all', authenticate, (req, res) => {
  * POST /auth/refresh
  * 토큰 갱신
  */
-router.post('/refresh', (req, res) => {
+router.post('/refresh', async (req, res) => {
   try {
     const { refreshToken } = req.body;
 
@@ -288,7 +297,7 @@ router.post('/refresh', (req, res) => {
     }
 
     // 세션 확인
-    const session = tokenService.findSession(refreshToken);
+    const session = await tokenService.findSession(refreshToken);
 
     if (!session) {
       return res.status(401).json({
@@ -310,7 +319,7 @@ router.post('/refresh', (req, res) => {
     }
 
     // 사용자 조회
-    const user = User.findUserById(session.user_id);
+    const user = await User.findUserById(session.user_id);
 
     if (!user) {
       return res.status(401).json({
@@ -348,7 +357,7 @@ router.post('/refresh', (req, res) => {
  * POST /auth/verify-email
  * 이메일 인증 처리
  */
-router.post('/verify-email', (req, res) => {
+router.post('/verify-email', async (req, res) => {
   try {
     const { token } = req.body;
 
@@ -361,7 +370,7 @@ router.post('/verify-email', (req, res) => {
     }
 
     // 토큰 검증
-    const verification = tokenService.verifyEmailVerificationToken(token);
+    const verification = await tokenService.verifyEmailVerificationToken(token);
 
     if (!verification) {
       return res.status(401).json({
@@ -372,7 +381,7 @@ router.post('/verify-email', (req, res) => {
     }
 
     // 사용자 이메일 인증 처리
-    const user = User.findUserById(verification.user_id);
+    const user = await User.findUserById(verification.user_id);
 
     if (!user) {
       return res.status(404).json({
@@ -384,7 +393,7 @@ router.post('/verify-email', (req, res) => {
 
     // 이미 인증된 경우
     if (user.emailVerified) {
-      tokenService.useEmailVerificationToken(token);
+      await tokenService.useEmailVerificationToken(token);
       return res.json({
         success: true,
         message: '이미 이메일 인증이 완료되었습니다.',
@@ -393,8 +402,8 @@ router.post('/verify-email', (req, res) => {
     }
 
     // 이메일 인증 완료
-    User.updateUser(user.id, { emailVerified: true });
-    tokenService.useEmailVerificationToken(token);
+    await User.updateUser(user.id, { emailVerified: true });
+    await tokenService.useEmailVerificationToken(token);
 
     // 환영 이메일 발송
     sendWelcomeEmail(user.email, user.displayName).catch(err => {
@@ -422,7 +431,7 @@ router.post('/verify-email', (req, res) => {
  * POST /auth/resend-verification
  * 인증 이메일 재발송
  */
-router.post('/resend-verification', rateLimit(rateLimitConfig.magicLink), (req, res) => {
+router.post('/resend-verification', rateLimit(rateLimitConfig.magicLink), async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -434,7 +443,7 @@ router.post('/resend-verification', rateLimit(rateLimitConfig.magicLink), (req, 
       });
     }
 
-    const user = User.findUserByEmail(email);
+    const user = await User.findUserByEmail(email);
 
     if (!user) {
       // 보안상 사용자 존재 여부 숨김
@@ -453,7 +462,7 @@ router.post('/resend-verification', rateLimit(rateLimitConfig.magicLink), (req, 
     }
 
     // 새 인증 토큰 생성 및 발송
-    const verificationToken = tokenService.createEmailVerificationToken(user.id);
+    const verificationToken = await tokenService.createEmailVerificationToken(user.id);
     sendVerificationEmail(email, verificationToken.token).catch(err => {
       console.error('[Auth] 인증 이메일 재발송 실패:', err.message);
     });
@@ -497,7 +506,7 @@ router.post('/magic-link', emailActionLimiter, async (req, res) => {
     }
 
     // 매직 링크 생성
-    const magicLink = tokenService.createMagicLink(email);
+    const magicLink = await tokenService.createMagicLink(email);
 
     // 이메일 발송
     try {
@@ -536,7 +545,7 @@ router.post('/magic-link', emailActionLimiter, async (req, res) => {
  * POST /auth/magic-link/verify
  * 매직 링크 검증 및 로그인
  */
-router.post('/magic-link/verify', (req, res) => {
+router.post('/magic-link/verify', async (req, res) => {
   try {
     const { token } = req.body;
 
@@ -549,7 +558,7 @@ router.post('/magic-link/verify', (req, res) => {
     }
 
     // 매직 링크 검증
-    const magicLink = tokenService.verifyMagicLink(token);
+    const magicLink = await tokenService.verifyMagicLink(token);
 
     if (!magicLink) {
       return res.status(401).json({
@@ -560,29 +569,29 @@ router.post('/magic-link/verify', (req, res) => {
     }
 
     // 매직 링크 사용 처리
-    tokenService.useMagicLink(token);
+    await tokenService.useMagicLink(token);
 
     // 사용자 찾기 또는 생성
-    let user = User.findUserByEmail(magicLink.email);
+    let user = await User.findUserByEmail(magicLink.email);
 
     if (!user) {
       // 신규 사용자 생성
-      user = User.createUser({
+      user = await User.createUser({
         email: magicLink.email,
         emailVerified: true
       });
     } else if (!user.emailVerified) {
       // 이메일 인증 처리
-      User.updateUser(user.id, { emailVerified: true });
+      await User.updateUser(user.id, { emailVerified: true });
     }
 
     // 세션 생성
-    const session = tokenService.createSession(user.id, req);
+    const session = await tokenService.createSession(user.id, req);
 
     // 토큰 생성
     const { accessToken } = tokenService.generateTokenPair(user);
 
-    User.updateLastLogin(user.id);
+    await User.updateLastLogin(user.id);
 
     res.json({
       success: true,
@@ -721,20 +730,20 @@ router.get('/error', (req, res) => {
 /**
  * OAuth 성공 처리
  */
-function handleOAuthSuccess(req, res, provider) {
+async function handleOAuthSuccess(req, res, provider) {
   try {
     const user = req.user;
 
     // 세션 제한 체크
-    tokenService.enforceSessionLimit(user.id);
+    await tokenService.enforceSessionLimit(user.id);
 
     // 세션 생성
-    const session = tokenService.createSession(user.id, req);
+    const session = await tokenService.createSession(user.id, req);
 
     // 토큰 생성
     const { accessToken } = tokenService.generateTokenPair(user);
 
-    User.updateLastLogin(user.id);
+    await User.updateLastLogin(user.id);
 
     console.log(`[Auth] ${provider} OAuth 로그인 성공: ${user.email}`);
 
@@ -774,11 +783,11 @@ router.post('/forgot-password', emailActionLimiter, async (req, res) => {
       });
     }
 
-    const user = User.findUserByEmail(email);
+    const user = await User.findUserByEmail(email);
 
     // 사용자 존재 여부와 관계없이 동일한 응답 (보안)
     if (user) {
-      const resetToken = tokenService.createPasswordResetToken(user.id);
+      const resetToken = await tokenService.createPasswordResetToken(user.id);
 
       // 이메일 발송
       try {
@@ -830,7 +839,7 @@ router.post('/reset-password', async (req, res) => {
     }
 
     // 토큰 검증
-    const resetToken = tokenService.verifyPasswordResetToken(token);
+    const resetToken = await tokenService.verifyPasswordResetToken(token);
 
     if (!resetToken) {
       return res.status(401).json({
@@ -844,10 +853,10 @@ router.post('/reset-password', async (req, res) => {
     await User.updatePassword(resetToken.user_id, newPassword);
 
     // 토큰 사용 처리
-    tokenService.usePasswordResetToken(token);
+    await tokenService.usePasswordResetToken(token);
 
     // 모든 세션 무효화 (보안)
-    tokenService.deleteAllUserSessions(resetToken.user_id);
+    await tokenService.deleteAllUserSessions(resetToken.user_id);
 
     res.json({
       success: true,
@@ -871,8 +880,8 @@ router.post('/reset-password', async (req, res) => {
  * GET /auth/me
  * 현재 사용자 정보
  */
-router.get('/me', authenticate, (req, res) => {
-  const preferences = User.getUserPreferences(req.user.id);
+router.get('/me', authenticate, async (req, res) => {
+  const preferences = await User.getUserPreferences(req.user.id);
 
   res.json({
     success: true,
@@ -887,13 +896,13 @@ router.get('/me', authenticate, (req, res) => {
  * PUT /auth/me
  * 사용자 정보 수정
  */
-router.put('/me', authenticate, (req, res) => {
+router.put('/me', authenticate, async (req, res) => {
   try {
     const { displayName, username, avatarUrl } = req.body;
 
     // 사용자명 중복 확인
     if (username) {
-      const existingUser = User.findUserByUsername(username);
+      const existingUser = await User.findUserByUsername(username);
       if (existingUser && existingUser.id !== req.user.id) {
         return res.status(409).json({
           success: false,
@@ -903,7 +912,7 @@ router.put('/me', authenticate, (req, res) => {
       }
     }
 
-    const updatedUser = User.updateUser(req.user.id, {
+    const updatedUser = await User.updateUser(req.user.id, {
       displayName,
       username,
       avatarUrl
@@ -927,11 +936,11 @@ router.put('/me', authenticate, (req, res) => {
  * PUT /auth/preferences
  * 사용자 설정 수정
  */
-router.put('/preferences', authenticate, (req, res) => {
+router.put('/preferences', authenticate, async (req, res) => {
   try {
     const { preferredCategories, theme, language, notificationEnabled } = req.body;
 
-    const preferences = User.updateUserPreferences(req.user.id, {
+    const preferences = await User.updateUserPreferences(req.user.id, {
       preferredCategories,
       theme,
       language,
@@ -956,8 +965,8 @@ router.put('/preferences', authenticate, (req, res) => {
  * GET /auth/sessions
  * 활성 세션 목록
  */
-router.get('/sessions', authenticate, (req, res) => {
-  const sessions = tokenService.getUserSessions(req.user.id);
+router.get('/sessions', authenticate, async (req, res) => {
+  const sessions = await tokenService.getUserSessions(req.user.id);
 
   res.json({
     success: true,
@@ -969,10 +978,10 @@ router.get('/sessions', authenticate, (req, res) => {
  * DELETE /auth/sessions/:sessionId
  * 특정 세션 삭제
  */
-router.delete('/sessions/:sessionId', authenticate, (req, res) => {
+router.delete('/sessions/:sessionId', authenticate, async (req, res) => {
   try {
     // 해당 세션이 현재 사용자의 것인지 확인
-    const sessions = tokenService.getUserSessions(req.user.id);
+    const sessions = await tokenService.getUserSessions(req.user.id);
     const targetSession = sessions.find(s => s.id === req.params.sessionId);
 
     if (!targetSession) {
@@ -1058,8 +1067,8 @@ router.put('/change-password', authenticate, async (req, res) => {
  * GET /auth/providers
  * 연결된 OAuth 프로바이더 목록
  */
-router.get('/providers', authenticate, (req, res) => {
-  const providers = User.getUserProviders(req.user.id);
+router.get('/providers', authenticate, async (req, res) => {
+  const providers = await User.getUserProviders(req.user.id);
 
   res.json({
     success: true,
@@ -1071,12 +1080,12 @@ router.get('/providers', authenticate, (req, res) => {
  * DELETE /auth/providers/:provider
  * OAuth 프로바이더 연결 해제
  */
-router.delete('/providers/:provider', authenticate, (req, res) => {
+router.delete('/providers/:provider', authenticate, async (req, res) => {
   try {
     const { provider } = req.params;
 
     // 비밀번호가 없고 다른 프로바이더도 없으면 연결 해제 불가
-    const providers = User.getUserProviders(req.user.id);
+    const providers = await User.getUserProviders(req.user.id);
 
     if (!req.user.passwordHash && providers.length <= 1) {
       return res.status(400).json({
@@ -1086,7 +1095,7 @@ router.delete('/providers/:provider', authenticate, (req, res) => {
       });
     }
 
-    User.unlinkAuthProvider(req.user.id, provider);
+    await User.unlinkAuthProvider(req.user.id, provider);
 
     res.json({
       success: true,

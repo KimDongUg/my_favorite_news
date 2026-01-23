@@ -1,162 +1,155 @@
 /**
- * 세션 관리 서비스
+ * 세션 관리 서비스 (PostgreSQL)
  * 사용자 세션 관리, 디바이스 추적, 보안 기능
  */
 
-let db = null;
+import { query } from '../db/database.js';
 
 /**
- * 데이터베이스 인스턴스 설정
+ * 데이터베이스 인스턴스 설정 (호환성 유지)
  */
 export function setDatabase(database) {
-  db = database;
+  // PostgreSQL은 database.js의 query 함수를 사용하므로 별도 설정 불필요
 }
 
 /**
  * 사용자의 활성 세션 목록 조회
  */
-export function getActiveSessions(userId) {
-  const stmt = db.prepare(`
+export async function getActiveSessions(userId) {
+  const result = await query(`
     SELECT
       id,
       ip_address,
       user_agent,
       created_at,
       expires_at,
-      CASE WHEN expires_at > datetime('now') THEN 1 ELSE 0 END as is_active
+      CASE WHEN expires_at > NOW() THEN TRUE ELSE FALSE END as is_active
     FROM sessions
-    WHERE user_id = ? AND expires_at > datetime('now')
+    WHERE user_id = $1 AND expires_at > NOW()
     ORDER BY created_at DESC
-  `);
+  `, [userId]);
 
-  const sessions = stmt.all(userId);
-
-  return sessions.map(session => ({
+  return result.rows.map(session => ({
     id: session.id,
     ipAddress: session.ip_address,
     userAgent: session.user_agent,
     device: parseUserAgent(session.user_agent),
     createdAt: session.created_at,
     expiresAt: session.expires_at,
-    isActive: !!session.is_active,
+    isActive: session.is_active,
   }));
 }
 
 /**
  * 특정 세션 삭제 (다른 기기 로그아웃)
  */
-export function revokeSession(userId, sessionId) {
-  const stmt = db.prepare(`
+export async function revokeSession(userId, sessionId) {
+  const result = await query(`
     DELETE FROM sessions
-    WHERE id = ? AND user_id = ?
-  `);
+    WHERE id = $1 AND user_id = $2
+  `, [sessionId, userId]);
 
-  const result = stmt.run(sessionId, userId);
-  return result.changes > 0;
+  return result.rowCount > 0;
 }
 
 /**
  * 현재 세션을 제외한 모든 세션 삭제
  */
-export function revokeOtherSessions(userId, currentSessionId) {
-  const stmt = db.prepare(`
+export async function revokeOtherSessions(userId, currentSessionId) {
+  const result = await query(`
     DELETE FROM sessions
-    WHERE user_id = ? AND id != ?
-  `);
+    WHERE user_id = $1 AND id != $2
+  `, [userId, currentSessionId]);
 
-  const result = stmt.run(userId, currentSessionId);
-  console.log(`[Session] ${userId}의 다른 세션 ${result.changes}개 삭제됨`);
-  return result.changes;
+  console.log(`[Session] ${userId}의 다른 세션 ${result.rowCount}개 삭제됨`);
+  return result.rowCount;
 }
 
 /**
  * 모든 세션 삭제 (비밀번호 변경 등)
  */
-export function revokeAllSessions(userId) {
-  const stmt = db.prepare(`
+export async function revokeAllSessions(userId) {
+  const result = await query(`
     DELETE FROM sessions
-    WHERE user_id = ?
-  `);
+    WHERE user_id = $1
+  `, [userId]);
 
-  const result = stmt.run(userId);
-  console.log(`[Session] ${userId}의 모든 세션 ${result.changes}개 삭제됨`);
-  return result.changes;
+  console.log(`[Session] ${userId}의 모든 세션 ${result.rowCount}개 삭제됨`);
+  return result.rowCount;
 }
 
 /**
  * 만료된 세션 정리
  */
-export function cleanupExpiredSessions() {
-  const stmt = db.prepare(`
+export async function cleanupExpiredSessions() {
+  const result = await query(`
     DELETE FROM sessions
-    WHERE expires_at <= datetime('now')
+    WHERE expires_at <= NOW()
   `);
 
-  const result = stmt.run();
-
-  if (result.changes > 0) {
-    console.log(`[Session] 만료된 세션 ${result.changes}개 정리됨`);
+  if (result.rowCount > 0) {
+    console.log(`[Session] 만료된 세션 ${result.rowCount}개 정리됨`);
   }
 
-  return result.changes;
+  return result.rowCount;
 }
 
 /**
  * 세션 통계 조회
  */
-export function getSessionStats() {
-  const statsStmt = db.prepare(`
+export async function getSessionStats() {
+  const statsResult = await query(`
     SELECT
       COUNT(*) as total,
-      COUNT(CASE WHEN expires_at > datetime('now') THEN 1 END) as active,
-      COUNT(CASE WHEN expires_at <= datetime('now') THEN 1 END) as expired
+      COUNT(CASE WHEN expires_at > NOW() THEN 1 END) as active,
+      COUNT(CASE WHEN expires_at <= NOW() THEN 1 END) as expired
     FROM sessions
   `);
 
-  const userCountStmt = db.prepare(`
+  const userCountResult = await query(`
     SELECT COUNT(DISTINCT user_id) as unique_users
     FROM sessions
-    WHERE expires_at > datetime('now')
+    WHERE expires_at > NOW()
   `);
 
-  const stats = statsStmt.get();
-  const userCount = userCountStmt.get();
+  const stats = statsResult.rows[0];
+  const userCount = userCountResult.rows[0];
 
   return {
-    totalSessions: stats.total,
-    activeSessions: stats.active,
-    expiredSessions: stats.expired,
-    uniqueUsers: userCount.unique_users,
+    totalSessions: parseInt(stats.total) || 0,
+    activeSessions: parseInt(stats.active) || 0,
+    expiredSessions: parseInt(stats.expired) || 0,
+    uniqueUsers: parseInt(userCount.unique_users) || 0,
   };
 }
 
 /**
  * 사용자별 세션 수 확인
  */
-export function getUserSessionCount(userId) {
-  const stmt = db.prepare(`
+export async function getUserSessionCount(userId) {
+  const result = await query(`
     SELECT COUNT(*) as count
     FROM sessions
-    WHERE user_id = ? AND expires_at > datetime('now')
-  `);
+    WHERE user_id = $1 AND expires_at > NOW()
+  `, [userId]);
 
-  return stmt.get(userId)?.count || 0;
+  return parseInt(result.rows[0]?.count) || 0;
 }
 
 /**
  * 의심스러운 세션 활동 감지
  */
-export function detectSuspiciousActivity(userId) {
+export async function detectSuspiciousActivity(userId) {
   // 최근 1시간 내 다른 IP에서의 접속 확인
-  const stmt = db.prepare(`
+  const result = await query(`
     SELECT DISTINCT ip_address
     FROM sessions
-    WHERE user_id = ?
-      AND created_at > datetime('now', '-1 hour')
-      AND expires_at > datetime('now')
-  `);
+    WHERE user_id = $1
+      AND created_at > NOW() - INTERVAL '1 hour'
+      AND expires_at > NOW()
+  `, [userId]);
 
-  const ips = stmt.all(userId);
+  const ips = result.rows;
 
   if (ips.length > 3) {
     console.warn(`[Security] 의심스러운 활동 감지: ${userId} - ${ips.length}개의 다른 IP에서 접속`);
@@ -173,15 +166,14 @@ export function detectSuspiciousActivity(userId) {
 /**
  * 세션 연장
  */
-export function extendSession(sessionId, daysToExtend = 7) {
-  const stmt = db.prepare(`
+export async function extendSession(sessionId, daysToExtend = 7) {
+  const result = await query(`
     UPDATE sessions
-    SET expires_at = datetime(expires_at, '+${daysToExtend} days')
-    WHERE id = ? AND expires_at > datetime('now')
-  `);
+    SET expires_at = expires_at + INTERVAL '${daysToExtend} days'
+    WHERE id = $1 AND expires_at > NOW()
+  `, [sessionId]);
 
-  const result = stmt.run(sessionId);
-  return result.changes > 0;
+  return result.rowCount > 0;
 }
 
 /**

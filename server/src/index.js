@@ -61,9 +61,13 @@ const PORT = process.env.PORT || 3001;
 app.use(helmetMiddleware);
 app.use(addSecurityHeaders);
 
-// CORS 설정
+// CORS 설정 (환경변수로 프론트엔드 URL 설정 가능)
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
+  : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:5178', 'http://localhost:3000'];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:3000'],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -256,17 +260,17 @@ async function startServer() {
     console.log('  with Security & Auth & Compliance');
     console.log('========================================\n');
 
-    // 1. 데이터베이스 초기화
+    // 1. 데이터베이스 초기화 (PostgreSQL)
     console.log('[Server] 데이터베이스 초기화...');
-    initDatabase();
+    await initDatabase();
 
     // 2. 인증 테이블 생성 및 서비스 초기화
     console.log('[Server] 인증 시스템 초기화...');
-    const db = getDatabase();
-    createAuthTables(db);
-    tokenService.setDatabase(db);
-    User.setDatabase(db);
-    sessionManager.setDatabase(db);
+    await createAuthTables();
+    // PostgreSQL은 database.js의 query 함수를 사용하므로 setDatabase는 호환성 유지용
+    tokenService.setDatabase(null);
+    User.setDatabase(null);
+    sessionManager.setDatabase(null);
 
     // 3. Passport 초기화
     initializePassport();

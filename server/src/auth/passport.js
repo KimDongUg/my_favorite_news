@@ -1,5 +1,5 @@
 /**
- * Passport.js 전략 설정
+ * Passport.js 전략 설정 (PostgreSQL)
  * OAuth 2.0 소셜 로그인 지원 (Google, Kakao, Naver, Apple)
  */
 
@@ -21,9 +21,9 @@ export function initializePassport() {
   });
 
   // Deserialize user from session
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser(async (id, done) => {
     try {
-      const user = User.findUserById(id);
+      const user = await User.findUserById(id);
       done(null, user);
     } catch (error) {
       done(error, null);
@@ -40,7 +40,7 @@ export function initializePassport() {
     },
     async (email, password, done) => {
       try {
-        const user = User.findUserByEmail(email);
+        const user = await User.findUserByEmail(email);
 
         if (!user) {
           return done(null, false, { message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
@@ -169,32 +169,32 @@ async function handleOAuthCallback(provider, profile, data) {
   const providerUserId = profile.id;
 
   // 1. 기존 사용자 찾기 (프로바이더로)
-  let user = User.findUserByProvider(provider, providerUserId);
+  let user = await User.findUserByProvider(provider, providerUserId);
 
   if (user) {
     // 기존 사용자 - 토큰 업데이트
-    User.linkAuthProvider(user.id, provider, {
+    await User.linkAuthProvider(user.id, provider, {
       providerUserId,
       accessToken: data.accessToken,
       refreshToken: data.refreshToken
     });
-    User.updateLastLogin(user.id);
+    await User.updateLastLogin(user.id);
     console.log(`[Auth] ${provider} 기존 사용자 로그인: ${user.email}`);
     return user;
   }
 
   // 2. 이메일로 기존 사용자 찾기
   if (data.email) {
-    user = User.findUserByEmail(data.email);
+    user = await User.findUserByEmail(data.email);
 
     if (user) {
       // 기존 계정에 프로바이더 연결
-      User.linkAuthProvider(user.id, provider, {
+      await User.linkAuthProvider(user.id, provider, {
         providerUserId,
         accessToken: data.accessToken,
         refreshToken: data.refreshToken
       });
-      User.updateLastLogin(user.id);
+      await User.updateLastLogin(user.id);
       console.log(`[Auth] ${provider} 기존 이메일 계정에 연결: ${user.email}`);
       return user;
     }
@@ -209,11 +209,11 @@ async function handleOAuthCallback(provider, profile, data) {
     role: 'user'
   };
 
-  user = User.createUser(userData);
+  user = await User.createUser(userData);
   console.log(`[Auth] ${provider} 신규 사용자 생성: ${user.email}`);
 
   // 프로바이더 연결
-  User.linkAuthProvider(user.id, provider, {
+  await User.linkAuthProvider(user.id, provider, {
     providerUserId,
     accessToken: data.accessToken,
     refreshToken: data.refreshToken

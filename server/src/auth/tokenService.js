@@ -1,18 +1,17 @@
 /**
- * JWT 토큰 서비스
+ * JWT 토큰 서비스 (PostgreSQL)
  */
 
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { jwtConfig } from '../config/auth.js';
-
-let db = null;
+import { query } from '../db/database.js';
 
 /**
- * 데이터베이스 인스턴스 설정
+ * 데이터베이스 인스턴스 설정 (호환성 유지)
  */
 export function setDatabase(database) {
-  db = database;
+  // PostgreSQL은 database.js의 query 함수를 사용하므로 별도 설정 불필요
 }
 
 /**
@@ -92,17 +91,15 @@ export function generateTokenPair(user) {
 /**
  * 세션 생성
  */
-export function createSession(userId, req) {
+export async function createSession(userId, req) {
   const sessionId = uuidv4();
   const token = generateRefreshToken({ id: userId });
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7일
 
-  const stmt = db.prepare(`
+  await query(`
     INSERT INTO sessions (id, user_id, token, expires_at, ip_address, user_agent, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+  `, [
     sessionId,
     userId,
     token,
@@ -110,7 +107,7 @@ export function createSession(userId, req) {
     req?.ip || req?.connection?.remoteAddress || 'unknown',
     req?.headers?.['user-agent'] || 'unknown',
     new Date().toISOString()
-  );
+  ]);
 
   return { sessionId, token, expiresAt };
 }
@@ -118,73 +115,69 @@ export function createSession(userId, req) {
 /**
  * 세션 조회
  */
-export function findSession(token) {
-  const stmt = db.prepare(`
+export async function findSession(token) {
+  const result = await query(`
     SELECT * FROM sessions
-    WHERE token = ? AND expires_at > datetime('now')
-  `);
-  return stmt.get(token);
+    WHERE token = $1 AND expires_at > NOW()
+  `, [token]);
+  return result.rows[0];
 }
 
 /**
  * 세션 삭제 (로그아웃)
  */
-export function deleteSession(token) {
-  const stmt = db.prepare('DELETE FROM sessions WHERE token = ?');
-  stmt.run(token);
+export async function deleteSession(token) {
+  await query('DELETE FROM sessions WHERE token = $1', [token]);
 }
 
 /**
  * 사용자의 모든 세션 삭제
  */
-export function deleteAllUserSessions(userId) {
-  const stmt = db.prepare('DELETE FROM sessions WHERE user_id = ?');
-  stmt.run(userId);
+export async function deleteAllUserSessions(userId) {
+  await query('DELETE FROM sessions WHERE user_id = $1', [userId]);
 }
 
 /**
  * 사용자의 세션 목록
  */
-export function getUserSessions(userId) {
-  const stmt = db.prepare(`
+export async function getUserSessions(userId) {
+  const result = await query(`
     SELECT id, ip_address, user_agent, created_at, expires_at
     FROM sessions
-    WHERE user_id = ? AND expires_at > datetime('now')
+    WHERE user_id = $1 AND expires_at > NOW()
     ORDER BY created_at DESC
-  `);
-  return stmt.all(userId);
+  `, [userId]);
+  return result.rows;
 }
 
 /**
  * 만료된 세션 정리
  */
-export function cleanupExpiredSessions() {
-  const stmt = db.prepare("DELETE FROM sessions WHERE expires_at <= datetime('now')");
-  const result = stmt.run();
-  if (result.changes > 0) {
-    console.log(`[Auth] ${result.changes}개의 만료된 세션 정리됨`);
+export async function cleanupExpiredSessions() {
+  const result = await query("DELETE FROM sessions WHERE expires_at <= NOW()");
+  if (result.rowCount > 0) {
+    console.log(`[Auth] ${result.rowCount}개의 만료된 세션 정리됨`);
   }
-  return result.changes;
+  return result.rowCount;
 }
 
 /**
  * 세션 개수 제한 체크 및 오래된 세션 삭제
  */
-export function enforceSessionLimit(userId, maxSessions = 5) {
-  const stmt = db.prepare(`
+export async function enforceSessionLimit(userId, maxSessions = 5) {
+  const result = await query(`
     SELECT id FROM sessions
-    WHERE user_id = ?
+    WHERE user_id = $1
     ORDER BY created_at DESC
-  `);
-  const sessions = stmt.all(userId);
+  `, [userId]);
+  const sessions = result.rows;
 
   if (sessions.length >= maxSessions) {
     // 오래된 세션들 삭제
     const sessionsToDelete = sessions.slice(maxSessions - 1);
-    const deleteStmt = db.prepare('DELETE FROM sessions WHERE id = ?');
 
     for (const session of sessionsToDelete) {
-      deleteStmt.run(session.id);
+      await query('DELETE FROM sessions WHERE id = $1', [session.id]);
     }
   }
 }
@@ -196,17 +189,15 @@ export function enforceSessionLimit(userId, maxSessions = 5) {
 /**
  * 매직 링크 토큰 생성
  */
-export function createMagicLink(email) {
+export async function createMagicLink(email) {
   const id = uuidv4();
   const token = uuidv4();
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15분
 
-  const stmt = db.prepare(`
+  await query(`
     INSERT INTO magic_links (id, email, token, expires_at, created_at)
-    VALUES (?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(id, email.toLowerCase(), token, expiresAt, new Date().toISOString());
+    VALUES ($1, $2, $3, $4, $5)
+  `, [id, email.toLowerCase(), token, expiresAt, new Date().toISOString()]);
 
   return { id, token, expiresAt };
 }
@@ -214,28 +205,26 @@ export function createMagicLink(email) {
 /**
  * 매직 링크 검증
  */
-export function verifyMagicLink(token) {
-  const stmt = db.prepare(`
+export async function verifyMagicLink(token) {
+  const result = await query(`
     SELECT * FROM magic_links
-    WHERE token = ? AND expires_at > datetime('now') AND used = 0
-  `);
-  return stmt.get(token);
+    WHERE token = $1 AND expires_at > NOW() AND used = FALSE
+  `, [token]);
+  return result.rows[0];
 }
 
 /**
  * 매직 링크 사용 처리
  */
-export function useMagicLink(token) {
-  const stmt = db.prepare('UPDATE magic_links SET used = 1 WHERE token = ?');
-  stmt.run(token);
+export async function useMagicLink(token) {
+  await query('UPDATE magic_links SET used = TRUE WHERE token = $1', [token]);
 }
 
 /**
  * 만료된 매직 링크 정리
  */
-export function cleanupExpiredMagicLinks() {
-  const stmt = db.prepare("DELETE FROM magic_links WHERE expires_at <= datetime('now') OR used = 1");
-  stmt.run();
+export async function cleanupExpiredMagicLinks() {
+  await query("DELETE FROM magic_links WHERE expires_at <= NOW() OR used = TRUE");
 }
 
 // ============================================
@@ -245,17 +234,15 @@ export function cleanupExpiredMagicLinks() {
 /**
  * 비밀번호 재설정 토큰 생성
  */
-export function createPasswordResetToken(userId) {
+export async function createPasswordResetToken(userId) {
   const id = uuidv4();
   const token = uuidv4();
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1시간
 
-  const stmt = db.prepare(`
+  await query(`
     INSERT INTO password_reset_tokens (id, user_id, token, expires_at, created_at)
-    VALUES (?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(id, userId, token, expiresAt, new Date().toISOString());
+    VALUES ($1, $2, $3, $4, $5)
+  `, [id, userId, token, expiresAt, new Date().toISOString()]);
 
   return { id, token, expiresAt };
 }
@@ -263,20 +250,19 @@ export function createPasswordResetToken(userId) {
 /**
  * 비밀번호 재설정 토큰 검증
  */
-export function verifyPasswordResetToken(token) {
-  const stmt = db.prepare(`
+export async function verifyPasswordResetToken(token) {
+  const result = await query(`
     SELECT * FROM password_reset_tokens
-    WHERE token = ? AND expires_at > datetime('now') AND used = 0
-  `);
-  return stmt.get(token);
+    WHERE token = $1 AND expires_at > NOW() AND used = FALSE
+  `, [token]);
+  return result.rows[0];
 }
 
 /**
  * 비밀번호 재설정 토큰 사용 처리
  */
-export function usePasswordResetToken(token) {
-  const stmt = db.prepare('UPDATE password_reset_tokens SET used = 1 WHERE token = ?');
-  stmt.run(token);
+export async function usePasswordResetToken(token) {
+  await query('UPDATE password_reset_tokens SET used = TRUE WHERE token = $1', [token]);
 }
 
 // ============================================
@@ -286,17 +272,15 @@ export function usePasswordResetToken(token) {
 /**
  * 이메일 인증 토큰 생성
  */
-export function createEmailVerificationToken(userId) {
+export async function createEmailVerificationToken(userId) {
   const id = uuidv4();
   const token = uuidv4();
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24시간
 
-  const stmt = db.prepare(`
+  await query(`
     INSERT INTO email_verifications (id, user_id, token, expires_at, created_at)
-    VALUES (?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(id, userId, token, expiresAt, new Date().toISOString());
+    VALUES ($1, $2, $3, $4, $5)
+  `, [id, userId, token, expiresAt, new Date().toISOString()]);
 
   return { id, token, expiresAt };
 }
@@ -304,28 +288,26 @@ export function createEmailVerificationToken(userId) {
 /**
  * 이메일 인증 토큰 검증
  */
-export function verifyEmailVerificationToken(token) {
-  const stmt = db.prepare(`
+export async function verifyEmailVerificationToken(token) {
+  const result = await query(`
     SELECT * FROM email_verifications
-    WHERE token = ? AND expires_at > datetime('now') AND used = 0
-  `);
-  return stmt.get(token);
+    WHERE token = $1 AND expires_at > NOW() AND used = FALSE
+  `, [token]);
+  return result.rows[0];
 }
 
 /**
  * 이메일 인증 토큰 사용 처리
  */
-export function useEmailVerificationToken(token) {
-  const stmt = db.prepare('UPDATE email_verifications SET used = 1 WHERE token = ?');
-  stmt.run(token);
+export async function useEmailVerificationToken(token) {
+  await query('UPDATE email_verifications SET used = TRUE WHERE token = $1', [token]);
 }
 
 /**
  * 만료된 이메일 인증 토큰 정리
  */
-export function cleanupExpiredEmailVerifications() {
-  const stmt = db.prepare("DELETE FROM email_verifications WHERE expires_at <= datetime('now') OR used = 1");
-  stmt.run();
+export async function cleanupExpiredEmailVerifications() {
+  await query("DELETE FROM email_verifications WHERE expires_at <= NOW() OR used = TRUE");
 }
 
 export default {

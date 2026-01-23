@@ -1,5 +1,5 @@
 /**
- * 인증 미들웨어
+ * 인증 미들웨어 (PostgreSQL)
  * JWT 토큰 검증 및 권한 확인
  */
 
@@ -10,7 +10,7 @@ import * as User from '../models/User.js';
  * JWT 인증 미들웨어
  * Authorization 헤더에서 Bearer 토큰을 검증
  */
-export function authenticate(req, res, next) {
+export async function authenticate(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -34,7 +34,7 @@ export function authenticate(req, res, next) {
   }
 
   // 사용자 정보 조회
-  const user = User.findUserById(decoded.sub);
+  const user = await User.findUserById(decoded.sub);
 
   if (!user) {
     return res.status(401).json({
@@ -55,7 +55,7 @@ export function authenticate(req, res, next) {
  * 선택적 인증 미들웨어
  * 토큰이 있으면 검증하고, 없어도 통과
  */
-export function optionalAuth(req, res, next) {
+export async function optionalAuth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -66,7 +66,7 @@ export function optionalAuth(req, res, next) {
   const decoded = verifyAccessToken(token);
 
   if (decoded) {
-    const user = User.findUserById(decoded.sub);
+    const user = await User.findUserById(decoded.sub);
     if (user) {
       req.user = user;
       req.tokenPayload = decoded;

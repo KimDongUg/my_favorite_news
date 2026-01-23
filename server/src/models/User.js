@@ -1,105 +1,104 @@
 /**
  * User 모델
- * 사용자 데이터 CRUD 작업
+ * 사용자 데이터 CRUD 작업 (PostgreSQL)
  */
 
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import { passwordPolicy, defaultUserPreferences } from '../config/auth.js';
-
-let db = null;
+import { query } from '../db/database.js';
 
 /**
- * 데이터베이스 인스턴스 설정
+ * 데이터베이스 인스턴스 설정 (호환성 유지)
  */
 export function setDatabase(database) {
-  db = database;
+  // PostgreSQL은 database.js의 query 함수를 사용하므로 별도 설정 불필요
 }
 
 /**
  * 사용자 생성
  */
-export function createUser(userData) {
+export async function createUser(userData) {
   const id = uuidv4();
   const now = new Date().toISOString();
 
-  const stmt = db.prepare(`
+  await query(`
     INSERT INTO users (id, email, password_hash, username, display_name, avatar_url, email_verified, created_at, updated_at, role)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+  `, [
     id,
     userData.email.toLowerCase(),
     userData.passwordHash || null,
     userData.username || null,
     userData.displayName || userData.email.split('@')[0],
     userData.avatarUrl || null,
-    userData.emailVerified ? 1 : 0,
+    userData.emailVerified || false,
     now,
     now,
     userData.role || 'user'
-  );
+  ]);
 
   // 기본 설정 생성
-  createUserPreferences(id);
+  await createUserPreferences(id);
 
-  return findUserById(id);
+  return await findUserById(id);
 }
 
 /**
  * 이메일로 사용자 찾기
  */
-export function findUserByEmail(email) {
-  const stmt = db.prepare('SELECT * FROM users WHERE email = ? AND is_active = 1');
-  const user = stmt.get(email.toLowerCase());
+export async function findUserByEmail(email) {
+  const result = await query('SELECT * FROM users WHERE email = $1 AND is_active = TRUE', [email.toLowerCase()]);
+  const user = result.rows[0];
   return user ? formatUser(user) : null;
 }
 
 /**
  * ID로 사용자 찾기
  */
-export function findUserById(id) {
-  const stmt = db.prepare('SELECT * FROM users WHERE id = ? AND is_active = 1');
-  const user = stmt.get(id);
+export async function findUserById(id) {
+  const result = await query('SELECT * FROM users WHERE id = $1 AND is_active = TRUE', [id]);
+  const user = result.rows[0];
   return user ? formatUser(user) : null;
 }
 
 /**
  * 사용자명으로 찾기
  */
-export function findUserByUsername(username) {
-  const stmt = db.prepare('SELECT * FROM users WHERE username = ? AND is_active = 1');
-  const user = stmt.get(username);
+export async function findUserByUsername(username) {
+  const result = await query('SELECT * FROM users WHERE username = $1 AND is_active = TRUE', [username]);
+  const user = result.rows[0];
   return user ? formatUser(user) : null;
 }
 
 /**
  * 사용자 정보 업데이트
  */
-export function updateUser(id, updates) {
+export async function updateUser(id, updates) {
   const allowedFields = ['username', 'display_name', 'avatar_url', 'email_verified', 'last_login_at', 'role'];
   const updateParts = [];
   const values = [];
+  let paramIndex = 1;
 
   for (const [key, value] of Object.entries(updates)) {
     const dbKey = key.replace(/([A-Z])/g, '_$1').toLowerCase(); // camelCase to snake_case
     if (allowedFields.includes(dbKey)) {
-      updateParts.push(`${dbKey} = ?`);
+      updateParts.push(`${dbKey} = $${paramIndex}`);
       values.push(value);
+      paramIndex++;
     }
   }
 
   if (updateParts.length === 0) return null;
 
-  updateParts.push('updated_at = ?');
+  updateParts.push(`updated_at = $${paramIndex}`);
   values.push(new Date().toISOString());
+  paramIndex++;
   values.push(id);
 
-  const stmt = db.prepare(`UPDATE users SET ${updateParts.join(', ')} WHERE id = ?`);
-  stmt.run(...values);
+  await query(`UPDATE users SET ${updateParts.join(', ')} WHERE id = $${paramIndex}`, values);
 
-  return findUserById(id);
+  return await findUserById(id);
 }
 
 /**
@@ -107,8 +106,7 @@ export function updateUser(id, updates) {
  */
 export async function updatePassword(id, newPassword) {
   const hash = await bcrypt.hash(newPassword, passwordPolicy.saltRounds);
-  const stmt = db.prepare('UPDATE users SET password_hash = ?, updated_at = ? WHERE id = ?');
-  stmt.run(hash, new Date().toISOString(), id);
+  await query('UPDATE users SET password_hash = $1, updated_at = $2 WHERE id = $3', [hash, new Date().toISOString(), id]);
 }
 
 /**
@@ -122,25 +120,22 @@ export async function verifyPassword(user, password) {
 /**
  * 마지막 로그인 시간 업데이트
  */
-export function updateLastLogin(id) {
-  const stmt = db.prepare('UPDATE users SET last_login_at = ? WHERE id = ?');
-  stmt.run(new Date().toISOString(), id);
+export async function updateLastLogin(id) {
+  await query('UPDATE users SET last_login_at = $1 WHERE id = $2', [new Date().toISOString(), id]);
 }
 
 /**
  * 사용자 비활성화
  */
-export function deactivateUser(id) {
-  const stmt = db.prepare('UPDATE users SET is_active = 0, updated_at = ? WHERE id = ?');
-  stmt.run(new Date().toISOString(), id);
+export async function deactivateUser(id) {
+  await query('UPDATE users SET is_active = FALSE, updated_at = $1 WHERE id = $2', [new Date().toISOString(), id]);
 }
 
 /**
  * 사용자 삭제 (영구)
  */
-export function deleteUser(id) {
-  const stmt = db.prepare('DELETE FROM users WHERE id = ?');
-  stmt.run(id);
+export async function deleteUser(id) {
+  await query('DELETE FROM users WHERE id = $1', [id]);
 }
 
 // ============================================
@@ -150,16 +145,20 @@ export function deleteUser(id) {
 /**
  * 소셜 로그인 프로바이더 연결
  */
-export function linkAuthProvider(userId, provider, providerData) {
+export async function linkAuthProvider(userId, provider, providerData) {
   const now = new Date().toISOString();
 
-  const stmt = db.prepare(`
-    INSERT OR REPLACE INTO auth_providers
+  await query(`
+    INSERT INTO auth_providers
     (user_id, provider, provider_user_id, access_token, refresh_token, token_expires_at, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-
-  stmt.run(
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    ON CONFLICT (provider, provider_user_id) DO UPDATE SET
+      user_id = EXCLUDED.user_id,
+      access_token = EXCLUDED.access_token,
+      refresh_token = EXCLUDED.refresh_token,
+      token_expires_at = EXCLUDED.token_expires_at,
+      updated_at = EXCLUDED.updated_at
+  `, [
     userId,
     provider,
     providerData.providerUserId,
@@ -168,36 +167,35 @@ export function linkAuthProvider(userId, provider, providerData) {
     providerData.tokenExpiresAt || null,
     now,
     now
-  );
+  ]);
 }
 
 /**
  * 프로바이더로 사용자 찾기
  */
-export function findUserByProvider(provider, providerUserId) {
-  const stmt = db.prepare(`
+export async function findUserByProvider(provider, providerUserId) {
+  const result = await query(`
     SELECT u.* FROM users u
     JOIN auth_providers ap ON u.id = ap.user_id
-    WHERE ap.provider = ? AND ap.provider_user_id = ? AND u.is_active = 1
-  `);
-  const user = stmt.get(provider, providerUserId);
+    WHERE ap.provider = $1 AND ap.provider_user_id = $2 AND u.is_active = TRUE
+  `, [provider, providerUserId]);
+  const user = result.rows[0];
   return user ? formatUser(user) : null;
 }
 
 /**
  * 사용자의 연결된 프로바이더 목록
  */
-export function getUserProviders(userId) {
-  const stmt = db.prepare('SELECT provider, created_at FROM auth_providers WHERE user_id = ?');
-  return stmt.all(userId);
+export async function getUserProviders(userId) {
+  const result = await query('SELECT provider, created_at FROM auth_providers WHERE user_id = $1', [userId]);
+  return result.rows;
 }
 
 /**
  * 프로바이더 연결 해제
  */
-export function unlinkAuthProvider(userId, provider) {
-  const stmt = db.prepare('DELETE FROM auth_providers WHERE user_id = ? AND provider = ?');
-  stmt.run(userId, provider);
+export async function unlinkAuthProvider(userId, provider) {
+  await query('DELETE FROM auth_providers WHERE user_id = $1 AND provider = $2', [userId, provider]);
 }
 
 // ============================================
@@ -207,77 +205,82 @@ export function unlinkAuthProvider(userId, provider) {
 /**
  * 사용자 설정 생성
  */
-export function createUserPreferences(userId) {
+export async function createUserPreferences(userId) {
   const now = new Date().toISOString();
-  const stmt = db.prepare(`
-    INSERT OR IGNORE INTO user_preferences
-    (user_id, preferred_categories, theme, language, notification_enabled, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `);
 
-  stmt.run(
+  await query(`
+    INSERT INTO user_preferences
+    (user_id, preferred_categories, theme, language, notification_enabled, created_at, updated_at)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    ON CONFLICT (user_id) DO NOTHING
+  `, [
     userId,
     JSON.stringify(defaultUserPreferences.preferred_categories),
     defaultUserPreferences.theme,
     defaultUserPreferences.language,
-    defaultUserPreferences.notification_enabled ? 1 : 0,
+    defaultUserPreferences.notification_enabled,
     now,
     now
-  );
+  ]);
 }
 
 /**
  * 사용자 설정 조회
  */
-export function getUserPreferences(userId) {
-  const stmt = db.prepare('SELECT * FROM user_preferences WHERE user_id = ?');
-  const prefs = stmt.get(userId);
+export async function getUserPreferences(userId) {
+  const result = await query('SELECT * FROM user_preferences WHERE user_id = $1', [userId]);
+  const prefs = result.rows[0];
 
   if (!prefs) return null;
 
   return {
     userId: prefs.user_id,
-    preferredCategories: JSON.parse(prefs.preferred_categories || '[]'),
+    preferredCategories: prefs.preferred_categories || [],
     theme: prefs.theme,
     language: prefs.language,
-    notificationEnabled: prefs.notification_enabled === 1
+    notificationEnabled: prefs.notification_enabled
   };
 }
 
 /**
  * 사용자 설정 업데이트
  */
-export function updateUserPreferences(userId, updates) {
+export async function updateUserPreferences(userId, updates) {
   const parts = [];
   const values = [];
+  let paramIndex = 1;
 
   if (updates.preferredCategories !== undefined) {
-    parts.push('preferred_categories = ?');
+    parts.push(`preferred_categories = $${paramIndex}`);
     values.push(JSON.stringify(updates.preferredCategories));
+    paramIndex++;
   }
   if (updates.theme !== undefined) {
-    parts.push('theme = ?');
+    parts.push(`theme = $${paramIndex}`);
     values.push(updates.theme);
+    paramIndex++;
   }
   if (updates.language !== undefined) {
-    parts.push('language = ?');
+    parts.push(`language = $${paramIndex}`);
     values.push(updates.language);
+    paramIndex++;
   }
   if (updates.notificationEnabled !== undefined) {
-    parts.push('notification_enabled = ?');
-    values.push(updates.notificationEnabled ? 1 : 0);
+    parts.push(`notification_enabled = $${paramIndex}`);
+    values.push(updates.notificationEnabled);
+    paramIndex++;
   }
 
   if (parts.length === 0) return null;
 
-  parts.push('updated_at = ?');
+  parts.push(`updated_at = $${paramIndex}`);
   values.push(new Date().toISOString());
+  paramIndex++;
   values.push(userId);
 
-  const stmt = db.prepare(`UPDATE user_preferences SET ${parts.join(', ')} WHERE user_id = ?`);
-  stmt.run(...values);
+  await query(`UPDATE user_preferences SET ${parts.join(', ')} WHERE user_id = $${paramIndex}`, values);
 
-  return getUserPreferences(userId);
+  return await getUserPreferences(userId);
 }
 
 // ============================================
@@ -295,11 +298,11 @@ function formatUser(row) {
     username: row.username,
     displayName: row.display_name,
     avatarUrl: row.avatar_url,
-    emailVerified: row.email_verified === 1,
+    emailVerified: row.email_verified,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     lastLoginAt: row.last_login_at,
-    isActive: row.is_active === 1,
+    isActive: row.is_active,
     role: row.role
   };
 }
