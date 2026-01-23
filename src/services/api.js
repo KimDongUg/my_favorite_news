@@ -3,7 +3,7 @@
  * 백엔드 서버와 통신
  */
 
-const API_BASE_URL = 'http://localhost:3001/api';
+import { API_BASE_URL, IS_DEMO_MODE } from '../config/api';
 
 /**
  * API 요청 헬퍼

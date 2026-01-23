@@ -4,8 +4,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const API_BASE_URL = 'http://localhost:3001/api';
+import { API_BASE_URL, IS_DEMO_MODE } from '../config/api';
 
 const AuthContext = createContext(null);
 
@@ -110,6 +109,18 @@ export function AuthProvider({ children }) {
   // 자동 로그인 (페이지 로드 시)
   useEffect(() => {
     const initAuth = async () => {
+      // 데모 모드에서는 데모 사용자로 자동 로그인
+      if (IS_DEMO_MODE) {
+        setUser({
+          id: 'demo-user',
+          email: 'demo@mynews.com',
+          displayName: '데모 사용자',
+          role: 'user',
+        });
+        setLoading(false);
+        return;
+      }
+
       const token = localStorage.getItem('accessToken');
       if (token) {
         await fetchUser();

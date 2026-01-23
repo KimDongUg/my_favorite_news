@@ -705,6 +705,19 @@ body {
   border: 1px solid #ffc107;
 }
 
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .retry-btn {
   background: #856404;
   color: white;
