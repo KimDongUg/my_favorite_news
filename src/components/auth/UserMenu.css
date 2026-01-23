@@ -1,0 +1,74 @@
+/* UserMenu 스타일 */
+
+.user-menu-loading {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.user-menu-loading .loading-dot {
+  width: 8px;
+  height: 8px;
+  background: #94a3b8;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.user-menu-guest {
+  display: flex;
+  align-items: center;
+}
+
+.user-menu-guest .login-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.user-menu-guest .login-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.user-menu-logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.user-greeting {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.user-greeting strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.menu-divider {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+.logout-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+
+.logout-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}

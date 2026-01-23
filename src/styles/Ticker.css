@@ -1,0 +1,894 @@
+/* ========================================
+   Multi Layer Ticker - Complete Styles
+   ======================================== */
+
+.multi-layer-ticker {
+  width: 100%;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.ticker-speed {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* Header */
+.ticker-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.ticker-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.ticker-subtitle {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* ========================================
+   Controls Panel
+   ======================================== */
+.ticker-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.controls-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-toggles {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.toggle-label:hover {
+  border-color: var(--toggle-color, #667eea);
+}
+
+.toggle-label input {
+  display: none;
+}
+
+.toggle-label input:checked + .toggle-indicator {
+  transform: scale(1.1);
+}
+
+.toggle-label input:checked ~ .toggle-text {
+  font-weight: 600;
+}
+
+.toggle-label input:not(:checked) + .toggle-indicator {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+.toggle-label input:not(:checked) ~ .toggle-text {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.toggle-indicator {
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.toggle-text {
+  font-size: 0.8rem;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+/* Speed Slider */
+.speed-slider {
+  width: 150px;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e0e0e0;
+  border-radius: 3px;
+  outline: none;
+}
+
+.speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.speed-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.speed-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #999;
+}
+
+/* ========================================
+   Desktop (1200px+) - Default Styles
+   ======================================== */
+.ticker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: calc(var(--visible-layers, 5) * 100px);
+  min-height: 100px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: height 0.3s ease;
+}
+
+/* Ticker Layer - Base with GPU Acceleration */
+.ticker-layer {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  font-size: 16px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--layer-color) 15%, white) 0%,
+    color-mix(in srgb, var(--layer-color) 5%, white) 20%,
+    #ffffff 40%,
+    #ffffff 100%
+  );
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+  /* GPU 가속 */
+  will-change: transform;
+  transform: translateZ(0);
+  /* 깊이감 */
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.ticker-layer:last-child {
+  border-bottom: none;
+}
+
+/* 레이어별 개별 애니메이션 - CSS 변수 기반 */
+.ticker-content {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  padding: 0 1rem;
+  /* GPU 가속 */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0) translateZ(0); }
+  100% { transform: translateX(-33.333%) translateZ(0); }
+}
+
+/* 호버 시 해당 레이어만 일시정지 */
+.ticker-layer:hover .ticker-content {
+  animation-play-state: paused;
+}
+
+/* 호버 시 레이어 하이라이트 효과 */
+.ticker-layer:hover {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--layer-color) 20%, white) 0%,
+    color-mix(in srgb, var(--layer-color) 10%, white) 30%,
+    #f5f5f5 50%,
+    #f5f5f5 100%
+  );
+  z-index: 2;
+}
+
+/* Ticker Label - 왼쪽 고정 영역 */
+.ticker-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0 1.5rem;
+  min-width: 110px;
+  height: 100%;
+  background: linear-gradient(135deg, var(--layer-color) 0%, var(--layer-color) 100%);
+  color: white;
+  font-weight: 600;
+  z-index: 10;
+  position: sticky;
+  left: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    4px 0 15px rgba(0, 0, 0, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.ticker-label:hover {
+  filter: brightness(1.15);
+}
+
+.ticker-label:focus {
+  outline: 2px solid white;
+  outline-offset: -4px;
+}
+
+.ticker-label::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, var(--layer-color), transparent);
+  pointer-events: none;
+}
+
+.ticker-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.ticker-category {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+/* Ticker Track */
+.ticker-track {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-track::before,
+.ticker-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ticker-track::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
+}
+
+.ticker-track::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 1), transparent);
+}
+
+/* Ticker Item - Desktop with GPU Acceleration */
+.ticker-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border-left: 5px solid var(--item-color);
+  width: 400px;
+  min-width: 400px;
+  height: 75px;
+  cursor: pointer;
+  /* GPU 가속 */
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  /* 깊이감 */
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--item-color) 20%, transparent);
+}
+
+.ticker-item:hover {
+  background: color-mix(in srgb, var(--item-color) 8%, white);
+  transform: scale(1.02) translateZ(0);
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--item-color) 25%, rgba(0, 0, 0, 0.15)),
+    0 0 0 2px color-mix(in srgb, var(--item-color) 40%, transparent);
+}
+
+.ticker-item:focus {
+  outline: 2px solid var(--item-color);
+  outline-offset: 2px;
+}
+
+.ticker-item-title {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ticker-item-description {
+  color: #666;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* ========================================
+   Modal Styles
+   ======================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.modal-close:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.modal-close:focus {
+  outline: 2px solid var(--modal-color);
+  outline-offset: 2px;
+}
+
+.modal-header {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.3;
+}
+
+.modal-body {
+  padding: 1.5rem 2rem;
+}
+
+.modal-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.modal-footer {
+  padding: 1rem 2rem 2rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.modal-btn-primary {
+  color: white;
+}
+
+.modal-btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.modal-btn-secondary {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.modal-btn-secondary:hover {
+  background: #e0e0e0;
+}
+
+/* ========================================
+   Tablet (768px - 1199px)
+   ======================================== */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .ticker-container {
+    height: calc(var(--visible-layers, 5) * 80px);
+    border-radius: 12px;
+  }
+
+  .ticker-layer {
+    height: 80px;
+    font-size: 14px;
+  }
+
+  .ticker-label {
+    min-width: 90px;
+    padding: 0 1rem;
+    gap: 0.3rem;
+  }
+
+  .ticker-icon {
+    font-size: 1.4rem;
+  }
+
+  .ticker-category {
+    font-size: 0.7rem;
+  }
+
+  .ticker-track::before,
+  .ticker-track::after {
+    width: 60px;
+  }
+
+  .ticker-item {
+    width: 320px;
+    min-width: 320px;
+    height: 60px;
+    padding: 12px;
+  }
+
+  .ticker-item-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .ticker-item-description {
+    font-size: 0.8rem;
+  }
+
+  .ticker-content {
+    gap: 1.25rem;
+  }
+
+  .ticker-controls {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+}
+
+/* ========================================
+   Mobile (767px 이하)
+   ======================================== */
+@media (max-width: 767px) {
+  .multi-layer-ticker {
+    padding: 1rem 0;
+  }
+
+  .ticker-title {
+    font-size: 1.25rem;
+  }
+
+  .ticker-controls {
+    flex-direction: column;
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  .category-toggles {
+    justify-content: center;
+  }
+
+  .toggle-text {
+    display: none;
+  }
+
+  .toggle-label {
+    padding: 0.5rem;
+  }
+
+  .speed-slider {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .ticker-container {
+    height: calc(var(--visible-layers, 5) * 70px);
+    border-radius: 10px;
+    gap: 1px;
+  }
+
+  .ticker-layer {
+    height: 70px;
+    font-size: 13px;
+  }
+
+  .ticker-label {
+    min-width: 50px;
+    padding: 0 0.5rem;
+    gap: 0.2rem;
+  }
+
+  .ticker-label::after {
+    width: 10px;
+    right: -10px;
+  }
+
+  .ticker-category {
+    display: none;
+  }
+
+  .ticker-icon {
+    font-size: 1.5rem;
+  }
+
+  .ticker-track::before,
+  .ticker-track::after {
+    width: 30px;
+  }
+
+  .ticker-item {
+    width: 280px;
+    min-width: 280px;
+    height: 52px;
+    padding: 10px;
+    border-left-width: 3px;
+    border-radius: 6px;
+  }
+
+  .ticker-item-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.15rem;
+    font-weight: 600;
+  }
+
+  .ticker-item-description {
+    display: none;
+  }
+
+  .ticker-content {
+    gap: 1rem;
+  }
+
+  .ticker-item:hover {
+    transform: none;
+  }
+
+  /* Modal Mobile */
+  .modal-content {
+    max-height: 85vh;
+    margin: auto 0.5rem;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   Small Mobile (480px 이하)
+   ======================================== */
+@media (max-width: 480px) {
+  .ticker-container {
+    height: calc(var(--visible-layers, 5) * 65px);
+  }
+
+  .ticker-layer {
+    height: 65px;
+  }
+
+  .ticker-label {
+    min-width: 45px;
+    padding: 0 0.4rem;
+  }
+
+  .ticker-icon {
+    font-size: 1.3rem;
+  }
+
+  .ticker-item {
+    width: 240px;
+    min-width: 240px;
+    height: 48px;
+    padding: 8px 10px;
+  }
+
+  .ticker-item-title {
+    font-size: 0.8rem;
+  }
+
+  .ticker-content {
+    gap: 0.75rem;
+  }
+
+  .ticker-track::before,
+  .ticker-track::after {
+    width: 20px;
+  }
+}
+
+/* ========================================
+   Touch Device Optimization
+   ======================================== */
+@media (hover: none) and (pointer: coarse) {
+  .ticker-item:hover {
+    transform: none;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 0 0 1px color-mix(in srgb, var(--item-color) 20%, transparent);
+  }
+
+  .ticker-layer:hover {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--layer-color) 15%, white) 0%,
+      color-mix(in srgb, var(--layer-color) 5%, white) 20%,
+      #ffffff 40%,
+      #ffffff 100%
+    );
+  }
+
+  .ticker-layer:active .ticker-content {
+    animation-play-state: paused;
+  }
+
+  .ticker-item:active {
+    background: color-mix(in srgb, var(--item-color) 15%, white);
+  }
+}
+
+/* ========================================
+   Reduced Motion (접근성)
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-content {
+    animation: none !important;
+  }
+
+  .ticker-item,
+  .ticker-layer,
+  .modal-content,
+  .modal-backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+  .ticker-title,
+  .ticker-subtitle {
+    color: #f0f0f0;
+  }
+
+  .ticker-controls {
+    background: #1a1a2e;
+  }
+
+  .controls-title {
+    color: #aaa;
+  }
+
+  .toggle-label {
+    background: #2a2a3e;
+    border-color: #3a3a4e;
+  }
+
+  .toggle-text {
+    color: #ddd;
+  }
+
+  .speed-slider {
+    background: #3a3a4e;
+  }
+}
+
+/* ========================================
+   Landscape Mobile Optimization
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .ticker-controls {
+    padding: 0.5rem;
+  }
+
+  .ticker-container {
+    height: calc(var(--visible-layers, 5) * 56px);
+  }
+
+  .ticker-layer {
+    height: 56px;
+  }
+
+  .ticker-label {
+    min-width: 45px;
+  }
+
+  .ticker-icon {
+    font-size: 1.2rem;
+  }
+
+  .ticker-item {
+    height: 42px;
+    width: 220px;
+    min-width: 220px;
+    padding: 6px 10px;
+  }
+
+  .ticker-item-title {
+    font-size: 0.75rem;
+  }
+
+  .ticker-item-description {
+    display: none;
+  }
+}
+
+/* ========================================
+   Focus Visible (키보드 접근성)
+   ======================================== */
+.ticker-item:focus-visible,
+.ticker-label:focus-visible,
+.toggle-label:focus-visible,
+.modal-close:focus-visible,
+.modal-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Skip Link for Screen Readers */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: #667eea;
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 1001;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
