@@ -5,7 +5,6 @@ import MultiLayerTicker from './components/MultiLayerTicker';
 import BannerAd from './components/BannerAd';
 import { useSummaries } from './hooks/useSummaries';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from './data/headlines';
-import { IS_DEMO_MODE } from './config/api';
 
 function App() {
   // API에서 요약 데이터 가져오기
@@ -107,10 +106,10 @@ function App() {
         </div>
       )}
 
-      {/* 데모 모드 또는 에러 시 안내 배너 */}
-      {(IS_DEMO_MODE || error) && (
-        <div className="demo-bar">
-          <span>📰 데모 모드 - 샘플 데이터로 미리보기 중</span>
+      {/* 에러 시 안내 배너 */}
+      {error && (
+        <div className="error-bar">
+          <span>⚠️ 서버 연결 실패 - 오프라인 데이터 표시 중</span>
         </div>
       )}
 
