@@ -11,9 +11,16 @@ const isLocalhost = typeof window !== 'undefined' &&
 const PRODUCTION_API_URL = 'https://mynewsback.onrender.com/api';
 const LOCAL_API_URL = 'http://localhost:3001/api';
 
+// OAuth URL (/api 없이)
+const PRODUCTION_AUTH_URL = 'https://mynewsback.onrender.com';
+const LOCAL_AUTH_URL = 'http://localhost:3001';
+
 // API URL 설정 (우선순위: 환경변수 > 자동 감지)
 export const API_BASE_URL = import.meta.env.VITE_API_URL ||
   (isLocalhost ? LOCAL_API_URL : PRODUCTION_API_URL);
+
+// OAuth URL (소셜 로그인용)
+export const AUTH_BASE_URL = isLocalhost ? LOCAL_AUTH_URL : PRODUCTION_AUTH_URL;
 
 // 데모 모드
 export const IS_DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true';
@@ -27,6 +34,7 @@ export const ENV_INFO = {
 
 export default {
   API_BASE_URL,
+  AUTH_BASE_URL,
   IS_DEMO_MODE,
   ENV_INFO,
 };

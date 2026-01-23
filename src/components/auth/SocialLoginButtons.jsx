@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { API_BASE_URL } from '../../config/api';
+import { AUTH_BASE_URL } from '../../config/api';
 
 const socialProviders = [
   {
@@ -64,7 +64,7 @@ export default function SocialLoginButtons() {
 
   const handleSocialLogin = (providerId) => {
     // OAuth 로그인 시작 - 백엔드로 리다이렉트
-    window.location.href = `${API_BASE_URL}/auth/${providerId}`;
+    window.location.href = `${AUTH_BASE_URL}/auth/${providerId}`;
   };
 
   if (loading) {
