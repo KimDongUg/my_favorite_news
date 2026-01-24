@@ -17,7 +17,8 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const processCallback = async () => {
-      const token = searchParams.get('token');
+      // 백엔드에서 accessToken과 refreshToken을 쿼리 파라미터로 전달
+      const token = searchParams.get('accessToken') || searchParams.get('token');
       const refreshToken = searchParams.get('refreshToken');
       const errorParam = searchParams.get('error');
 
