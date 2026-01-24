@@ -698,8 +698,6 @@
     gap: 1rem;
     /* 모바일에서도 GPU 가속 강제 적용 */
     will-change: transform !important;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
     /* CSS 애니메이션 강제 활성화 */
@@ -787,8 +785,8 @@
   /* 모바일에서도 애니메이션 활성화 */
   .ticker-content {
     /* GPU 가속 유지 */
-    -webkit-transform: translate3d(0, 0, 0) !important;
-    transform: translate3d(0, 0, 0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
     /* CSS 애니메이션 강제 실행 */
     animation: ticker-scroll 20s linear infinite !important;
     -webkit-animation: ticker-scroll 20s linear infinite !important;
