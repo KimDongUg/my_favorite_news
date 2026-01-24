@@ -46,13 +46,30 @@ const TickerLayer = memo(function TickerLayer({
 
   // JavaScript 기반 애니메이션 (모바일 호환)
   useEffect(() => {
-    if (!isVisible || !contentRef.current) return;
+    console.log(`[TickerLayer ${category}] 애니메이션 시작:`, {
+      isVisible,
+      contentRef: !!contentRef.current,
+      itemCount: duplicatedItems.length
+    });
+
+    if (!isVisible || !contentRef.current) {
+      console.log(`[TickerLayer ${category}] 애니메이션 중단: visible=${isVisible}, ref=${!!contentRef.current}`);
+      return;
+    }
 
     const content = contentRef.current;
     // reduced motion이면 속도를 1/3로 줄임
     const adjustedSpeed = prefersReducedMotion ? speed * 3 : speed;
     const pixelsPerSecond = 100 / adjustedSpeed * 70; // 속도 증가 (50 → 70)
     let lastTime = performance.now();
+    let frameCount = 0;
+
+    console.log(`[TickerLayer ${category}] 애니메이션 설정:`, {
+      speed,
+      adjustedSpeed,
+      pixelsPerSecond,
+      contentWidth: content.scrollWidth
+    });
 
     const animate = (currentTime) => {
       if (isPaused) {
@@ -75,17 +92,28 @@ const TickerLayer = memo(function TickerLayer({
       // transform3d 사용하여 GPU 가속
       content.style.transform = `translate3d(${positionRef.current}px, 0, 0)`;
 
+      // 첫 100프레임만 로그
+      if (frameCount < 100 && frameCount % 30 === 0) {
+        console.log(`[TickerLayer ${category}] 애니메이션 진행:`, {
+          frame: frameCount,
+          position: positionRef.current,
+          contentWidth
+        });
+      }
+      frameCount++;
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
+      console.log(`[TickerLayer ${category}] 애니메이션 정리`);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isVisible, speed, isPaused, prefersReducedMotion]);
+  }, [isVisible, speed, isPaused, prefersReducedMotion, category, duplicatedItems.length]);
 
   if (!isVisible) return null;
 

@@ -2,6 +2,16 @@
    Multi Layer Ticker - Complete Styles
    ======================================== */
 
+/* CSS 애니메이션 키프레임 */
+@keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .multi-layer-ticker {
   width: 100%;
   padding: 1rem 0;
@@ -220,6 +230,9 @@
   backface-visibility: hidden;
   /* 터치 스크롤과 충돌 방지 */
   touch-action: pan-y;
+  /* CSS 애니메이션 백업 (JS 실패 시) */
+  animation: ticker-scroll 30s linear infinite;
+  -webkit-animation: ticker-scroll 30s linear infinite;
 }
 
 /* JS 애니메이션용 클래스 */
@@ -693,6 +706,9 @@
     transform: translate3d(0, 0, 0) !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
+    /* CSS 애니메이션 강제 활성화 */
+    animation: ticker-scroll 25s linear infinite !important;
+    -webkit-animation: ticker-scroll 25s linear infinite !important;
   }
 
   .ticker-item:hover {
@@ -772,11 +788,14 @@
    Touch Device Optimization
    ======================================== */
 @media (hover: none) and (pointer: coarse) {
-  /* 모바일에서도 애니메이션 활성화 - JS가 처리함 */
+  /* 모바일에서도 애니메이션 활성화 */
   .ticker-content {
     /* GPU 가속 유지 */
     -webkit-transform: translate3d(0, 0, 0) !important;
     transform: translate3d(0, 0, 0) !important;
+    /* CSS 애니메이션 강제 실행 */
+    animation: ticker-scroll 20s linear infinite !important;
+    -webkit-animation: ticker-scroll 20s linear infinite !important;
   }
 
   .ticker-item:hover,
