@@ -18,8 +18,11 @@ export default function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-logo">
-            <span className="logo-icon">📰</span>
-            <span className="logo-text">MyNews</span>
+            <div className="auth-logo-icon">
+              <span className="logo-globe">🌏</span>
+              <span className="logo-heart">💜</span>
+            </div>
+            <div className="auth-logo-text">내가 좋아하는 세상 정보</div>
           </div>
           <h1>환영합니다</h1>
           <p>나만의 정보 대시보드에 로그인하세요</p>
