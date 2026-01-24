@@ -212,16 +212,30 @@
   gap: 1.5rem;
   width: max-content;
   padding: 0 1rem;
-  /* GPU 가속 */
+  /* GPU 가속 - 모바일 포함 */
   will-change: transform;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  perspective: 1000px;
+  /* 애니메이션 - 모바일 Safari 지원 */
+  -webkit-animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
   animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
+  /* 터치 스크롤과 충돌 방지 */
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: auto;
+}
+
+/* Safari/iOS용 키프레임 */
+@-webkit-keyframes ticker-scroll {
+  0% { -webkit-transform: translateX(0) translateZ(0); transform: translateX(0) translateZ(0); }
+  100% { -webkit-transform: translateX(-33.333%) translateZ(0); transform: translateX(-33.333%) translateZ(0); }
 }
 
 @keyframes ticker-scroll {
-  0% { transform: translateX(0) translateZ(0); }
-  100% { transform: translateX(-33.333%) translateZ(0); }
+  0% { -webkit-transform: translateX(0) translateZ(0); transform: translateX(0) translateZ(0); }
+  100% { -webkit-transform: translateX(-33.333%) translateZ(0); transform: translateX(-33.333%) translateZ(0); }
 }
 
 /* 호버 시 해당 레이어만 일시정지 */
@@ -685,6 +699,11 @@
 
   .ticker-content {
     gap: 1rem;
+    /* 모바일에서도 애니메이션 유지 */
+    -webkit-animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
+    animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   .ticker-item:hover {
@@ -751,6 +770,9 @@
 
   .ticker-content {
     gap: 0.75rem;
+    /* 소형 모바일에서도 애니메이션 유지 */
+    -webkit-animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
+    animation: ticker-scroll var(--animation-duration, 40s) linear infinite;
   }
 
   .ticker-track::before,
@@ -763,7 +785,16 @@
    Touch Device Optimization
    ======================================== */
 @media (hover: none) and (pointer: coarse) {
+  /* 터치 디바이스에서 애니메이션 강제 실행 */
+  .ticker-content {
+    -webkit-animation: ticker-scroll var(--animation-duration, 40s) linear infinite !important;
+    animation: ticker-scroll var(--animation-duration, 40s) linear infinite !important;
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
+  }
+
   .ticker-item:hover {
+    -webkit-transform: none;
     transform: none;
     box-shadow:
       0 2px 8px rgba(0, 0, 0, 0.08),
@@ -780,7 +811,9 @@
     );
   }
 
+  /* 탭하면 일시정지, 떼면 재생 */
   .ticker-layer:active .ticker-content {
+    -webkit-animation-play-state: paused;
     animation-play-state: paused;
   }
 
@@ -791,18 +824,22 @@
 
 /* ========================================
    Reduced Motion (접근성)
+   사용자가 명시적으로 설정한 경우만 적용
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
+  /* 티커 애니메이션은 유지하되 속도를 느리게 */
   .ticker-content {
-    animation: none !important;
+    -webkit-animation-duration: 120s !important;
+    animation-duration: 120s !important;
   }
 
+  /* 다른 전환 효과만 비활성화 */
   .ticker-item,
   .ticker-layer,
   .modal-content,
   .modal-backdrop {
+    -webkit-transition: none !important;
     transition: none !important;
-    animation: none !important;
   }
 }
 
