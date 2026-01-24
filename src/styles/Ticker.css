@@ -687,6 +687,12 @@
 
   .ticker-content {
     gap: 1rem;
+    /* 모바일에서도 GPU 가속 강제 적용 */
+    will-change: transform !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
   }
 
   .ticker-item:hover {
@@ -766,10 +772,11 @@
    Touch Device Optimization
    ======================================== */
 @media (hover: none) and (pointer: coarse) {
-  /* JS 애니메이션 사용 - CSS 애니메이션 비활성화 */
+  /* 모바일에서도 애니메이션 활성화 - JS가 처리함 */
   .ticker-content {
-    -webkit-animation: none !important;
-    animation: none !important;
+    /* GPU 가속 유지 */
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 
   .ticker-item:hover,

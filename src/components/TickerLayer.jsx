@@ -51,7 +51,7 @@ const TickerLayer = memo(function TickerLayer({
     const content = contentRef.current;
     // reduced motion이면 속도를 1/3로 줄임
     const adjustedSpeed = prefersReducedMotion ? speed * 3 : speed;
-    const pixelsPerSecond = 100 / adjustedSpeed * 50; // 속도 조절
+    const pixelsPerSecond = 100 / adjustedSpeed * 70; // 속도 증가 (50 → 70)
     let lastTime = performance.now();
 
     const animate = (currentTime) => {
@@ -68,7 +68,7 @@ const TickerLayer = memo(function TickerLayer({
 
       // 컨텐츠 너비의 1/5 이동하면 리셋 (5배 복제했으므로)
       const contentWidth = content.scrollWidth / 5;
-      if (Math.abs(positionRef.current) >= contentWidth) {
+      if (contentWidth > 0 && Math.abs(positionRef.current) >= contentWidth) {
         positionRef.current = 0;
       }
 
@@ -100,9 +100,7 @@ const TickerLayer = memo(function TickerLayer({
     }
   };
 
-  // 터치/마우스 이벤트로 일시정지
-  const handleTouchStart = () => setIsPaused(true);
-  const handleTouchEnd = () => setIsPaused(false);
+  // 마우스 호버만 일시정지 (터치는 제외)
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
 
@@ -129,8 +127,6 @@ const TickerLayer = memo(function TickerLayer({
       <div
         className="ticker-track"
         aria-live="off"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
       >
         <div
           className="ticker-content ticker-content-js"
