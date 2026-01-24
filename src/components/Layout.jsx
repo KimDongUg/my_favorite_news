@@ -16,7 +16,7 @@ function Layout({ children, categoryCount = 5 }) {
               <div>
                 <h1 style={{ color: "white" }}>내가 좋아하는 세상 정보</h1>
                 <p style={{ color: "#d1d5db" }}>
-                  실시간으로 만나는 맞춤형 뉴스
+                  실시간으로 만나는 맞춤형 뉴스(Beta)
                 </p>
               </div>
             </div>
