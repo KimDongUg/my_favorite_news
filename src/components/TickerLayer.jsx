@@ -13,8 +13,6 @@ const TickerLayer = memo(function TickerLayer({
   onLayerClick,
 }) {
   const contentRef = useRef(null);
-  const animationRef = useRef(null);
-  const positionRef = useRef(0);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -44,75 +42,30 @@ const TickerLayer = memo(function TickerLayer({
     [color]
   );
 
-  // JavaScript 기반 애니메이션 (모바일 호환)
+  // CSS 애니메이션만 사용 - JavaScript 비활성화
+  // useEffect는 hover 제어에만 사용
   useEffect(() => {
-    console.log(`[TickerLayer ${category}] 애니메이션 시작:`, {
-      isVisible,
-      contentRef: !!contentRef.current,
-      itemCount: duplicatedItems.length
-    });
-
-    if (!isVisible || !contentRef.current) {
-      console.log(`[TickerLayer ${category}] 애니메이션 중단: visible=${isVisible}, ref=${!!contentRef.current}`);
-      return;
-    }
-
+    if (!contentRef.current) return;
+    
     const content = contentRef.current;
-    // reduced motion이면 속도를 1/3로 줄임
-    const adjustedSpeed = prefersReducedMotion ? speed * 3 : speed;
-    const pixelsPerSecond = 100 / adjustedSpeed * 70; // 속도 증가 (50 → 70)
-    let lastTime = performance.now();
-    let frameCount = 0;
-
-    console.log(`[TickerLayer ${category}] 애니메이션 설정:`, {
-      speed,
-      adjustedSpeed,
-      pixelsPerSecond,
-      contentWidth: content.scrollWidth
+    
+    // CSS 변수로 속도 조절
+    const duration = prefersReducedMotion ? speed * 3 : speed;
+    content.style.animationDuration = `${duration}s`;
+    
+    console.log(`[TickerLayer ${category}] CSS 애니메이션 설정:`, {
+      duration: `${duration}s`,
+      itemCount: duplicatedItems.length,
+      isPaused
     });
-
-    const animate = (currentTime) => {
-      if (isPaused) {
-        lastTime = currentTime;
-        animationRef.current = requestAnimationFrame(animate);
-        return;
-      }
-
-      const deltaTime = (currentTime - lastTime) / 1000;
-      lastTime = currentTime;
-
-      positionRef.current -= pixelsPerSecond * deltaTime;
-
-      // 컨텐츠 너비의 1/5 이동하면 리셋 (5배 복제했으므로)
-      const contentWidth = content.scrollWidth / 5;
-      if (contentWidth > 0 && Math.abs(positionRef.current) >= contentWidth) {
-        positionRef.current = 0;
-      }
-
-      // transform3d 사용하여 GPU 가속
-      content.style.transform = `translate3d(${positionRef.current}px, 0, 0)`;
-
-      // 첫 100프레임만 로그
-      if (frameCount < 100 && frameCount % 30 === 0) {
-        console.log(`[TickerLayer ${category}] 애니메이션 진행:`, {
-          frame: frameCount,
-          position: positionRef.current,
-          contentWidth
-        });
-      }
-      frameCount++;
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      console.log(`[TickerLayer ${category}] 애니메이션 정리`);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
+    
+    // hover 시 일시정지
+    if (isPaused) {
+      content.style.animationPlayState = 'paused';
+    } else {
+      content.style.animationPlayState = 'running';
+    }
+    
   }, [isVisible, speed, isPaused, prefersReducedMotion, category, duplicatedItems.length]);
 
   if (!isVisible) return null;
@@ -159,10 +112,6 @@ const TickerLayer = memo(function TickerLayer({
         <div
           className="ticker-content ticker-content-js"
           ref={contentRef}
-          style={{
-            willChange: 'transform',
-            transform: 'translate3d(0, 0, 0)',
-          }}
         >
           {duplicatedItems.map((item, index) => (
             <TickerItem

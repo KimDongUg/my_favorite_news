@@ -216,7 +216,7 @@
   border-bottom: none;
 }
 
-/* 레이어별 개별 애니메이션 - JavaScript 기반 */
+/* 레이어별 개별 애니메이션 - CSS 기반 */
 .ticker-content {
   display: flex;
   gap: 1.5rem;
@@ -224,22 +224,18 @@
   padding: 0 1rem;
   /* GPU 가속 - 모바일 포함 */
   will-change: transform;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   /* 터치 스크롤과 충돌 방지 */
   touch-action: pan-y;
-  /* CSS 애니메이션 백업 (JS 실패 시) */
+  /* CSS 애니메이션 - 기본 30초 */
   animation: ticker-scroll 30s linear infinite;
   -webkit-animation: ticker-scroll 30s linear infinite;
 }
 
-/* JS 애니메이션용 클래스 */
+/* JS로 제어하기 위한 클래스 */
 .ticker-content-js {
-  /* CSS 애니메이션 비활성화 - JS가 처리 */
-  -webkit-animation: none !important;
-  animation: none !important;
+  /* animation-duration은 JavaScript에서 동적 설정 */
 }
 
 /* 호버 시 일시정지는 JS에서 처리 */
