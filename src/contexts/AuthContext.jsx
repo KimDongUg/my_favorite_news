@@ -249,7 +249,8 @@ export function AuthProvider({ children }) {
   const getAvailableProviders = useCallback(async () => {
     try {
       const data = await authFetch('/auth/providers/available');
-      return data.providers || [];
+      // API 응답 구조: { success: true, data: { providers: [...] } }
+      return data.data?.providers || data.providers || [];
     } catch (err) {
       console.error('Failed to get providers:', err);
       return [];
