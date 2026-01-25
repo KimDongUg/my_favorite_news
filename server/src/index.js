@@ -9,6 +9,7 @@ import summaryRoutes from './routes/summaryRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import complianceRoutes from './routes/complianceRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import feedbackRoutes from './routes/feedbackRoutes.js';
 
 // 크롤러 & 요약
 import { loadFromFile, getCrawledData } from './crawlers/crawlerManager.js';
@@ -26,6 +27,7 @@ import { initializePassport } from './auth/passport.js';
 import * as tokenService from './auth/tokenService.js';
 import * as User from './models/User.js';
 import { createAuthTables } from './db/authSchema.js';
+import { createFeedbackTables } from './db/feedbackSchema.js';
 import { initEmailService } from './services/emailService.js';
 
 // 미들웨어
@@ -116,6 +118,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/summary', applyCopyrightSafety, summaryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/compliance', complianceRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // 헬스 체크
 app.get('/api/health', (req, res) => {
@@ -289,6 +292,11 @@ async function startServer() {
     // 2. 인증 테이블 생성 및 서비스 초기화
     console.log('[Server] 인증 시스템 초기화...');
     await createAuthTables();
+
+    // 3. 게시판 테이블 생성
+    console.log('[Server] 게시판 테이블 초기화...');
+    await createFeedbackTables();
+
     // PostgreSQL은 database.js의 query 함수를 사용하므로 setDatabase는 호환성 유지용
     tokenService.setDatabase(null);
     User.setDatabase(null);

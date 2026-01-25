@@ -11,6 +11,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import Feedback from './pages/Feedback.jsx'
 import FeedbackPost from './pages/FeedbackPost.jsx'
 import FeedbackWrite from './pages/FeedbackWrite.jsx'
+import AllNews from './pages/AllNews.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
@@ -22,6 +23,7 @@ import './styles/Settings.css'
 import './styles/Monitoring.css'
 import './styles/Auth.css'
 import './styles/Legal.css'
+import './styles/AllNews.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -32,6 +34,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/settings" element={<CategorySettings />} />
           <Route path="/monitoring" element={<ComplianceMonitoring />} />
+          <Route path="/news" element={<AllNews />} />
 
           {/* 법적 문서 페이지 */}
           <Route path="/copyright" element={<CopyrightPolicy />} />

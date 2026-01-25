@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import Layout from './components/Layout';
 import HeadlineRotator from './components/HeadlineRotator';
 import MultiLayerTicker from './components/MultiLayerTicker';
@@ -26,16 +26,42 @@ function App() {
     return Object.keys(fallbackHeadlines);
   }, [summaries]);
 
-  // localStorage에서 선택된 카테고리 로드
-  const selectedCategories = useMemo(() => {
+  // 선택된 카테고리를 상태로 관리 (순서 포함)
+  const [selectedCategories, setSelectedCategories] = useState(() => {
     const saved = localStorage.getItem('selectedCategories');
     if (saved) {
-      const parsed = JSON.parse(saved);
-      // API 카테고리와 일치하는 것만 필터링
-      return parsed.filter((cat) => allCategories.includes(cat));
+      return JSON.parse(saved);
     }
-    // 기본값: 처음 5개 카테고리
     return allCategories.slice(0, 5);
+  });
+
+  // allCategories가 로드되면 selectedCategories 유효성 검사
+  useEffect(() => {
+    if (allCategories.length > 0) {
+      setSelectedCategories((prev) => {
+        const validCategories = prev.filter((cat) => allCategories.includes(cat));
+        if (validCategories.length === 0) {
+          return allCategories.slice(0, 5);
+        }
+        return validCategories;
+      });
+    }
+  }, [allCategories]);
+
+  // 카테고리 업데이트 이벤트 리스너
+  useEffect(() => {
+    const handleCategoriesUpdate = () => {
+      const saved = localStorage.getItem('selectedCategories');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setSelectedCategories(parsed.filter((cat) => allCategories.includes(cat)));
+      }
+    };
+
+    window.addEventListener('categoriesUpdated', handleCategoriesUpdate);
+    return () => {
+      window.removeEventListener('categoriesUpdated', handleCategoriesUpdate);
+    };
   }, [allCategories]);
 
   // 상태 관리
@@ -127,6 +153,7 @@ function App() {
         onSpeedChange={handleSpeedChange}
         headlines={headlines}
         isRefreshing={isRefreshing}
+        categoryOrder={selectedCategories}
       />
 
       {/* 배너 광고 */}

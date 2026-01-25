@@ -1,4 +1,5 @@
 import { memo, useMemo, useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TickerItem from './TickerItem';
 
 const TickerLayer = memo(function TickerLayer({
@@ -12,9 +13,11 @@ const TickerLayer = memo(function TickerLayer({
   onItemClick,
   onLayerClick,
 }) {
+  const navigate = useNavigate();
   const contentRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // prefers-reduced-motion 감지
   useEffect(() => {
@@ -71,14 +74,24 @@ const TickerLayer = memo(function TickerLayer({
   if (!isVisible) return null;
 
   const handleLabelClick = () => {
+    // 전체 뉴스 페이지로 이동
+    navigate(`/news?category=${encodeURIComponent(category)}`);
     onLayerClick?.(category);
   };
 
   const handleLabelKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      onLayerClick?.(category);
+      handleLabelClick();
     }
+  };
+
+  const handleLabelMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleLabelMouseLeave = () => {
+    setShowTooltip(false);
   };
 
   // 마우스 호버만 일시정지 (터치는 제외)
@@ -98,12 +111,19 @@ const TickerLayer = memo(function TickerLayer({
         className="ticker-label"
         onClick={handleLabelClick}
         onKeyDown={handleLabelKeyDown}
+        onMouseEnter={handleLabelMouseEnter}
+        onMouseLeave={handleLabelMouseLeave}
         tabIndex={0}
         role="button"
-        aria-label={`${category} 카테고리로 이동`}
+        aria-label={`${category} 전체 뉴스 보기`}
       >
         <span className="ticker-icon" aria-hidden="true">{icon}</span>
         <span className="ticker-category">{category}</span>
+        {showTooltip && (
+          <div className="ticker-tooltip">
+            클릭하시면 전체 정보를 볼 수 있습니다
+          </div>
+        )}
       </div>
       <div
         className="ticker-track"

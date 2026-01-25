@@ -9,10 +9,23 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
   onSpeedChange,
   headlines: propHeadlines,
   isRefreshing = false,
+  categoryOrder = [],
 }) {
   // props로 받은 headlines 사용, 없으면 fallback
   const headlines = propHeadlines || fallbackHeadlines;
-  const categories = useMemo(() => Object.keys(headlines), [headlines]);
+
+  // categoryOrder가 있으면 그 순서대로, 없으면 기본 순서
+  const categories = useMemo(() => {
+    const allCats = Object.keys(headlines);
+    if (categoryOrder.length > 0) {
+      // categoryOrder 순서대로 정렬하고, 나머지는 뒤에 추가
+      const ordered = categoryOrder.filter((cat) => allCats.includes(cat));
+      const remaining = allCats.filter((cat) => !categoryOrder.includes(cat));
+      return [...ordered, ...remaining];
+    }
+    return allCats;
+  }, [headlines, categoryOrder]);
+
   const baseSpeeds = useMemo(() => [40, 35, 38, 42, 37, 39, 36, 41, 34, 43], []);
 
   const [selectedItem, setSelectedItem] = useState(null);
