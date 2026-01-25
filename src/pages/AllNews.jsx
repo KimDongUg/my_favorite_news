@@ -87,8 +87,8 @@ function AllNews() {
     <div className="all-news-page">
       <header className="all-news-header">
         <Link to="/" className="back-link">← 홈으로</Link>
-        <h1>전체 뉴스 보기</h1>
-        <p className="header-desc">크롤링된 모든 뉴스를 확인하세요</p>
+        <h1>전체 정보 보기</h1>
+        <p className="header-desc">크롤링된 모든 정보를 확인하세요</p>
       </header>
 
       <div className="all-news-content">

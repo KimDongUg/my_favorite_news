@@ -55,6 +55,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .logo-icon {
@@ -146,6 +147,12 @@ body {
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.header-login {
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .header-actions-row {
@@ -593,6 +600,13 @@ body {
   .header-user {
     position: static;
     transform: none;
+  }
+
+  .header-login {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    padding-left: 0;
+    border-left: none;
   }
 
   .header-actions-row {

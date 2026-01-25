@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import UserMenu from "./auth/UserMenu";
+import { useAuth } from "../contexts/AuthContext";
 
 function Layout({ children, categoryCount = 5 }) {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="layout">
       <header className="header">
@@ -19,13 +22,13 @@ function Layout({ children, categoryCount = 5 }) {
                   실시간으로 만나는 맞춤형 뉴스
                 </p>
               </div>
-            </div>
-            <div className="header-user">
-              <UserMenu />
+              <div className="header-login">
+                <UserMenu />
+              </div>
             </div>
           </div>
           <div className="header-actions-row">
-            <Link to="/settings" className="header-btn settings-btn">
+            <Link to={isAuthenticated ? "/settings" : "/login"} className="header-btn settings-btn">
               <span className="btn-icon">⚙️</span>
               <span className="btn-text">좋아하는 정보 설정하기 ({categoryCount})</span>
             </Link>
