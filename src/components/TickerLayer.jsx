@@ -55,13 +55,7 @@ const TickerLayer = memo(function TickerLayer({
     // CSS 변수로 속도 조절
     const duration = prefersReducedMotion ? speed * 3 : speed;
     content.style.animationDuration = `${duration}s`;
-    
-    console.log(`[TickerLayer ${category}] CSS 애니메이션 설정:`, {
-      duration: `${duration}s`,
-      itemCount: duplicatedItems.length,
-      isPaused
-    });
-    
+
     // hover 시 일시정지
     if (isPaused) {
       content.style.animationPlayState = 'paused';
