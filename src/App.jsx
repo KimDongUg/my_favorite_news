@@ -170,7 +170,11 @@ function App() {
   }, [summaries, newsData]);
 
   return (
-    <Layout categoryCount={selectedCategories.length}>
+    <Layout
+      categoryCount={selectedCategories.length}
+      speedMultiplier={speedMultiplier}
+      onSpeedChange={handleSpeedChange}
+    >
       {/* 로딩/에러 상태 표시 */}
       {loading && !isRefreshing && (
         <div className="loading-bar">

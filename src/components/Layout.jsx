@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const ADMIN_EMAILS = ['kduaro124@naver.com'];
 
-function Layout({ children, categoryCount = 5 }) {
+function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChange }) {
   const { isAuthenticated, user } = useAuth();
   const isAdmin = isAuthenticated && user?.email && ADMIN_EMAILS.includes(user.email);
 
@@ -39,6 +39,22 @@ function Layout({ children, categoryCount = 5 }) {
               <span className="btn-icon">💬</span>
               <span className="btn-text">고객 의견 게시판</span>
             </Link>
+            {onSpeedChange && (
+              <div className="header-speed-control">
+                <span className="speed-label">🎚️ 속도</span>
+                <input
+                  type="range"
+                  min="0.3"
+                  max="3"
+                  step="0.1"
+                  value={speedMultiplier}
+                  onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
+                  className="header-speed-slider"
+                  aria-label="스크롤 속도 조절"
+                />
+                <span className="speed-value">{speedMultiplier.toFixed(1)}x</span>
+              </div>
+            )}
           </div>
         </div>
       </header>

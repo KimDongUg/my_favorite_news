@@ -49,20 +49,11 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
 
   return (
     <div className="multi-layer-ticker">
-      <div className="mini-speed-control ticker-speed">
-        {isRefreshing && <span className="refresh-indicator">🔄</span>}
-        <input
-          type="range"
-          min="0.3"
-          max="3"
-          step="0.1"
-          value={speedMultiplier}
-          onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
-          className="mini-speed-slider"
-          aria-label="스크롤 속도"
-        />
-        <span className="mini-speed-label">{speedMultiplier.toFixed(1)}x</span>
-      </div>
+      {isRefreshing && (
+        <div className="refresh-indicator-bar">
+          <span className="refresh-indicator">🔄 새로고침 중...</span>
+        </div>
+      )}
       <div
         className="ticker-container"
         role="feed"
