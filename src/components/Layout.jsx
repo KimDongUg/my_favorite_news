@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import UserMenu from "./auth/UserMenu";
 import { useAuth } from "../contexts/AuthContext";
 
+const ADMIN_EMAILS = ['kduaro124@naver.com'];
+
 function Layout({ children, categoryCount = 5 }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const isAdmin = isAuthenticated && user?.email && ADMIN_EMAILS.includes(user.email);
 
   return (
     <div className="layout">
@@ -49,6 +52,12 @@ function Layout({ children, categoryCount = 5 }) {
           <Link to="/terms">이용약관</Link>
           <span className="footer-divider">|</span>
           <Link to="/privacy">개인정보처리방침</Link>
+          {isAdmin && (
+            <>
+              <span className="footer-divider">|</span>
+              <Link to="/admin" className="admin-link">관리자</Link>
+            </>
+          )}
         </div>
         <p className="footer-copyright">
           &copy; 2026 내가 좋아하는 세상 정보. All rights reserved.

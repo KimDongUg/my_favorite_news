@@ -17,6 +17,7 @@ import Signup from './pages/Signup.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
 import AuthCallback from './pages/AuthCallback.jsx'
 import MagicLinkVerify from './pages/MagicLinkVerify.jsx'
+import Admin from './pages/Admin.jsx'
 import './styles/App.css'
 import './styles/Ticker.css'
 import './styles/Settings.css'
@@ -24,6 +25,7 @@ import './styles/Monitoring.css'
 import './styles/Auth.css'
 import './styles/Legal.css'
 import './styles/AllNews.css'
+import './styles/Admin.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -44,6 +46,9 @@ createRoot(document.getElementById('root')).render(
           <Route path="/feedback/write" element={<FeedbackWrite />} />
           <Route path="/feedback/edit/:id" element={<FeedbackWrite />} />
           <Route path="/feedback/:id" element={<FeedbackPost />} />
+
+          {/* 관리자 페이지 */}
+          <Route path="/admin" element={<Admin />} />
 
           {/* 인증 페이지 */}
           <Route path="/login" element={<Login />} />

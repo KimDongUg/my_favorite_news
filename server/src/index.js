@@ -65,14 +65,6 @@ app.use(addSecurityHeaders);
 
 // CORS 설정
 const allowedOrigins = [
-  // 로컬 개발
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:5175',
-  'http://localhost:5176',
-  'http://localhost:5177',
-  'http://localhost:5178',
-  'http://localhost:3000',
   // 프로덕션
   'https://myfavoritenews.vercel.app',
   // 환경변수 추가 도메인
@@ -83,6 +75,11 @@ app.use(cors({
   origin: (origin, callback) => {
     // origin이 없는 경우 (같은 origin 또는 서버 요청) 허용
     if (!origin) return callback(null, true);
+
+    // localhost 개발 환경은 모두 허용
+    if (origin.startsWith('http://localhost:')) {
+      return callback(null, true);
+    }
 
     if (allowedOrigins.includes(origin)) {
       callback(null, true);

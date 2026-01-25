@@ -1115,6 +1115,77 @@ router.delete('/providers/:provider', authenticate, async (req, res) => {
 // 헬퍼 함수
 // ============================================
 
+// ============================================
+// 관리자 전용 API
+// ============================================
+
+// 관리자 이메일 목록
+const ADMIN_EMAILS = ['kduaro124@naver.com'];
+
+/**
+ * 관리자 권한 확인 미들웨어
+ */
+function requireAdmin(req, res, next) {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: '로그인이 필요합니다.',
+      code: 'UNAUTHORIZED'
+    });
+  }
+
+  if (!ADMIN_EMAILS.includes(req.user.email)) {
+    return res.status(403).json({
+      success: false,
+      error: '관리자 권한이 필요합니다.',
+      code: 'FORBIDDEN'
+    });
+  }
+
+  next();
+}
+
+/**
+ * GET /auth/admin/users
+ * 모든 사용자와 설정 조회 (관리자 전용)
+ */
+router.get('/admin/users', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const usersWithPreferences = await User.getAllUsersWithPreferences();
+
+    res.json({
+      success: true,
+      data: {
+        users: usersWithPreferences,
+        total: usersWithPreferences.length
+      }
+    });
+  } catch (error) {
+    console.error('[Admin] 사용자 목록 조회 오류:', error);
+    res.status(500).json({
+      success: false,
+      error: '사용자 목록 조회 중 오류가 발생했습니다.'
+    });
+  }
+});
+
+/**
+ * GET /auth/admin/check
+ * 관리자 권한 확인
+ */
+router.get('/admin/check', authenticate, (req, res) => {
+  const isAdmin = ADMIN_EMAILS.includes(req.user.email);
+
+  res.json({
+    success: true,
+    data: { isAdmin }
+  });
+});
+
+// ============================================
+// 헬퍼 함수
+// ============================================
+
 /**
  * 비밀번호 유효성 검사
  */

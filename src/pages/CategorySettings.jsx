@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { headlines, categoryColors, categoryIcons } from '../data/headlines';
+import { useAuth } from '../contexts/AuthContext';
 
 const allCategories = Object.keys(headlines);
 
 function CategorySettings() {
   const navigate = useNavigate();
+  const { isAuthenticated, authFetch } = useAuth();
+  const [saving, setSaving] = useState(false);
 
   // 선택된 카테고리 (클릭 순서대로 저장)
   const [selectedCategories, setSelectedCategories] = useState(() => {
@@ -38,9 +41,30 @@ function CategorySettings() {
   };
 
   // 저장
-  const handleSave = () => {
+  const handleSave = async () => {
+    setSaving(true);
+
+    // localStorage에 저장 (비로그인 사용자도 사용)
     localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
     window.dispatchEvent(new Event('categoriesUpdated'));
+
+    // 로그인 사용자는 DB에도 저장
+    if (isAuthenticated) {
+      try {
+        await authFetch('/auth/preferences', {
+          method: 'PUT',
+          body: JSON.stringify({
+            preferredCategories: selectedCategories
+          }),
+        });
+        console.log('[Settings] 사용자 설정이 서버에 저장되었습니다.');
+      } catch (error) {
+        console.error('[Settings] 서버 저장 실패:', error);
+        // 실패해도 localStorage에는 저장되었으므로 계속 진행
+      }
+    }
+
+    setSaving(false);
     navigate('/');
   };
 
@@ -97,11 +121,11 @@ function CategorySettings() {
         </div>
 
         <div className="settings-actions">
-          <button onClick={() => navigate('/')} className="cancel-btn">
+          <button onClick={() => navigate('/')} className="cancel-btn" disabled={saving}>
             취소
           </button>
-          <button onClick={handleSave} className="save-btn">
-            저장하기
+          <button onClick={handleSave} className="save-btn" disabled={saving}>
+            {saving ? '저장 중...' : '저장하기'}
           </button>
         </div>
       </div>

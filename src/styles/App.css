@@ -260,6 +260,14 @@ body {
   color: white;
 }
 
+.footer-links a.admin-link {
+  color: #ffc107;
+}
+
+.footer-links a.admin-link:hover {
+  color: #ffda47;
+}
+
 .footer-divider {
   color: #555;
   margin: 0 0.75rem;

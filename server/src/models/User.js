@@ -322,6 +322,44 @@ export function getPublicProfile(user) {
   };
 }
 
+/**
+ * 모든 사용자와 설정 조회 (관리자용)
+ */
+export async function getAllUsersWithPreferences() {
+  const result = await query(`
+    SELECT
+      u.id, u.email, u.username, u.display_name, u.avatar_url,
+      u.email_verified, u.created_at, u.last_login_at, u.role,
+      p.preferred_categories, p.theme, p.language, p.notification_enabled,
+      p.updated_at as preferences_updated_at
+    FROM users u
+    LEFT JOIN user_preferences p ON u.id = p.user_id
+    WHERE u.is_active = TRUE
+    ORDER BY p.updated_at DESC NULLS LAST, u.created_at DESC
+  `);
+
+  return result.rows.map(row => ({
+    user: {
+      id: row.id,
+      email: row.email,
+      username: row.username,
+      displayName: row.display_name,
+      avatarUrl: row.avatar_url,
+      emailVerified: row.email_verified,
+      createdAt: row.created_at,
+      lastLoginAt: row.last_login_at,
+      role: row.role
+    },
+    preferences: {
+      preferredCategories: row.preferred_categories || [],
+      theme: row.theme,
+      language: row.language,
+      notificationEnabled: row.notification_enabled,
+      updatedAt: row.preferences_updated_at
+    }
+  }));
+}
+
 export default {
   setDatabase,
   createUser,
@@ -341,5 +379,6 @@ export default {
   createUserPreferences,
   getUserPreferences,
   updateUserPreferences,
-  getPublicProfile
+  getPublicProfile,
+  getAllUsersWithPreferences
 };
