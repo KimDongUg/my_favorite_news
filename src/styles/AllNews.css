@@ -152,6 +152,23 @@
   color: #666;
 }
 
+.view-all-btn {
+  padding: 0.75rem 1.25rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
 .refresh-btn {
   padding: 0.75rem 1.25rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -192,6 +209,12 @@
   background: #fef3c7;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+}
+
+.view-all-hint {
+  color: #667eea;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 /* Loading / Error / Empty States */
@@ -335,6 +358,11 @@
   gap: 1rem;
   font-size: 0.8rem;
   color: #888;
+}
+
+.card-source {
+  color: #667eea;
+  font-size: 0.8rem;
 }
 
 .card-link {

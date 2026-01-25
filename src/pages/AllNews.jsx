@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useSummaries } from '../hooks/useSummaries';
+import { newsAPI } from '../services/api';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from '../data/headlines';
 import '../styles/AllNews.css';
 
@@ -10,57 +10,67 @@ function AllNews() {
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
+  const [newsData, setNewsData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const { summaries, loading, error, refresh, lastUpdated } = useSummaries({
-    autoRefresh: false
-  });
+  // 뉴스 데이터 가져오기
+  const fetchNews = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await newsAPI.getAll();
+      if (response.success) {
+        setNewsData(response.data);
+      } else {
+        throw new Error('데이터를 가져올 수 없습니다');
+      }
+    } catch (err) {
+      console.error('[AllNews] 뉴스 데이터 로드 실패:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  // 모든 카테고리 목록 (API 데이터가 없으면 fallback 사용)
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  // 모든 카테고리 목록
   const allCategoryNames = Object.keys(fallbackHeadlines);
   const categories = useMemo(() => {
-    if (summaries.length > 0) {
-      const apiCategories = summaries.map(s => s.category);
+    if (newsData?.categories) {
+      const apiCategories = Object.keys(newsData.categories);
       return ['all', ...apiCategories];
     }
     return ['all', ...allCategoryNames];
-  }, [summaries, allCategoryNames]);
+  }, [newsData, allCategoryNames]);
 
-  // 필터링된 뉴스 아이템
+  // 필터링된 뉴스 아이템 (카테고리별 최대 20개)
   const filteredItems = useMemo(() => {
     let items = [];
 
-    // API 데이터가 있으면 사용
-    if (summaries.length > 0) {
-      summaries.forEach(summary => {
+    if (newsData?.categories) {
+      Object.entries(newsData.categories).forEach(([category, newsItems]) => {
         // 카테고리 필터
-        if (selectedCategory !== 'all' && summary.category !== selectedCategory) {
+        if (selectedCategory !== 'all' && category !== selectedCategory) {
           return;
         }
 
-        // 메인 요약
-        const mainItem = {
-          id: `${summary.category}-main`,
-          category: summary.category,
-          title: summary.aiTitle,
-          description: summary.aiSummary,
-          sources: summary.sources,
-          isMain: true,
-          isAI: !summary.isFallback,
-          generatedAt: summary.generatedAt
-        };
-        items.push(mainItem);
+        // 카테고리별 최대 20개
+        const limitedItems = newsItems.slice(0, 20);
 
-        // 소스 뉴스들
-        (summary.sources || []).forEach((source, idx) => {
+        limitedItems.forEach((news, idx) => {
           items.push({
-            id: `${summary.category}-source-${idx}`,
-            category: summary.category,
-            title: source.originalTitle,
-            description: `출처: ${source.name}`,
-            url: source.url,
-            publishedDate: source.publishedDate,
-            sourceName: source.name,
-            isMain: false
+            id: `${category}-${idx}`,
+            category: category,
+            title: news.originalTitle || news.title,
+            description: news.snippet || news.rawContent || news.description || '',
+            url: news.originalUrl || news.link || news.url,
+            publishedDate: news.publishedDate || news.pubDate,
+            sourceName: news.sourceName || news.source || '',
+            isMain: idx === 0
           });
         });
       });
@@ -78,7 +88,6 @@ function AllNews() {
             title: item.title,
             description: item.description,
             isMain: idx === 0,
-            isAI: false,
             isFallback: true
           });
         });
@@ -95,7 +104,7 @@ function AllNews() {
     }
 
     return items;
-  }, [summaries, selectedCategory, searchQuery]);
+  }, [newsData, selectedCategory, searchQuery]);
 
   // 날짜 포맷
   const formatDate = (dateStr) => {
@@ -115,7 +124,7 @@ function AllNews() {
       <header className="all-news-header">
         <Link to="/" className="back-link">← 홈으로</Link>
         <h1>전체 정보 보기</h1>
-        <p className="header-desc">크롤링된 모든 정보를 확인하세요</p>
+        <p className="header-desc">카테고리별 최대 20개의 정보를 확인하세요</p>
       </header>
 
       <div className="all-news-content">
@@ -156,7 +165,12 @@ function AllNews() {
             )}
           </div>
 
-          <button className="refresh-btn" onClick={refresh} disabled={loading}>
+          {selectedCategory !== 'all' && (
+            <button className="view-all-btn" onClick={() => setSelectedCategory('all')}>
+              📋 전체 보기
+            </button>
+          )}
+          <button className="refresh-btn" onClick={fetchNews} disabled={loading}>
             {loading ? '로딩 중...' : '🔄 새로고침'}
           </button>
         </div>
@@ -164,14 +178,18 @@ function AllNews() {
         {/* 통계 */}
         <div className="news-stats">
           <span className="stat-item">
-            총 <strong>{filteredItems.length}</strong>개의 정보
+            {selectedCategory === 'all' ? (
+              <>총 <strong>{filteredItems.length}</strong>개의 정보 (카테고리별 최대 20개)</>
+            ) : (
+              <><strong>{selectedCategory}</strong>: {filteredItems.length}개</>
+            )}
           </span>
-          {lastUpdated && (
+          {newsData?.lastCrawled && (
             <span className="stat-item">
-              마지막 업데이트: {formatDate(lastUpdated)}
+              마지막 업데이트: {formatDate(newsData.lastCrawled)}
             </span>
           )}
-          {summaries.length === 0 && !loading && (
+          {!newsData && !loading && (
             <span className="stat-item offline-notice">
               ⚠️ 서버 연결 대기 중 - 기본 정보 표시
             </span>
@@ -189,7 +207,7 @@ function AllNews() {
         {error && (
           <div className="error-state">
             <p>데이터를 불러올 수 없습니다.</p>
-            <button onClick={refresh}>다시 시도</button>
+            <button onClick={fetchNews}>다시 시도</button>
           </div>
         )}
 
@@ -204,7 +222,7 @@ function AllNews() {
               filteredItems.map(item => (
                 <article
                   key={item.id}
-                  className={`news-card ${item.isMain ? 'main-card' : 'source-card'}`}
+                  className={`news-card ${item.isMain ? 'main-card' : ''}`}
                   style={{ '--card-color': categoryColors[item.category] || '#667eea' }}
                 >
                   <div className="card-header">
@@ -212,12 +230,6 @@ function AllNews() {
                       <span className="cat-icon">{categoryIcons[item.category] || '📄'}</span>
                       {item.category}
                     </span>
-                    {item.isMain && item.isAI && (
-                      <span className="ai-badge">AI 요약</span>
-                    )}
-                    {item.isMain && !item.isAI && !item.isFallback && (
-                      <span className="fallback-badge">기본 요약</span>
-                    )}
                     {item.isFallback && (
                       <span className="offline-badge">오프라인</span>
                     )}
@@ -225,14 +237,16 @@ function AllNews() {
 
                   <h3 className="card-title">{item.title}</h3>
 
-                  <p className="card-description">{item.description}</p>
+                  {item.description && (
+                    <p className="card-description">{item.description}</p>
+                  )}
 
                   <div className="card-footer">
                     {item.publishedDate && (
                       <span className="card-date">{formatDate(item.publishedDate)}</span>
                     )}
-                    {item.generatedAt && (
-                      <span className="card-date">생성: {formatDate(item.generatedAt)}</span>
+                    {item.sourceName && (
+                      <span className="card-source">{item.sourceName}</span>
                     )}
                     {item.url && (
                       <a
@@ -245,23 +259,6 @@ function AllNews() {
                       </a>
                     )}
                   </div>
-
-                  {/* 소스 목록 (메인 카드에만) */}
-                  {item.isMain && item.sources && item.sources.length > 0 && (
-                    <div className="card-sources">
-                      <h4>출처 ({item.sources.length}개)</h4>
-                      <ul>
-                        {item.sources.map((source, idx) => (
-                          <li key={idx}>
-                            <a href={source.url} target="_blank" rel="noopener noreferrer">
-                              <span className="source-name">{source.name}</span>
-                              <span className="source-title">{source.originalTitle}</span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                 </article>
               ))
             )}
