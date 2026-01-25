@@ -337,6 +337,12 @@ body {
 .footer-copyright {
   font-size: 0.85rem;
   color: #888;
+  margin-bottom: 0.25rem;
+}
+
+.footer-author {
+  font-size: 0.8rem;
+  color: #999;
   margin-bottom: 0.5rem;
 }
 
