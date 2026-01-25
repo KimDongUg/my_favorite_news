@@ -4,6 +4,7 @@ import HeadlineRotator from './components/HeadlineRotator';
 import MultiLayerTicker from './components/MultiLayerTicker';
 import BannerAd from './components/BannerAd';
 import { useSummaries } from './hooks/useSummaries';
+import { newsAPI } from './services/api';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from './data/headlines';
 
 function App() {
@@ -11,12 +12,43 @@ function App() {
   const {
     summaries,
     summariesByCategory,
-    loading,
-    error,
+    loading: summaryLoading,
+    error: summaryError,
     isRefreshing,
     refresh,
     lastUpdated,
   } = useSummaries({ autoRefresh: true, refreshInterval: 5 * 60 * 1000 });
+
+  // 뉴스 데이터 상태
+  const [newsData, setNewsData] = useState({});
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [newsError, setNewsError] = useState(null);
+
+  // 뉴스 데이터 가져오기
+  const fetchNews = useCallback(async () => {
+    try {
+      setNewsLoading(true);
+      const response = await newsAPI.getAll();
+      if (response.success) {
+        // API 응답 구조: { success, data: { categories: { ... } } }
+        setNewsData(response.data?.categories || {});
+      }
+    } catch (err) {
+      console.error('[App] 뉴스 데이터 로드 실패:', err);
+      setNewsError(err.message);
+    } finally {
+      setNewsLoading(false);
+    }
+  }, []);
+
+  // 초기 뉴스 로드
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  // 통합 로딩/에러 상태
+  const loading = summaryLoading || newsLoading;
+  const error = summaryError || newsError;
 
   // 모든 카테고리 (fallback 포함)
   const allCategories = useMemo(() => {
@@ -85,42 +117,57 @@ function App() {
     setSpeedMultiplier(multiplier);
   }, []);
 
-  // API 데이터를 기존 형식으로 변환
+  // API 데이터를 기존 형식으로 변환 (요약 + 뉴스 결합)
   const headlines = useMemo(() => {
-    if (summaries.length === 0) {
+    // 뉴스 데이터도 없고 요약도 없으면 fallback 사용
+    if (summaries.length === 0 && Object.keys(newsData).length === 0) {
       return fallbackHeadlines;
     }
 
-    // 각 카테고리별로 요약 데이터를 headlines 형식으로 변환
     const apiHeadlines = {};
 
-    summaries.forEach((summary) => {
-      const category = summary.category;
+    // 모든 카테고리 수집 (요약과 뉴스 모두에서)
+    const allCategories = new Set([
+      ...summaries.map(s => s.category),
+      ...Object.keys(newsData)
+    ]);
 
-      // 메인 요약을 첫 번째 아이템으로
-      const mainItem = {
-        id: summary.id || `${category}-main`,
-        title: summary.aiTitle,
-        description: summary.aiSummary,
-        sources: summary.sources,
-        generatedAt: summary.generatedAt,
-        isAI: !summary.isFallback,
-      };
+    allCategories.forEach((category) => {
+      const items = [];
+      const summary = summaries.find(s => s.category === category);
+      const categoryNews = newsData[category] || [];
 
-      // 소스들을 추가 아이템으로
-      const sourceItems = (summary.sources || []).map((source, idx) => ({
-        id: `${category}-source-${idx}`,
-        title: source.originalTitle,
-        description: `출처: ${source.name}`,
-        url: source.url,
-        publishedDate: source.publishedDate,
-      }));
+      // AI 요약이 있으면 첫 번째 아이템으로 추가
+      if (summary && summary.aiTitle) {
+        items.push({
+          id: summary.id || `${category}-main`,
+          title: summary.aiTitle,
+          description: summary.aiSummary,
+          sources: summary.sources,
+          generatedAt: summary.generatedAt,
+          isAI: !summary.isFallback,
+        });
+      }
 
-      apiHeadlines[category] = [mainItem, ...sourceItems];
+      // 뉴스 데이터 추가 (최대 20개)
+      categoryNews.slice(0, 20).forEach((news, idx) => {
+        items.push({
+          id: `${category}-news-${idx}`,
+          title: news.originalTitle || news.title,
+          description: news.snippet || news.rawContent || news.description || '',
+          url: news.originalUrl || news.link || news.url,
+          publishedDate: news.publishedDate || news.pubDate,
+          sourceName: news.sourceName || news.source || '',
+        });
+      });
+
+      if (items.length > 0) {
+        apiHeadlines[category] = items;
+      }
     });
 
-    return apiHeadlines;
-  }, [summaries]);
+    return Object.keys(apiHeadlines).length > 0 ? apiHeadlines : fallbackHeadlines;
+  }, [summaries, newsData]);
 
   return (
     <Layout categoryCount={selectedCategories.length}>

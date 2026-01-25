@@ -26,7 +26,8 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
     return allCats;
   }, [headlines, categoryOrder]);
 
-  const baseSpeeds = useMemo(() => [40, 35, 38, 42, 37, 39, 36, 41, 34, 43], []);
+  // 아이템 20개 기준 느린 속도 (숫자가 클수록 느림)
+  const baseSpeeds = useMemo(() => [240, 220, 230, 250, 236, 244, 224, 256, 216, 260], []);
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -52,8 +53,8 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
         {isRefreshing && <span className="refresh-indicator">🔄</span>}
         <input
           type="range"
-          min="0.5"
-          max="2"
+          min="0.3"
+          max="3"
           step="0.1"
           value={speedMultiplier}
           onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
