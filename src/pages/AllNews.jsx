@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useSummaries } from '../hooks/useSummaries';
-import { categoryColors, categoryIcons } from '../data/headlines';
+import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from '../data/headlines';
 import '../styles/AllNews.css';
 
 function AllNews() {
@@ -15,48 +15,75 @@ function AllNews() {
     autoRefresh: false
   });
 
-  // 모든 카테고리 목록
+  // 모든 카테고리 목록 (API 데이터가 없으면 fallback 사용)
+  const allCategoryNames = Object.keys(fallbackHeadlines);
   const categories = useMemo(() => {
-    return ['all', ...summaries.map(s => s.category)];
-  }, [summaries]);
+    if (summaries.length > 0) {
+      const apiCategories = summaries.map(s => s.category);
+      return ['all', ...apiCategories];
+    }
+    return ['all', ...allCategoryNames];
+  }, [summaries, allCategoryNames]);
 
   // 필터링된 뉴스 아이템
   const filteredItems = useMemo(() => {
     let items = [];
 
-    summaries.forEach(summary => {
-      // 카테고리 필터
-      if (selectedCategory !== 'all' && summary.category !== selectedCategory) {
-        return;
-      }
+    // API 데이터가 있으면 사용
+    if (summaries.length > 0) {
+      summaries.forEach(summary => {
+        // 카테고리 필터
+        if (selectedCategory !== 'all' && summary.category !== selectedCategory) {
+          return;
+        }
 
-      // 메인 요약
-      const mainItem = {
-        id: `${summary.category}-main`,
-        category: summary.category,
-        title: summary.aiTitle,
-        description: summary.aiSummary,
-        sources: summary.sources,
-        isMain: true,
-        isAI: !summary.isFallback,
-        generatedAt: summary.generatedAt
-      };
-      items.push(mainItem);
-
-      // 소스 뉴스들
-      (summary.sources || []).forEach((source, idx) => {
-        items.push({
-          id: `${summary.category}-source-${idx}`,
+        // 메인 요약
+        const mainItem = {
+          id: `${summary.category}-main`,
           category: summary.category,
-          title: source.originalTitle,
-          description: `출처: ${source.name}`,
-          url: source.url,
-          publishedDate: source.publishedDate,
-          sourceName: source.name,
-          isMain: false
+          title: summary.aiTitle,
+          description: summary.aiSummary,
+          sources: summary.sources,
+          isMain: true,
+          isAI: !summary.isFallback,
+          generatedAt: summary.generatedAt
+        };
+        items.push(mainItem);
+
+        // 소스 뉴스들
+        (summary.sources || []).forEach((source, idx) => {
+          items.push({
+            id: `${summary.category}-source-${idx}`,
+            category: summary.category,
+            title: source.originalTitle,
+            description: `출처: ${source.name}`,
+            url: source.url,
+            publishedDate: source.publishedDate,
+            sourceName: source.name,
+            isMain: false
+          });
         });
       });
-    });
+    } else {
+      // Fallback 데이터 사용
+      Object.entries(fallbackHeadlines).forEach(([category, headlineItems]) => {
+        if (selectedCategory !== 'all' && category !== selectedCategory) {
+          return;
+        }
+
+        headlineItems.forEach((item, idx) => {
+          items.push({
+            id: `${category}-fallback-${idx}`,
+            category: category,
+            title: item.title,
+            description: item.description,
+            isMain: idx === 0,
+            isAI: false,
+            isFallback: true
+          });
+        });
+      });
+    }
 
     // 검색 필터
     if (searchQuery.trim()) {
@@ -137,11 +164,16 @@ function AllNews() {
         {/* 통계 */}
         <div className="news-stats">
           <span className="stat-item">
-            총 <strong>{filteredItems.length}</strong>개의 뉴스
+            총 <strong>{filteredItems.length}</strong>개의 정보
           </span>
           {lastUpdated && (
             <span className="stat-item">
               마지막 업데이트: {formatDate(lastUpdated)}
+            </span>
+          )}
+          {summaries.length === 0 && !loading && (
+            <span className="stat-item offline-notice">
+              ⚠️ 서버 연결 대기 중 - 기본 정보 표시
             </span>
           )}
         </div>
@@ -183,8 +215,11 @@ function AllNews() {
                     {item.isMain && item.isAI && (
                       <span className="ai-badge">AI 요약</span>
                     )}
-                    {item.isMain && !item.isAI && (
+                    {item.isMain && !item.isAI && !item.isFallback && (
                       <span className="fallback-badge">기본 요약</span>
+                    )}
+                    {item.isFallback && (
+                      <span className="offline-badge">오프라인</span>
                     )}
                   </div>
 

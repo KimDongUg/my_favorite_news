@@ -187,6 +187,13 @@
   color: #333;
 }
 
+.stat-item.offline-notice {
+  color: #92400e;
+  background: #fef3c7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
 /* Loading / Error / Empty States */
 .loading-state,
 .error-state,
@@ -284,6 +291,15 @@
 .fallback-badge {
   background: #f0f0f0;
   color: #666;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.offline-badge {
+  background: #fef3c7;
+  color: #92400e;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.7rem;
