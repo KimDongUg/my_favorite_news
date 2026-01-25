@@ -7,7 +7,7 @@ function Layout({ children, categoryCount = 5 }) {
       <header className="header">
         <div className="header-overlay"></div>
         <div className="header-content">
-          <div className="header-nav">
+          <div className="header-top">
             <div className="logo">
               <div className="logo-icon">
                 <span className="logo-globe">🌏</span>
@@ -20,13 +20,19 @@ function Layout({ children, categoryCount = 5 }) {
                 </p>
               </div>
             </div>
-            <div className="header-actions">
+            <div className="header-user">
               <UserMenu />
-              <Link to="/settings" className="header-btn settings-btn">
-                <span className="btn-icon">⚙️</span>
-                <span className="btn-text">카테고리 ({categoryCount})</span>
-              </Link>
             </div>
+          </div>
+          <div className="header-actions-row">
+            <Link to="/settings" className="header-btn settings-btn">
+              <span className="btn-icon">⚙️</span>
+              <span className="btn-text">좋아하는 정보 설정하기 ({categoryCount})</span>
+            </Link>
+            <Link to="/feedback" className="header-btn feedback-btn">
+              <span className="btn-icon">💬</span>
+              <span className="btn-text">고객 의견 게시판</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -35,27 +41,11 @@ function Layout({ children, categoryCount = 5 }) {
 
       <footer className="footer">
         <div className="footer-links">
-          <Link to="/monitoring">저작권 모니터링</Link>
+          <Link to="/copyright">저작권 정책</Link>
           <span className="footer-divider">|</span>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("이용약관 페이지");
-            }}
-          >
-            이용약관
-          </a>
+          <Link to="/terms">이용약관</Link>
           <span className="footer-divider">|</span>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("개인정보처리방침");
-            }}
-          >
-            개인정보처리방침
-          </a>
+          <Link to="/privacy">개인정보처리방침</Link>
         </div>
         <p className="footer-copyright">
           &copy; 2026 내가 좋아하는 세상 정보. All rights reserved.

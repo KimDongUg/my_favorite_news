@@ -5,6 +5,12 @@ import { AuthProvider } from './contexts/AuthContext'
 import App from './App.jsx'
 import CategorySettings from './pages/CategorySettings.jsx'
 import ComplianceMonitoring from './pages/ComplianceMonitoring.jsx'
+import CopyrightPolicy from './pages/CopyrightPolicy.jsx'
+import TermsOfService from './pages/TermsOfService.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import Feedback from './pages/Feedback.jsx'
+import FeedbackPost from './pages/FeedbackPost.jsx'
+import FeedbackWrite from './pages/FeedbackWrite.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
@@ -15,6 +21,7 @@ import './styles/Ticker.css'
 import './styles/Settings.css'
 import './styles/Monitoring.css'
 import './styles/Auth.css'
+import './styles/Legal.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,6 +32,15 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/settings" element={<CategorySettings />} />
           <Route path="/monitoring" element={<ComplianceMonitoring />} />
+
+          {/* 법적 문서 페이지 */}
+          <Route path="/copyright" element={<CopyrightPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/feedback/write" element={<FeedbackWrite />} />
+          <Route path="/feedback/edit/:id" element={<FeedbackWrite />} />
+          <Route path="/feedback/:id" element={<FeedbackPost />} />
 
           {/* 인증 페이지 */}
           <Route path="/login" element={<Login />} />

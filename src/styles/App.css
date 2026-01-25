@@ -131,6 +131,31 @@ body {
   width: 100%;
 }
 
+.header-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header-user {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-actions-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
 .header-actions {
   position: absolute;
   right: 0;
@@ -161,6 +186,17 @@ body {
 }
 
 .settings-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.feedback-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+.feedback-btn:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
@@ -547,6 +583,20 @@ body {
   .header-nav {
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .header-top {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .header-user {
+    position: static;
+    transform: none;
+  }
+
+  .header-actions-row {
+    gap: 0.5rem;
   }
 
   .header-actions {
