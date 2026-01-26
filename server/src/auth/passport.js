@@ -95,6 +95,12 @@ export function initializePassport() {
   // ============================================
   // Kakao Strategy
   // ============================================
+  console.log('=== 카카오 로그인 설정 확인 ===');
+  console.log('KAKAO_CLIENT_ID:', oauthConfig.kakao.clientID ? '설정됨 (' + oauthConfig.kakao.clientID.substring(0, 8) + '...)' : '없음');
+  console.log('KAKAO_CLIENT_SECRET:', oauthConfig.kakao.clientSecret ? '설정됨' : '없음 (선택사항)');
+  console.log('KAKAO_CALLBACK_URL:', oauthConfig.kakao.callbackURL);
+  console.log('===============================');
+
   if (oauthConfig.kakao.clientID) {
     passport.use(new KakaoStrategy(
       {

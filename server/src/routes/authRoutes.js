@@ -664,13 +664,16 @@ router.get('/google/callback',
  * Kakao OAuth 시작
  */
 router.get('/kakao', (req, res, next) => {
+  console.log('[Auth] 카카오 로그인 시작');
   if (!oauthConfig.kakao.clientID) {
+    console.error('[Auth] KAKAO_CLIENT_ID가 설정되지 않음');
     return res.status(501).json({
       success: false,
       error: 'Kakao OAuth가 설정되지 않았습니다.',
       code: 'OAUTH_NOT_CONFIGURED'
     });
   }
+  console.log('[Auth] 카카오 인증 페이지로 리다이렉트');
   passport.authenticate('kakao')(req, res, next);
 });
 
@@ -678,12 +681,26 @@ router.get('/kakao', (req, res, next) => {
  * GET /auth/kakao/callback
  * Kakao OAuth 콜백
  */
-router.get('/kakao/callback',
-  passport.authenticate('kakao', { session: false, failureRedirect: '/api/auth/error?provider=kakao' }),
-  (req, res) => {
+router.get('/kakao/callback', (req, res, next) => {
+  console.log('[Auth] 카카오 콜백 수신:', req.query);
+
+  passport.authenticate('kakao', { session: false }, (err, user, info) => {
+    console.log('[Auth] 카카오 인증 결과:', { err: err?.message, user: !!user, info });
+
+    if (err) {
+      console.error('[Auth] 카카오 인증 에러:', err);
+      return res.redirect(`${magicLinkConfig.baseUrl}/auth/error?provider=kakao&message=${encodeURIComponent(err.message || '인증 오류')}`);
+    }
+
+    if (!user) {
+      console.error('[Auth] 카카오 사용자 정보 없음:', info);
+      return res.redirect(`${magicLinkConfig.baseUrl}/auth/error?provider=kakao&message=${encodeURIComponent(info?.message || '사용자 정보를 가져올 수 없습니다')}`);
+    }
+
+    req.user = user;
     handleOAuthSuccess(req, res, 'kakao');
-  }
-);
+  })(req, res, next);
+});
 
 /**
  * GET /auth/naver

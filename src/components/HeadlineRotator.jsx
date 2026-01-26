@@ -5,6 +5,8 @@ const HeadlineRotator = memo(function HeadlineRotator({
   selectedCategories,
   headlines: propHeadlines,
   isLoading = false,
+  onFullscreen,
+  showFullscreenButton = true,
 }) {
 
   // props로 받은 headlines 사용, 없으면 fallback
@@ -123,6 +125,20 @@ const HeadlineRotator = memo(function HeadlineRotator({
           </button>
         ))}
       </div>
+
+      {/* 전체화면 버튼 */}
+      {showFullscreenButton && onFullscreen && (
+        <button
+          className="fullscreen-toggle-btn"
+          onClick={onFullscreen}
+          title="전체화면으로 보기"
+          aria-label="전체화면으로 보기"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+          </svg>
+        </button>
+      )}
 
       {isLoading && (
         <div className="rotator-loading">

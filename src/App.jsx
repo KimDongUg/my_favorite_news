@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import HeadlineRotator from './components/HeadlineRotator';
 import MultiLayerTicker from './components/MultiLayerTicker';
 import BannerAd from './components/BannerAd';
+import FullscreenNews from './components/FullscreenNews';
 import { useSummaries } from './hooks/useSummaries';
 import { newsAPI } from './services/api';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from './data/headlines';
@@ -98,6 +99,7 @@ function App() {
 
   // 상태 관리
   const [speedMultiplier, setSpeedMultiplier] = useState(2.5);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // 선택된 카테고리만 visible로 설정
   const visibleCategories = useMemo(
@@ -115,6 +117,15 @@ function App() {
   // 속도 변경
   const handleSpeedChange = useCallback((multiplier) => {
     setSpeedMultiplier(multiplier);
+  }, []);
+
+  // 전체화면 토글
+  const handleFullscreenToggle = useCallback(() => {
+    setIsFullscreen(true);
+  }, []);
+
+  const handleFullscreenClose = useCallback(() => {
+    setIsFullscreen(false);
   }, []);
 
   // API 데이터를 기존 형식으로 변환 (요약 + 뉴스 결합)
@@ -195,6 +206,7 @@ function App() {
         selectedCategories={selectedCategories}
         headlines={headlines}
         isLoading={loading}
+        onFullscreen={handleFullscreenToggle}
       />
 
       {/* 멀티 레이어 티커 */}
@@ -216,6 +228,19 @@ function App() {
           마지막 업데이트: {new Date(lastUpdated).toLocaleString('ko-KR')}
           {isRefreshing && <span className="refreshing-indicator"> 🔄</span>}
         </div>
+      )}
+
+      {/* 전체화면 모드 */}
+      {isFullscreen && (
+        <FullscreenNews
+          selectedCategories={selectedCategories}
+          headlines={headlines}
+          visibleCategories={visibleCategories}
+          speedMultiplier={speedMultiplier}
+          onSpeedChange={handleSpeedChange}
+          isRefreshing={isRefreshing}
+          onClose={handleFullscreenClose}
+        />
       )}
     </Layout>
   );

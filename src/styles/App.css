@@ -441,6 +441,36 @@ body {
   flex-shrink: 0;
 }
 
+/* 전체화면 토글 버튼 */
+.fullscreen-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.fullscreen-toggle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.fullscreen-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.fullscreen-toggle-btn svg {
+  pointer-events: none;
+}
+
 .mini-speed-control {
   display: flex;
   align-items: center;
