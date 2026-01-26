@@ -3,6 +3,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { AUTH_BASE_URL } from '../../config/api';
 
@@ -52,6 +53,7 @@ export default function SocialLoginButtons() {
   const [availableProviders, setAvailableProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const { getAvailableProviders } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProviders = async () => {
@@ -63,6 +65,10 @@ export default function SocialLoginButtons() {
   }, [getAvailableProviders]);
 
   const handleSocialLogin = (providerId) => {
+    // 로그인 후 돌아갈 경로 저장
+    const returnUrl = location.state?.from?.pathname || '/';
+    localStorage.setItem('authReturnUrl', returnUrl);
+
     // OAuth 로그인 시작 - 백엔드로 리다이렉트
     window.location.href = `${AUTH_BASE_URL}/auth/${providerId}`;
   };

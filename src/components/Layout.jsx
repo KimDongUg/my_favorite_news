@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserMenu from "./auth/UserMenu";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -6,7 +6,18 @@ const ADMIN_EMAILS = ['kduaro124@naver.com'];
 
 function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChange }) {
   const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const isAdmin = isAuthenticated && user?.email && ADMIN_EMAILS.includes(user.email);
+
+  // 로그인 필요한 페이지 클릭 핸들러
+  const handleProtectedClick = (e, targetPath) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      // 로그인 후 돌아올 경로 저장
+      navigate('/login', { state: { from: { pathname: targetPath } } });
+    }
+  };
 
   return (
     <div className="layout">
@@ -31,11 +42,19 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
             </div>
           </div>
           <div className="header-actions-row">
-            <Link to={isAuthenticated ? "/settings" : "/login"} className="header-btn settings-btn">
+            <Link
+              to="/settings"
+              className="header-btn settings-btn"
+              onClick={(e) => handleProtectedClick(e, '/settings')}
+            >
               <span className="btn-icon">⚙️</span>
               <span className="btn-text">좋아하는 정보 설정하기 ({categoryCount})</span>
             </Link>
-            <Link to="/feedback" className="header-btn feedback-btn">
+            <Link
+              to="/feedback"
+              className="header-btn feedback-btn"
+              onClick={(e) => handleProtectedClick(e, '/feedback')}
+            >
               <span className="btn-icon">💬</span>
               <span className="btn-text">고객 의견 게시판</span>
             </Link>

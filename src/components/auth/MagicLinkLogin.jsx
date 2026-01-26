@@ -3,6 +3,7 @@
  */
 
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function MagicLinkLogin({ onBack }) {
@@ -11,6 +12,7 @@ export default function MagicLinkLogin({ onBack }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { requestMagicLink } = useAuth();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,10 @@ export default function MagicLinkLogin({ onBack }) {
     setLoading(true);
 
     try {
+      // 로그인 후 돌아갈 경로 저장 (매직 링크는 다른 탭에서 열릴 수 있음)
+      const returnUrl = location.state?.from?.pathname || '/';
+      localStorage.setItem('authReturnUrl', returnUrl);
+
       await requestMagicLink(email);
       setSent(true);
     } catch (err) {

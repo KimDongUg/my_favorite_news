@@ -133,11 +133,15 @@ export function AuthProvider({ children }) {
       const { user, accessToken, refreshToken } = response.data;
       setTokens(accessToken, refreshToken);
       setUser(user);
-      navigate('/');
+
+      // 저장된 returnUrl로 리다이렉트
+      const returnUrl = localStorage.getItem('authReturnUrl') || location.state?.from?.pathname || '/';
+      localStorage.removeItem('authReturnUrl');
+      navigate(returnUrl, { replace: true });
     }
 
     return response;
-  }, [authFetch, navigate, setTokens]);
+  }, [authFetch, location.state, navigate, setTokens]);
 
   // 로그인
   const login = useCallback(async ({ email, password }) => {
@@ -164,7 +168,11 @@ export function AuthProvider({ children }) {
   const handleOAuthCallback = useCallback(async (token, refreshToken) => {
     setTokens(token, refreshToken);
     await fetchUser();
-    navigate('/');
+
+    // 저장된 returnUrl로 리다이렉트
+    const returnUrl = localStorage.getItem('authReturnUrl') || '/';
+    localStorage.removeItem('authReturnUrl');
+    navigate(returnUrl, { replace: true });
   }, [fetchUser, navigate, setTokens]);
 
   // 매직 링크 요청
@@ -192,7 +200,11 @@ export function AuthProvider({ children }) {
     const { user, accessToken, refreshToken } = response.data;
     setTokens(accessToken, refreshToken);
     setUser(user);
-    navigate('/');
+
+    // 저장된 returnUrl로 리다이렉트
+    const returnUrl = localStorage.getItem('authReturnUrl') || '/';
+    localStorage.removeItem('authReturnUrl');
+    navigate(returnUrl, { replace: true });
 
     return response;
   }, [authFetch, navigate, setTokens]);
