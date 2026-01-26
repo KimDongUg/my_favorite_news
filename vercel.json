@@ -1,9 +1,11 @@
 {
+  "redirects": [
+    { "source": "/privacy", "destination": "/privacy.html", "permanent": true },
+    { "source": "/terms", "destination": "/terms.html", "permanent": true },
+    { "source": "/copyright", "destination": "/copyright.html", "permanent": true },
+    { "source": "/feedback", "destination": "/feedback.html", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/copyright", "destination": "/copyright.html" },
-    { "source": "/feedback", "destination": "/feedback.html" },
     {
       "source": "/((?!privacy\\.html|terms\\.html|copyright\\.html|feedback\\.html).*)",
       "destination": "/index.html"
