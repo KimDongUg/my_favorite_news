@@ -796,34 +796,45 @@ body {
   }
 
   .headline-rotator-inline {
-    gap: 0.3rem;
-    padding: 0.3rem 0.5rem;
+    gap: 0.4rem;
+    padding: 0.4rem 0.5rem;
   }
 
   .rotator-current-category {
-    padding: 0.1rem 0.3rem;
+    padding: 0.15rem 0.35rem;
   }
 
   .current-cat-icon {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 
+  /* 모바일: 카테고리 이름 숨김, 아이콘만 표시 */
   .current-cat-name {
-    font-size: 0.55rem;
+    display: none;
   }
 
   .rotator-title-text {
     font-size: 0.85rem;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
+  /* 모바일: 설명 숨김, 제목만 표시 */
   .rotator-desc-text {
-    font-size: 0.75rem;
+    display: none;
   }
 
-  .indicator {
-    width: 14px;
-    height: 14px;
-    font-size: 0.45rem;
+  /* 모바일: 인디케이터 숨김 */
+  .rotator-indicators {
+    display: none;
+  }
+
+  /* 모바일: 출처 링크 숨김 */
+  .rotator-sources {
+    display: none !important;
   }
 
   .mini-speed-slider {
