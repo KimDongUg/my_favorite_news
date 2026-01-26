@@ -1,4 +1,4 @@
-import { memo, useEffect, useCallback, useMemo } from 'react';
+import { memo, useEffect, useMemo, useCallback } from 'react';
 import HeadlineRotator from './HeadlineRotator';
 import MultiLayerTicker from './MultiLayerTicker';
 import '../styles/FullscreenNews.css';
@@ -10,7 +10,7 @@ const CATEGORY_PRIORITY = [
   '칼럼·사설', '여행', '음식', '휴먼스토리', '과학', '취업·직장', '재테크'
 ];
 
-const FULLSCREEN_CATEGORY_COUNT = 7;
+const FULLSCREEN_CATEGORY_COUNT = 8;
 
 const FullscreenNews = memo(function FullscreenNews({
   selectedCategories,
@@ -21,17 +21,17 @@ const FullscreenNews = memo(function FullscreenNews({
   isRefreshing,
   onClose,
 }) {
-  // 전체화면용 카테고리 계산 (항상 7개)
+  // 전체화면용 카테고리 계산 (항상 8개)
   const fullscreenCategories = useMemo(() => {
     // 사용자가 선택한 카테고리
     const userSelected = selectedCategories || [];
 
-    // 7개 이상이면 7개까지만 자르기
+    // 8개 이상이면 8개까지만 자르기
     if (userSelected.length >= FULLSCREEN_CATEGORY_COUNT) {
       return userSelected.slice(0, FULLSCREEN_CATEGORY_COUNT);
     }
 
-    // 7개 미만이면 우선순위가 높은 미선택 카테고리로 채우기
+    // 8개 미만이면 우선순위가 높은 미선택 카테고리로 채우기
     const result = [...userSelected];
     const availableCategories = Object.keys(headlines);
 
@@ -63,7 +63,7 @@ const FullscreenNews = memo(function FullscreenNews({
     return visible;
   }, [fullscreenCategories]);
 
-  // 전체화면용 headlines 필터링 (7개 카테고리만)
+  // 전체화면용 headlines 필터링 (8개 카테고리만)
   const fullscreenHeadlines = useMemo(() => {
     const filtered = {};
     fullscreenCategories.forEach(cat => {
@@ -91,7 +91,7 @@ const FullscreenNews = memo(function FullscreenNews({
     };
   }, [onClose]);
 
-  // 실제 브라우저 전체화면 토글
+  // 브라우저 전체화면 토글
   const toggleBrowserFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen?.();
@@ -103,38 +103,26 @@ const FullscreenNews = memo(function FullscreenNews({
   return (
     <div className="fullscreen-news-overlay">
       <div className="fullscreen-news-container">
-        {/* 상단 헤더 */}
-        <div className="fullscreen-header">
-          <div className="fullscreen-title">
-            <div className="fullscreen-logo-icon">
-              <span className="logo-globe">🌏</span>
-              <span className="logo-heart">💜</span>
-            </div>
-            <div className="fullscreen-title-text">
-              <h1>내가 좋아하는 세상 정보</h1>
-              <p>실시간으로 만나는 맞춤형 뉴스</p>
-            </div>
-          </div>
-          <div className="fullscreen-controls">
-            <button
-              className="fullscreen-btn browser-fullscreen-btn"
-              onClick={toggleBrowserFullscreen}
-              title="브라우저 전체화면 (F11)"
-            >
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-              </svg>
-            </button>
-            <button
-              className="fullscreen-btn close-btn"
-              onClick={onClose}
-              title="닫기 (ESC)"
-            >
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              </svg>
-            </button>
-          </div>
+        {/* 상단 컨트롤 버튼들 */}
+        <div className="fullscreen-controls">
+          <button
+            className="fullscreen-ctrl-btn expand-btn"
+            onClick={toggleBrowserFullscreen}
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+            <span className="tooltip">전체보기 (F11)</span>
+          </button>
+          <button
+            className="fullscreen-ctrl-btn close-btn"
+            onClick={onClose}
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+            <span className="tooltip">닫기 (ESC)</span>
+          </button>
         </div>
 
         {/* 실시간 헤드라인 */}

@@ -437,7 +437,7 @@ body {
 
 .rotator-indicators {
   display: flex;
-  gap: 0.2rem;
+  gap: 0.1rem;
   flex-shrink: 0;
 }
 
@@ -536,28 +536,27 @@ body {
 }
 
 .indicator {
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid #e0e0e0;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ddd;
   border-radius: 50%;
   background: white;
   cursor: pointer;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  overflow: hidden;
 }
 
 .indicator:hover {
   border-color: var(--indicator-color);
-  transform: scale(1.1);
 }
 
 .indicator.active {
   border-color: var(--indicator-color);
   background: var(--indicator-color);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* ========================================
@@ -848,9 +847,9 @@ body {
   }
 
   .indicator {
-    width: 16px;
-    height: 16px;
-    font-size: 0.5rem;
+    width: 14px;
+    height: 14px;
+    font-size: 0.45rem;
   }
 
   .banner-content {

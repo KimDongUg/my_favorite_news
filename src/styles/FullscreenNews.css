@@ -1,4 +1,4 @@
-/* 전체화면 뉴스 오버레이 - 메인화면과 동일한 스타일 */
+/* 전체화면 뉴스 오버레이 */
 .fullscreen-news-overlay {
   position: fixed;
   top: 0;
@@ -26,144 +26,129 @@
   height: 100vh;
   width: 100vw;
   padding: 0;
-}
-
-/* 상단 헤더 - 메인화면 헤더와 동일 */
-.fullscreen-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  color: white;
-  background-image: url("https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1920&q=80");
-  background-size: cover;
-  background-position: center;
   position: relative;
-  flex-shrink: 0;
 }
 
-.fullscreen-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.85) 0%,
-    rgba(118, 75, 162, 0.85) 50%,
-    rgba(89, 45, 122, 0.9) 100%
-  );
-}
-
-.fullscreen-title {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-  z-index: 1;
-}
-
-.fullscreen-logo-icon {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.fullscreen-logo-icon .logo-globe {
-  font-size: 2.5rem;
-}
-
-.fullscreen-logo-icon .logo-heart {
-  position: absolute;
-  font-size: 1rem;
-  bottom: 0;
-  right: 0;
-  animation: heartPulse 2s ease-in-out infinite;
-}
-
-@keyframes heartPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-}
-
-.fullscreen-title-text h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.fullscreen-title-text p {
-  margin: 0.25rem 0 0 0;
-  font-size: 0.85rem;
-  color: #d1d5db;
-}
-
+/* 상단 컨트롤 버튼들 */
 .fullscreen-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
   display: flex;
-  gap: 0.75rem;
-  position: relative;
-  z-index: 1;
+  gap: 0.5rem;
 }
 
-.fullscreen-btn {
+.fullscreen-ctrl-btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.browser-fullscreen-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+.fullscreen-ctrl-btn.expand-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
 
-.browser-fullscreen-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+.fullscreen-ctrl-btn.expand-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
-.close-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+.fullscreen-ctrl-btn.close-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
 }
 
-.close-btn:hover {
-  background: rgba(239, 68, 68, 0.8);
-  transform: scale(1.05);
+.fullscreen-ctrl-btn.close-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
 }
 
-/* 실시간 헤드라인 섹션 - 메인페이지와 동일한 스타일 */
+/* 말풍선 툴팁 */
+.fullscreen-ctrl-btn .tooltip {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.fullscreen-ctrl-btn .tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+}
+
+.fullscreen-ctrl-btn:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  bottom: -40px;
+}
+
+/* 실시간 헤드라인 섹션 - 컴팩트 */
 .fullscreen-headline-section {
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.75rem;
+  padding-right: 6rem;
   background: #f5f5f5;
   flex-shrink: 0;
 }
 
 .fullscreen-headline-section .headline-rotator-inline {
-  /* 메인페이지와 동일한 스타일 유지 */
   background: white;
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   margin-bottom: 0;
+}
+
+.fullscreen-headline-section .rotator-title-text {
+  font-size: 0.9rem;
+}
+
+.fullscreen-headline-section .rotator-desc-text {
+  font-size: 0.8rem;
+}
+
+.fullscreen-headline-section .rotator-current-category {
+  padding: 0.1rem 0.3rem;
+}
+
+.fullscreen-headline-section .current-cat-icon {
+  font-size: 0.7rem;
+}
+
+.fullscreen-headline-section .current-cat-name {
+  font-size: 0.65rem;
 }
 
 /* 티커 섹션 */
 .fullscreen-ticker-section {
   flex: 1;
   overflow: hidden;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   background: #f5f5f5;
 }
 
@@ -177,19 +162,19 @@
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0.4rem 2rem;
   background: #333;
   color: white;
   flex-shrink: 0;
 }
 
 .footer-hint {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #aaa;
 }
 
 .refreshing-badge {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #667eea;
   animation: pulse 1.5s infinite;
 }
@@ -199,78 +184,85 @@
   50% { opacity: 0.5; }
 }
 
-/* 반응형 */
+/* 반응형 - 태블릿 */
 @media (max-width: 768px) {
-  .fullscreen-header {
-    padding: 0.75rem 1rem;
-  }
-
-  .fullscreen-logo-icon {
+  .fullscreen-ctrl-btn {
     width: 36px;
     height: 36px;
   }
 
-  .fullscreen-logo-icon .logo-globe {
-    font-size: 1.75rem;
-  }
-
-  .fullscreen-logo-icon .logo-heart {
-    font-size: 0.75rem;
-  }
-
-  .fullscreen-title-text h1 {
-    font-size: 1.1rem;
-  }
-
-  .fullscreen-title-text p {
-    font-size: 0.75rem;
-  }
-
-  .fullscreen-btn {
-    width: 38px;
-    height: 38px;
+  .fullscreen-ctrl-btn svg {
+    width: 16px;
+    height: 16px;
   }
 
   .fullscreen-headline-section {
-    padding: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    padding-right: 5rem;
   }
 
   .fullscreen-headline-section .headline-rotator-inline {
-    padding: 0.4rem 0.6rem;
+    padding: 0.3rem 0.5rem;
   }
 
   .fullscreen-footer {
-    padding: 0.5rem 1rem;
+    padding: 0.35rem 1rem;
   }
 
   .footer-hint {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 }
 
+/* 반응형 - 모바일 (스크롤 가능) */
 @media (max-width: 480px) {
-  .fullscreen-title {
-    gap: 0.5rem;
+  .fullscreen-news-overlay {
+    overflow-y: auto;
   }
 
-  .fullscreen-logo-icon {
+  .fullscreen-news-container {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .fullscreen-controls {
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .fullscreen-ctrl-btn {
     width: 32px;
     height: 32px;
+    border-radius: 8px;
   }
 
-  .fullscreen-logo-icon .logo-globe {
-    font-size: 1.5rem;
+  .fullscreen-ctrl-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
-  .fullscreen-logo-icon .logo-heart {
-    font-size: 0.6rem;
+  .fullscreen-ctrl-btn .tooltip {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
   }
 
-  .fullscreen-title-text h1 {
-    font-size: 0.95rem;
+  .fullscreen-headline-section {
+    padding-right: 4.5rem;
   }
 
-  .fullscreen-title-text p {
-    display: none;
+  .fullscreen-ticker-section {
+    flex: none;
+    overflow: visible;
+    padding: 0.5rem 0;
+  }
+
+  .fullscreen-ticker-section .multi-layer-ticker {
+    height: auto;
+  }
+
+  .fullscreen-ticker-section .ticker-container {
+    flex-direction: column;
+    height: auto;
   }
 }
