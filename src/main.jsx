@@ -5,10 +5,6 @@ import { AuthProvider } from './contexts/AuthContext'
 import App from './App.jsx'
 import CategorySettings from './pages/CategorySettings.jsx'
 import ComplianceMonitoring from './pages/ComplianceMonitoring.jsx'
-// 정책 페이지는 정적 HTML로 제공 (public/*.html)
-import Feedback from './pages/Feedback.jsx'
-import FeedbackPost from './pages/FeedbackPost.jsx'
-import FeedbackWrite from './pages/FeedbackWrite.jsx'
 import AllNews from './pages/AllNews.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
@@ -25,6 +21,10 @@ import './styles/Legal.css'
 import './styles/AllNews.css'
 import './styles/Admin.css'
 
+// 정책 페이지(/privacy, /terms, /copyright, /feedback)는
+// public/*.html 정적 파일로 제공됩니다.
+// Vercel redirects가 처리합니다.
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -35,12 +35,6 @@ createRoot(document.getElementById('root')).render(
           <Route path="/settings" element={<CategorySettings />} />
           <Route path="/monitoring" element={<ComplianceMonitoring />} />
           <Route path="/news" element={<AllNews />} />
-
-          {/* 법적 문서 페이지는 정적 HTML로 제공 (public/*.html) */}
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/feedback/write" element={<FeedbackWrite />} />
-          <Route path="/feedback/edit/:id" element={<FeedbackWrite />} />
-          <Route path="/feedback/:id" element={<FeedbackPost />} />
 
           {/* 관리자 페이지 */}
           <Route path="/admin" element={<Admin />} />

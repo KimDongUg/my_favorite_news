@@ -4,5 +4,8 @@
     { "source": "/terms", "destination": "/terms.html", "permanent": true },
     { "source": "/copyright", "destination": "/copyright.html", "permanent": true },
     { "source": "/feedback", "destination": "/feedback.html", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!.*\\.html$).*)", "destination": "/index.html" }
   ]
 }
