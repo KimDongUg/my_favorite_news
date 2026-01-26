@@ -5,6 +5,12 @@
 // 환경 변수 확인 (이 파일이 import될 때)
 import 'dotenv/config';
 
+// 카카오 설정 로그 (config 로드 시점)
+console.log('\n=== config/auth.js 로드 ===');
+console.log('KAKAO_CLIENT_ID (직접):', process.env.KAKAO_CLIENT_ID || '❌ undefined');
+console.log('KAKAO_CLIENT_SECRET (직접):', process.env.KAKAO_CLIENT_SECRET ? `✅ 있음 (${process.env.KAKAO_CLIENT_SECRET.length}자)` : '❌ undefined');
+console.log('=============================\n');
+
 // JWT 설정
 export const jwtConfig = {
   accessToken: {

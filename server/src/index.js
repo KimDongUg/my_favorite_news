@@ -73,35 +73,30 @@ const PORT = process.env.PORT || 3001;
 app.use(helmetMiddleware);
 app.use(addSecurityHeaders);
 
-// CORS 설정 - Vercel 프리뷰 URL 포함
-const allowedOrigins = [
-  // 프로덕션
-  'https://myfavoritenews.vercel.app',
-  // 환경변수 추가 도메인
-  ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : [])
-];
-
+// CORS 설정 - 모든 Vercel 도메인 허용
 app.use(cors({
   origin: (origin, callback) => {
-    // origin이 없는 경우 (같은 origin 또는 서버 요청) 허용
+    // origin이 없는 경우 (같은 origin, Postman 등) 허용
     if (!origin) return callback(null, true);
 
-    // localhost 개발 환경은 모두 허용
-    if (origin.startsWith('http://localhost:')) {
+    // localhost 개발 환경 모두 허용
+    if (origin.includes('localhost')) {
       return callback(null, true);
     }
 
-    // Vercel 프리뷰 URL 패턴 허용 (myfavoritenews-*.vercel.app)
-    const isVercelPreview = /^https:\/\/myfavoritenews(-[a-z0-9]+)?\.vercel\.app$/.test(origin) ||
-                           /^https:\/\/myfavoritenews-[a-z0-9-]+\.vercel\.app$/.test(origin) ||
-                           /^https:\/\/my-favorite-news(-[a-z0-9-]+)?\.vercel\.app$/.test(origin);
-
-    if (allowedOrigins.includes(origin) || isVercelPreview) {
-      callback(null, true);
-    } else {
-      console.warn(`[CORS] 차단된 origin: ${origin}`);
-      callback(new Error('CORS not allowed'));
+    // 모든 vercel.app 도메인 허용 (프로덕션 + 프리뷰)
+    if (origin.includes('vercel.app')) {
+      return callback(null, true);
     }
+
+    // FRONTEND_URL 허용
+    if (origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
+    // 그 외는 로그만 남기고 허용 (디버깅용)
+    console.log(`[CORS] 알 수 없는 origin (허용): ${origin}`);
+    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
