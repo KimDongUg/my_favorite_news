@@ -42,14 +42,20 @@ const HeadlineRotator = memo(function HeadlineRotator({
   // 헤드라인 클릭 핸들러 - 로그인 체크
   const handleHeadlineClick = (e) => {
     e.preventDefault();
+    const current = topHeadlines[currentIndex];
+    const articleUrl = current.sources?.[0]?.url;
+
     if (!isAuthenticated) {
+      // 클릭한 기사 URL 저장 (로그인 후 열기 위해)
+      if (articleUrl) {
+        localStorage.setItem('pendingArticleUrl', articleUrl);
+      }
       // 로그인 페이지로 이동하면서 현재 위치 저장
       navigate('/login', { state: { from: location } });
     } else {
       // 로그인된 경우 - 원본 기사로 이동
-      const current = topHeadlines[currentIndex];
-      if (current.sources && current.sources.length > 0) {
-        window.open(current.sources[0].url, '_blank', 'noopener,noreferrer');
+      if (articleUrl) {
+        window.open(articleUrl, '_blank', 'noopener,noreferrer');
       }
     }
   };

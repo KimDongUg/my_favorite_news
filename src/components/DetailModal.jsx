@@ -11,15 +11,18 @@ const DetailModal = memo(function DetailModal({ item, category, color, onClose }
 
   // 링크 클릭 시 로그인 체크
   const handleLinkClick = (e, url) => {
+    e.preventDefault();
     if (!isAuthenticated) {
-      e.preventDefault();
+      // 클릭한 기사 URL 저장 (로그인 후 열기 위해)
+      if (url) {
+        localStorage.setItem('pendingArticleUrl', url);
+      }
       onClose();
       navigate('/login', { state: { from: location } });
       return;
     }
     // 로그인된 경우 새 탭에서 열기
     window.open(url, '_blank', 'noopener,noreferrer');
-    e.preventDefault();
   };
 
   useEffect(() => {

@@ -134,6 +134,13 @@ export function AuthProvider({ children }) {
       setTokens(accessToken, refreshToken);
       setUser(user);
 
+      // 저장된 기사 URL이 있으면 새 탭에서 열기
+      const pendingArticleUrl = localStorage.getItem('pendingArticleUrl');
+      if (pendingArticleUrl) {
+        localStorage.removeItem('pendingArticleUrl');
+        window.open(pendingArticleUrl, '_blank', 'noopener,noreferrer');
+      }
+
       // 저장된 returnUrl로 리다이렉트
       const returnUrl = localStorage.getItem('authReturnUrl') || location.state?.from?.pathname || '/';
       localStorage.removeItem('authReturnUrl');
@@ -157,6 +164,13 @@ export function AuthProvider({ children }) {
     setTokens(accessToken, refreshToken);
     setUser(user);
 
+    // 저장된 기사 URL이 있으면 새 탭에서 열기
+    const pendingArticleUrl = localStorage.getItem('pendingArticleUrl');
+    if (pendingArticleUrl) {
+      localStorage.removeItem('pendingArticleUrl');
+      window.open(pendingArticleUrl, '_blank', 'noopener,noreferrer');
+    }
+
     // 원래 가려던 페이지로 리다이렉트
     const from = location.state?.from?.pathname || '/';
     navigate(from, { replace: true });
@@ -168,6 +182,13 @@ export function AuthProvider({ children }) {
   const handleOAuthCallback = useCallback(async (token, refreshToken) => {
     setTokens(token, refreshToken);
     await fetchUser();
+
+    // 저장된 기사 URL이 있으면 새 탭에서 열기
+    const pendingArticleUrl = localStorage.getItem('pendingArticleUrl');
+    if (pendingArticleUrl) {
+      localStorage.removeItem('pendingArticleUrl');
+      window.open(pendingArticleUrl, '_blank', 'noopener,noreferrer');
+    }
 
     // 저장된 returnUrl로 리다이렉트
     const returnUrl = localStorage.getItem('authReturnUrl') || '/';
@@ -200,6 +221,13 @@ export function AuthProvider({ children }) {
     const { user, accessToken, refreshToken } = response.data;
     setTokens(accessToken, refreshToken);
     setUser(user);
+
+    // 저장된 기사 URL이 있으면 새 탭에서 열기
+    const pendingArticleUrl = localStorage.getItem('pendingArticleUrl');
+    if (pendingArticleUrl) {
+      localStorage.removeItem('pendingArticleUrl');
+      window.open(pendingArticleUrl, '_blank', 'noopener,noreferrer');
+    }
 
     // 저장된 returnUrl로 리다이렉트
     const returnUrl = localStorage.getItem('authReturnUrl') || '/';
