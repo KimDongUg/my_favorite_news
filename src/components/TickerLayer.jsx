@@ -68,7 +68,7 @@ const TickerLayer = memo(function TickerLayer({
     // 모바일은 빠르게, PC는 느리게 조정
     let speedModifier = 1;
     if (screenWidth < 768) {
-      speedModifier = 0.7; // 모바일: 30% 빠르게
+      speedModifier = 0.5; // 모바일: 50% 빠르게
     } else if (screenWidth >= 1200) {
       speedModifier = 2.6; // PC: 160% 느리게
     }
