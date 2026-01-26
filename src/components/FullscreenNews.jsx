@@ -1,7 +1,16 @@
-import { memo, useEffect, useCallback } from 'react';
+import { memo, useEffect, useCallback, useMemo } from 'react';
 import HeadlineRotator from './HeadlineRotator';
 import MultiLayerTicker from './MultiLayerTicker';
 import '../styles/FullscreenNews.css';
+
+// 카테고리 우선순위 (headlines.js 순서 기반)
+const CATEGORY_PRIORITY = [
+  '속보', '정치', '경제·금융', '범죄·법', '국내', '국제', '건강',
+  '연예·문화', '스포츠', 'IT·기술', '라이프', '교육', '환경',
+  '칼럼·사설', '여행', '음식', '휴먼스토리', '과학', '취업·직장', '재테크'
+];
+
+const FULLSCREEN_CATEGORY_COUNT = 7;
 
 const FullscreenNews = memo(function FullscreenNews({
   selectedCategories,
@@ -12,6 +21,59 @@ const FullscreenNews = memo(function FullscreenNews({
   isRefreshing,
   onClose,
 }) {
+  // 전체화면용 카테고리 계산 (항상 7개)
+  const fullscreenCategories = useMemo(() => {
+    // 사용자가 선택한 카테고리
+    const userSelected = selectedCategories || [];
+
+    // 7개 이상이면 7개까지만 자르기
+    if (userSelected.length >= FULLSCREEN_CATEGORY_COUNT) {
+      return userSelected.slice(0, FULLSCREEN_CATEGORY_COUNT);
+    }
+
+    // 7개 미만이면 우선순위가 높은 미선택 카테고리로 채우기
+    const result = [...userSelected];
+    const availableCategories = Object.keys(headlines);
+
+    // 우선순위 순서대로 미선택 카테고리 추가
+    for (const category of CATEGORY_PRIORITY) {
+      if (result.length >= FULLSCREEN_CATEGORY_COUNT) break;
+      if (!result.includes(category) && availableCategories.includes(category)) {
+        result.push(category);
+      }
+    }
+
+    // 그래도 부족하면 headlines에 있는 나머지 카테고리 추가
+    for (const category of availableCategories) {
+      if (result.length >= FULLSCREEN_CATEGORY_COUNT) break;
+      if (!result.includes(category)) {
+        result.push(category);
+      }
+    }
+
+    return result;
+  }, [selectedCategories, headlines]);
+
+  // 전체화면용 visibleCategories 계산
+  const fullscreenVisibleCategories = useMemo(() => {
+    const visible = {};
+    fullscreenCategories.forEach(cat => {
+      visible[cat] = true;
+    });
+    return visible;
+  }, [fullscreenCategories]);
+
+  // 전체화면용 headlines 필터링 (7개 카테고리만)
+  const fullscreenHeadlines = useMemo(() => {
+    const filtered = {};
+    fullscreenCategories.forEach(cat => {
+      if (headlines[cat]) {
+        filtered[cat] = headlines[cat];
+      }
+    });
+    return filtered;
+  }, [fullscreenCategories, headlines]);
+
   // ESC 키로 닫기
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -43,10 +105,16 @@ const FullscreenNews = memo(function FullscreenNews({
       <div className="fullscreen-news-container">
         {/* 상단 헤더 */}
         <div className="fullscreen-header">
-          <h1 className="fullscreen-title">
-            <span className="title-icon">📰</span>
-            내가 좋아하는 세상 정보
-          </h1>
+          <div className="fullscreen-title">
+            <div className="fullscreen-logo-icon">
+              <span className="logo-globe">🌏</span>
+              <span className="logo-heart">💜</span>
+            </div>
+            <div className="fullscreen-title-text">
+              <h1>내가 좋아하는 세상 정보</h1>
+              <p>실시간으로 만나는 맞춤형 뉴스</p>
+            </div>
+          </div>
           <div className="fullscreen-controls">
             <button
               className="fullscreen-btn browser-fullscreen-btn"
@@ -72,21 +140,22 @@ const FullscreenNews = memo(function FullscreenNews({
         {/* 실시간 헤드라인 */}
         <div className="fullscreen-headline-section">
           <HeadlineRotator
-            selectedCategories={selectedCategories}
-            headlines={headlines}
+            selectedCategories={fullscreenCategories}
+            headlines={fullscreenHeadlines}
             isLoading={false}
+            showFullscreenButton={false}
           />
         </div>
 
         {/* 세상정보 티커 */}
         <div className="fullscreen-ticker-section">
           <MultiLayerTicker
-            visibleCategories={visibleCategories}
+            visibleCategories={fullscreenVisibleCategories}
             speedMultiplier={speedMultiplier}
             onSpeedChange={onSpeedChange}
-            headlines={headlines}
+            headlines={fullscreenHeadlines}
             isRefreshing={isRefreshing}
-            categoryOrder={selectedCategories}
+            categoryOrder={fullscreenCategories}
           />
         </div>
 

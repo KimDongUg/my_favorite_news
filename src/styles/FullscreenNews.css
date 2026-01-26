@@ -60,17 +60,48 @@
 .fullscreen-title {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
+  gap: 1rem;
   position: relative;
   z-index: 1;
 }
 
-.title-icon {
-  font-size: 1.75rem;
+.fullscreen-logo-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreen-logo-icon .logo-globe {
+  font-size: 2.5rem;
+}
+
+.fullscreen-logo-icon .logo-heart {
+  position: absolute;
+  font-size: 1rem;
+  bottom: 0;
+  right: 0;
+  animation: heartPulse 2s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.fullscreen-title-text h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fullscreen-title-text p {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: #d1d5db;
 }
 
 .fullscreen-controls {
@@ -112,46 +143,20 @@
   transform: scale(1.05);
 }
 
-/* 실시간 헤드라인 섹션 */
+/* 실시간 헤드라인 섹션 - 메인페이지와 동일한 스타일 */
 .fullscreen-headline-section {
-  padding: 1.5rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
   flex-shrink: 0;
 }
 
 .fullscreen-headline-section .headline-rotator-inline {
-  background: #f8f9fa;
-  border-radius: 16px;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.fullscreen-headline-section .rotator-title-text {
-  font-size: 1.25rem;
-  color: #333;
-}
-
-.fullscreen-headline-section .rotator-desc-text {
-  color: #666;
-}
-
-.fullscreen-headline-section .rotator-current-category {
-  background: color-mix(in srgb, var(--cat-color) 15%, white);
-  border: 1.5px solid var(--cat-color);
-}
-
-.fullscreen-headline-section .current-cat-name {
-  color: var(--cat-color);
-}
-
-.fullscreen-headline-section .source-link {
-  color: #667eea;
-}
-
-.fullscreen-headline-section .source-link:hover {
-  color: #764ba2;
+  /* 메인페이지와 동일한 스타일 유지 */
+  background: white;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0;
 }
 
 /* 티커 섹션 */
@@ -200,12 +205,25 @@
     padding: 0.75rem 1rem;
   }
 
-  .fullscreen-title {
+  .fullscreen-logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fullscreen-logo-icon .logo-globe {
+    font-size: 1.75rem;
+  }
+
+  .fullscreen-logo-icon .logo-heart {
+    font-size: 0.75rem;
+  }
+
+  .fullscreen-title-text h1 {
     font-size: 1.1rem;
   }
 
-  .title-icon {
-    font-size: 1.25rem;
+  .fullscreen-title-text p {
+    font-size: 0.75rem;
   }
 
   .fullscreen-btn {
@@ -214,15 +232,11 @@
   }
 
   .fullscreen-headline-section {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .fullscreen-headline-section .headline-rotator-inline {
-    padding: 1rem;
-  }
-
-  .fullscreen-headline-section .rotator-title-text {
-    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
   }
 
   .fullscreen-footer {
@@ -235,12 +249,28 @@
 }
 
 @media (max-width: 480px) {
-  .fullscreen-title span:not(.title-icon) {
-    display: none;
+  .fullscreen-title {
+    gap: 0.5rem;
   }
 
-  .fullscreen-title::after {
-    content: '세상 정보';
-    font-size: 1rem;
+  .fullscreen-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .fullscreen-logo-icon .logo-globe {
+    font-size: 1.5rem;
+  }
+
+  .fullscreen-logo-icon .logo-heart {
+    font-size: 0.6rem;
+  }
+
+  .fullscreen-title-text h1 {
+    font-size: 0.95rem;
+  }
+
+  .fullscreen-title-text p {
+    display: none;
   }
 }
