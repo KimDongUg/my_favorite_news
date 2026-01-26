@@ -40,8 +40,8 @@ const TickerControls = memo(function TickerControls({
         </h3>
         <input
           type="range"
-          min="0.5"
-          max="2"
+          min="0.3"
+          max="5"
           step="0.1"
           value={speedMultiplier}
           onChange={(e) => onSpeedChange(parseFloat(e.target.value))}

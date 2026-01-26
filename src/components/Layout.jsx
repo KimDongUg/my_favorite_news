@@ -45,7 +45,7 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
                 <input
                   type="range"
                   min="0.3"
-                  max="3"
+                  max="5"
                   step="0.1"
                   value={speedMultiplier}
                   onChange={(e) => onSpeedChange(parseFloat(e.target.value))}

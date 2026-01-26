@@ -60,12 +60,20 @@ const TickerLayer = memo(function TickerLayer({
 
     const content = contentRef.current;
 
-    // 화면 너비에 따라 속도 조절 (PC와 모바일 체감 속도 동일하게)
+    // 화면 너비에 따라 속도 조절
     // 기준: 1200px에서 설정된 speed 사용
     const baseWidth = 1200;
     const widthRatio = screenWidth / baseWidth;
-    // 화면이 좁을수록 duration을 길게 (느리게) 설정
-    const adjustedSpeed = speed / widthRatio;
+
+    // 모바일은 빠르게, PC는 느리게 조정
+    let speedModifier = 1;
+    if (screenWidth < 768) {
+      speedModifier = 0.7; // 모바일: 30% 빠르게
+    } else if (screenWidth >= 1200) {
+      speedModifier = 2.6; // PC: 160% 느리게
+    }
+
+    const adjustedSpeed = (speed / widthRatio) * speedModifier;
     const duration = prefersReducedMotion ? adjustedSpeed * 3 : adjustedSpeed;
     content.style.animationDuration = `${duration}s`;
 

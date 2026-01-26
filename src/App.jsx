@@ -97,7 +97,7 @@ function App() {
   }, [allCategories]);
 
   // 상태 관리
-  const [speedMultiplier, setSpeedMultiplier] = useState(1);
+  const [speedMultiplier, setSpeedMultiplier] = useState(2.5);
 
   // 선택된 카테고리만 visible로 설정
   const visibleCategories = useMemo(
