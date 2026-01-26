@@ -1,4 +1,4 @@
-/* 전체화면 뉴스 오버레이 */
+/* 전체화면 뉴스 오버레이 - 메인화면과 동일한 스타일 */
 .fullscreen-news-overlay {
   position: fixed;
   top: 0;
@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;
   z-index: 9999;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0d0d1f 100%);
+  background-color: #f5f5f5;
   overflow: hidden;
   animation: fadeIn 0.3s ease-out;
 }
@@ -28,15 +28,33 @@
   padding: 0;
 }
 
-/* 상단 헤더 */
+/* 상단 헤더 - 메인화면 헤더와 동일 */
 .fullscreen-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  background-image: url("https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1920&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
   flex-shrink: 0;
+}
+
+.fullscreen-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.85) 0%,
+    rgba(118, 75, 162, 0.85) 50%,
+    rgba(89, 45, 122, 0.9) 100%
+  );
 }
 
 .fullscreen-title {
@@ -47,7 +65,8 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+  position: relative;
+  z-index: 1;
 }
 
 .title-icon {
@@ -57,6 +76,8 @@
 .fullscreen-controls {
   display: flex;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .fullscreen-btn {
@@ -72,17 +93,17 @@
 }
 
 .browser-fullscreen-btn {
-  background: rgba(102, 126, 234, 0.2);
-  color: #667eea;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 .browser-fullscreen-btn:hover {
-  background: rgba(102, 126, 234, 0.4);
+  background: rgba(255, 255, 255, 0.3);
   transform: scale(1.05);
 }
 
 .close-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
@@ -94,42 +115,43 @@
 /* 실시간 헤드라인 섹션 */
 .fullscreen-headline-section {
   padding: 1.5rem 2rem;
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
 
 .fullscreen-headline-section .headline-rotator-inline {
-  background: rgba(255, 255, 255, 0.05);
+  background: #f8f9fa;
   border-radius: 16px;
   padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .fullscreen-headline-section .rotator-title-text {
   font-size: 1.25rem;
-  color: #fff;
+  color: #333;
 }
 
 .fullscreen-headline-section .rotator-desc-text {
-  color: rgba(255, 255, 255, 0.7);
+  color: #666;
 }
 
 .fullscreen-headline-section .rotator-current-category {
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--cat-color) 15%, white);
+  border: 1.5px solid var(--cat-color);
 }
 
 .fullscreen-headline-section .current-cat-name {
-  color: #fff;
+  color: var(--cat-color);
 }
 
 .fullscreen-headline-section .source-link {
-  color: rgba(255, 255, 255, 0.6);
+  color: #667eea;
 }
 
 .fullscreen-headline-section .source-link:hover {
-  color: #fff;
+  color: #764ba2;
 }
 
 /* 티커 섹션 */
@@ -137,41 +159,11 @@
   flex: 1;
   overflow: hidden;
   padding: 1rem 0;
+  background: #f5f5f5;
 }
 
 .fullscreen-ticker-section .multi-layer-ticker {
   height: 100%;
-}
-
-.fullscreen-ticker-section .ticker-layer {
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.fullscreen-ticker-section .ticker-label {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.fullscreen-ticker-section .ticker-category {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.fullscreen-ticker-section .ticker-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.fullscreen-ticker-section .ticker-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.fullscreen-ticker-section .ticker-item-title {
-  color: #fff;
-}
-
-.fullscreen-ticker-section .ticker-item-description {
-  color: rgba(255, 255, 255, 0.6);
 }
 
 /* 하단 푸터 */
@@ -181,14 +173,14 @@
   align-items: center;
   gap: 1.5rem;
   padding: 0.75rem 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #333;
+  color: white;
   flex-shrink: 0;
 }
 
 .footer-hint {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: #aaa;
 }
 
 .refreshing-badge {

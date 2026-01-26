@@ -446,8 +446,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   border-radius: 10px;
@@ -456,10 +456,13 @@ body {
   flex-shrink: 0;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .fullscreen-toggle-btn:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
 }
 
@@ -469,6 +472,22 @@ body {
 
 .fullscreen-toggle-btn svg {
   pointer-events: none;
+  flex-shrink: 0;
+}
+
+.fullscreen-btn-text {
+  pointer-events: none;
+}
+
+/* 모바일에서 전체화면 버튼 텍스트 숨김 */
+@media (max-width: 768px) {
+  .fullscreen-toggle-btn {
+    padding: 0.5rem;
+  }
+
+  .fullscreen-btn-text {
+    display: none;
+  }
 }
 
 .mini-speed-control {
