@@ -25,8 +25,8 @@ import './styles/AllNews.css'
 import './styles/Admin.css'
 
 // 정책 페이지(/privacy, /terms, /copyright)는 public/*.html 정적 파일로 제공
-// 문의하기(/contact)도 public/feedback.html로 제공 (푸터 링크용)
-// 고객 의견 게시판(/feedback)은 React 라우트로 제공
+// 문의하기는 public/feedback.html로 제공 (푸터에서 /feedback.html 직접 링크)
+// 고객 의견 게시판(/feedback)은 React 라우트로 제공 (헤더 버튼에서 접근)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
