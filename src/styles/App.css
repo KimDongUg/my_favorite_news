@@ -627,6 +627,52 @@ body {
 /* ========================================
    Responsive
    ======================================== */
+
+/* 태블릿/iPad Mini (1024px 이하) */
+@media (max-width: 1024px) {
+  .headline-rotator-inline {
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .rotator-current-category {
+    padding: 0.15rem 0.35rem;
+  }
+
+  .current-cat-icon {
+    font-size: 0.7rem;
+  }
+
+  /* 태블릿: 카테고리 이름도 표시 */
+  .current-cat-name {
+    font-size: 0.6rem;
+  }
+
+  .rotator-title-text {
+    font-size: 0.9rem;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 태블릿: 설명 숨김, 제목만 표시 */
+  .rotator-desc-text {
+    display: none;
+  }
+
+  /* 태블릿: 인디케이터 숨김 */
+  .rotator-indicators {
+    display: none;
+  }
+
+  /* 태블릿: 출처 링크 숨김 */
+  .rotator-sources {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 1.5rem 1rem;
