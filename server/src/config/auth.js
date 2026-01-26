@@ -2,6 +2,9 @@
  * 인증 설정
  */
 
+// 환경 변수 확인 (이 파일이 import될 때)
+import 'dotenv/config';
+
 // JWT 설정
 export const jwtConfig = {
   accessToken: {

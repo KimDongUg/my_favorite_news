@@ -3,6 +3,9 @@
  * OAuth 2.0 소셜 로그인 지원 (Google, Kakao, Naver, Apple)
  */
 
+// 환경 변수 로드 보장
+import 'dotenv/config';
+
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as KakaoStrategy } from 'passport-kakao';

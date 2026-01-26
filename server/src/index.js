@@ -1,6 +1,15 @@
 // 🔥 환경 변수를 가장 먼저 로드 (ES 모듈에서 중요!)
 import 'dotenv/config';
 
+// 환경 변수 로드 확인 (서버 시작 시 출력)
+console.log('=== 환경 변수 로드 확인 ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('KAKAO_CLIENT_ID:', process.env.KAKAO_CLIENT_ID || '❌ 없음');
+console.log('KAKAO_CLIENT_SECRET:', process.env.KAKAO_CLIENT_SECRET ? `있음 (길이: ${process.env.KAKAO_CLIENT_SECRET.length})` : '❌ 없음');
+console.log('KAKAO_CALLBACK_URL:', process.env.KAKAO_CALLBACK_URL || '❌ 없음');
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL || '❌ 없음');
+console.log('===========================');
+
 import express from 'express';
 import cors from 'cors';
 import passport from 'passport';
@@ -64,7 +73,7 @@ const PORT = process.env.PORT || 3001;
 app.use(helmetMiddleware);
 app.use(addSecurityHeaders);
 
-// CORS 설정
+// CORS 설정 - Vercel 프리뷰 URL 포함
 const allowedOrigins = [
   // 프로덕션
   'https://myfavoritenews.vercel.app',
@@ -82,7 +91,12 @@ app.use(cors({
       return callback(null, true);
     }
 
-    if (allowedOrigins.includes(origin)) {
+    // Vercel 프리뷰 URL 패턴 허용 (myfavoritenews-*.vercel.app)
+    const isVercelPreview = /^https:\/\/myfavoritenews(-[a-z0-9]+)?\.vercel\.app$/.test(origin) ||
+                           /^https:\/\/myfavoritenews-[a-z0-9-]+\.vercel\.app$/.test(origin) ||
+                           /^https:\/\/my-favorite-news(-[a-z0-9-]+)?\.vercel\.app$/.test(origin);
+
+    if (allowedOrigins.includes(origin) || isVercelPreview) {
       callback(null, true);
     } else {
       console.warn(`[CORS] 차단된 origin: ${origin}`);
@@ -93,6 +107,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
+
+// OPTIONS 프리플라이트 요청 처리
+app.options('*', cors());
 
 // 기본 미들웨어
 app.use(express.json({ limit: '10mb' }));
