@@ -12,6 +12,9 @@ import ForgotPassword from './pages/ForgotPassword.jsx'
 import AuthCallback from './pages/AuthCallback.jsx'
 import MagicLinkVerify from './pages/MagicLinkVerify.jsx'
 import Admin from './pages/Admin.jsx'
+import Feedback from './pages/Feedback.jsx'
+import FeedbackPost from './pages/FeedbackPost.jsx'
+import FeedbackWrite from './pages/FeedbackWrite.jsx'
 import './styles/App.css'
 import './styles/Ticker.css'
 import './styles/Settings.css'
@@ -21,9 +24,9 @@ import './styles/Legal.css'
 import './styles/AllNews.css'
 import './styles/Admin.css'
 
-// 정책 페이지(/privacy, /terms, /copyright, /feedback)는
-// public/*.html 정적 파일로 제공됩니다.
-// Vercel redirects가 처리합니다.
+// 정책 페이지(/privacy, /terms, /copyright)는 public/*.html 정적 파일로 제공
+// 문의하기(/contact)도 public/feedback.html로 제공 (푸터 링크용)
+// 고객 의견 게시판(/feedback)은 React 라우트로 제공
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -35,6 +38,12 @@ createRoot(document.getElementById('root')).render(
           <Route path="/settings" element={<CategorySettings />} />
           <Route path="/monitoring" element={<ComplianceMonitoring />} />
           <Route path="/news" element={<AllNews />} />
+
+          {/* 고객 의견 게시판 (React) */}
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/feedback/write" element={<FeedbackWrite />} />
+          <Route path="/feedback/edit/:id" element={<FeedbackWrite />} />
+          <Route path="/feedback/:id" element={<FeedbackPost />} />
 
           {/* 관리자 페이지 */}
           <Route path="/admin" element={<Admin />} />
