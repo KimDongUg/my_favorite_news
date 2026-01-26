@@ -745,9 +745,7 @@
     will-change: transform !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
-    /* CSS 애니메이션 강제 활성화 */
-    animation: ticker-scroll 25s linear infinite !important;
-    -webkit-animation: ticker-scroll 25s linear infinite !important;
+    /* animation-duration은 JS에서 화면 너비에 따라 동적 설정 */
   }
 
   .ticker-item:hover {
@@ -832,9 +830,7 @@
     /* GPU 가속 유지 */
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
-    /* CSS 애니메이션 강제 실행 */
-    animation: ticker-scroll 20s linear infinite !important;
-    -webkit-animation: ticker-scroll 20s linear infinite !important;
+    /* animation-duration은 JS에서 화면 너비에 따라 동적 설정 */
   }
 
   .ticker-item:hover,

@@ -18,6 +18,14 @@ const TickerLayer = memo(function TickerLayer({
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  // 화면 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // prefers-reduced-motion 감지
   useEffect(() => {
@@ -49,11 +57,16 @@ const TickerLayer = memo(function TickerLayer({
   // useEffect는 hover 제어에만 사용
   useEffect(() => {
     if (!contentRef.current) return;
-    
+
     const content = contentRef.current;
-    
-    // CSS 변수로 속도 조절
-    const duration = prefersReducedMotion ? speed * 3 : speed;
+
+    // 화면 너비에 따라 속도 조절 (PC와 모바일 체감 속도 동일하게)
+    // 기준: 1200px에서 설정된 speed 사용
+    const baseWidth = 1200;
+    const widthRatio = screenWidth / baseWidth;
+    // 화면이 좁을수록 duration을 길게 (느리게) 설정
+    const adjustedSpeed = speed / widthRatio;
+    const duration = prefersReducedMotion ? adjustedSpeed * 3 : adjustedSpeed;
     content.style.animationDuration = `${duration}s`;
 
     // hover 시 일시정지
@@ -63,7 +76,7 @@ const TickerLayer = memo(function TickerLayer({
       content.style.animationPlayState = 'running';
     }
     
-  }, [isVisible, speed, isPaused, prefersReducedMotion, category, duplicatedItems.length]);
+  }, [isVisible, speed, isPaused, prefersReducedMotion, category, duplicatedItems.length, screenWidth]);
 
   if (!isVisible) return null;
 
