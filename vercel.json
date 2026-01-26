@@ -1,11 +1,8 @@
 {
   "redirects": [
-    { "source": "/privacy", "destination": "/privacy.html", "statusCode": 301 },
-    { "source": "/terms", "destination": "/terms.html", "statusCode": 301 },
-    { "source": "/copyright", "destination": "/copyright.html", "statusCode": 301 },
-    { "source": "/feedback", "destination": "/feedback.html", "statusCode": 301 }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/privacy", "destination": "/privacy.html", "permanent": true },
+    { "source": "/terms", "destination": "/terms.html", "permanent": true },
+    { "source": "/copyright", "destination": "/copyright.html", "permanent": true },
+    { "source": "/feedback", "destination": "/feedback.html", "permanent": true }
   ]
 }
