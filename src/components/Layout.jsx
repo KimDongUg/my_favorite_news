@@ -68,6 +68,8 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
           <Link to="/terms">이용약관</Link>
           <span className="footer-divider">|</span>
           <Link to="/privacy">개인정보처리방침</Link>
+          <span className="footer-divider">|</span>
+          <Link to="/feedback">문의하기</Link>
           {isAdmin && (
             <>
               <span className="footer-divider">|</span>
