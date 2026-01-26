@@ -96,16 +96,24 @@ export function initializePassport() {
   // Kakao Strategy
   // ============================================
   console.log('=== 카카오 로그인 설정 확인 ===');
-  console.log('KAKAO_CLIENT_ID:', oauthConfig.kakao.clientID ? '설정됨 (' + oauthConfig.kakao.clientID.substring(0, 8) + '...)' : '없음');
-  console.log('KAKAO_CLIENT_SECRET:', oauthConfig.kakao.clientSecret ? '설정됨' : '없음 (선택사항)');
+  console.log('KAKAO_CLIENT_ID:', oauthConfig.kakao.clientID ? '설정됨 (' + oauthConfig.kakao.clientID.substring(0, 8) + '...)' : '❌ 없음');
+  console.log('KAKAO_CLIENT_SECRET:', oauthConfig.kakao.clientSecret ? '설정됨 (길이: ' + oauthConfig.kakao.clientSecret.length + ')' : '❌ 없음 - Bad credentials 에러 발생 가능!');
   console.log('KAKAO_CALLBACK_URL:', oauthConfig.kakao.callbackURL);
+  console.log('환경변수 직접 확인:');
+  console.log('  process.env.KAKAO_CLIENT_ID:', process.env.KAKAO_CLIENT_ID ? '설정됨' : '❌ 없음');
+  console.log('  process.env.KAKAO_CLIENT_SECRET:', process.env.KAKAO_CLIENT_SECRET ? '설정됨' : '❌ 없음');
   console.log('===============================');
 
   if (oauthConfig.kakao.clientID) {
+    // 🔥 clientSecret이 반드시 필요함 (카카오 REST API 요구사항)
+    if (!oauthConfig.kakao.clientSecret) {
+      console.error('[Auth] ⚠️ KAKAO_CLIENT_SECRET이 설정되지 않음! Bad credentials 에러 발생 예상');
+    }
+
     passport.use(new KakaoStrategy(
       {
         clientID: oauthConfig.kakao.clientID,
-        clientSecret: oauthConfig.kakao.clientSecret || '',
+        clientSecret: oauthConfig.kakao.clientSecret, // 빈 문자열 fallback 제거
         callbackURL: oauthConfig.kakao.callbackURL
       },
       async (accessToken, refreshToken, profile, done) => {

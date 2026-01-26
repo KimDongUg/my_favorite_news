@@ -1,6 +1,8 @@
+// 🔥 환경 변수를 가장 먼저 로드 (ES 모듈에서 중요!)
+import 'dotenv/config';
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import passport from 'passport';
 
 // 라우트
@@ -53,8 +55,7 @@ import * as sessionManager from './services/sessionManager.js';
 // 컴플라이언스
 import { auditAllSummaries, getComplianceStats } from './compliance/complianceChecker.js';
 
-// 환경변수 로드
-dotenv.config();
+// 환경변수는 이미 맨 위에서 로드됨 (import 'dotenv/config')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
