@@ -1,8 +1,11 @@
 {
+  "redirects": [
+    { "source": "/privacy", "destination": "/privacy.html", "statusCode": 301 },
+    { "source": "/terms", "destination": "/terms.html", "statusCode": 301 },
+    { "source": "/copyright", "destination": "/copyright.html", "statusCode": 301 },
+    { "source": "/feedback", "destination": "/feedback.html", "statusCode": 301 }
+  ],
   "rewrites": [
-    {
-      "source": "/((?!.*\\.html$).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -5,9 +5,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import App from './App.jsx'
 import CategorySettings from './pages/CategorySettings.jsx'
 import ComplianceMonitoring from './pages/ComplianceMonitoring.jsx'
-import CopyrightPolicy from './pages/CopyrightPolicy.jsx'
-import TermsOfService from './pages/TermsOfService.jsx'
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+// 정책 페이지는 정적 HTML로 제공 (public/*.html)
 import Feedback from './pages/Feedback.jsx'
 import FeedbackPost from './pages/FeedbackPost.jsx'
 import FeedbackWrite from './pages/FeedbackWrite.jsx'
@@ -38,10 +36,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/monitoring" element={<ComplianceMonitoring />} />
           <Route path="/news" element={<AllNews />} />
 
-          {/* 법적 문서 페이지 */}
-          <Route path="/copyright" element={<CopyrightPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
+          {/* 법적 문서 페이지는 정적 HTML로 제공 (public/*.html) */}
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/feedback/write" element={<FeedbackWrite />} />
           <Route path="/feedback/edit/:id" element={<FeedbackWrite />} />
