@@ -739,11 +739,12 @@
   }
 
   .ticker-category {
-    display: none;
+    font-size: 0.55rem;
+    letter-spacing: 0;
   }
 
   .ticker-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   /* 모바일: 트랙에 오른쪽 여백 확보 */
@@ -832,12 +833,17 @@
   }
 
   .ticker-label {
-    min-width: 40px;
-    padding: 0 0.3rem;
+    min-width: 42px;
+    padding: 0 0.25rem;
+    gap: 0.1rem;
   }
 
   .ticker-icon {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .ticker-category {
+    font-size: 0.5rem;
   }
 
   .ticker-track {
