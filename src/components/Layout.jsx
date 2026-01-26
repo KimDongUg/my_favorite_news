@@ -79,7 +79,7 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
           &copy; 2026 내가 좋아하는 세상 정보. All rights reserved.
         </p>
         <p className="footer-author">
-          관리자 김동욱 kduaro124@naver.com
+          운영자(김동욱) 이메일: kduaro124@naver.com
         </p>
         <p className="footer-notice">
           본 서비스의 요약 콘텐츠는 AI가 생성한 것으로, 원본 기사 링크를 통해

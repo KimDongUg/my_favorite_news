@@ -40,6 +40,26 @@
   font-size: 0.9rem;
 }
 
+.feedback-header .contact-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.feedback-header .contact-info p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+.feedback-header .contact-info .operator-email {
+  color: #ffd700;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
 /* Content */
 .feedback-content {
   flex: 1;

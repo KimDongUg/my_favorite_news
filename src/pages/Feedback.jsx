@@ -117,6 +117,11 @@ function Feedback() {
         <Link to="/" className="back-link">← 홈으로</Link>
         <h1>고객 의견 게시판</h1>
         <p className="header-desc">서비스 개선을 위한 소중한 의견을 남겨주세요</p>
+        <div className="contact-info">
+          <p>본 사이트에 대한 문의, 오류 신고, 제휴 문의, 콘텐츠 관련 요청은</p>
+          <p>아래 게시판 또는 이메일을 통해 언제든지 연락 주세요.</p>
+          <p className="operator-email">운영자 이메일: kduaro124@naver.com</p>
+        </div>
       </header>
 
       <div className="feedback-content">
