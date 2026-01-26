@@ -63,13 +63,13 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
 
       <footer className="footer">
         <div className="footer-links">
-          <Link to="/copyright">저작권 정책</Link>
+          <a href="/copyright.html">저작권 정책</a>
           <span className="footer-divider">|</span>
-          <Link to="/terms">이용약관</Link>
+          <a href="/terms.html">이용약관</a>
           <span className="footer-divider">|</span>
-          <Link to="/privacy">개인정보처리방침</Link>
+          <a href="/privacy.html">개인정보처리방침</a>
           <span className="footer-divider">|</span>
-          <Link to="/feedback">문의하기</Link>
+          <a href="/feedback.html">문의하기</a>
           {isAdmin && (
             <>
               <span className="footer-divider">|</span>

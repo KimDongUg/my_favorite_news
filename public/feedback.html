@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의하기 - 내가 좋아하는 세상 정보</title>
+  <meta name="description" content="내가 좋아하는 세상 정보에 문의하기. 서비스 관련 문의, 오류 신고, 제휴 문의, 콘텐츠 관련 요청을 받습니다.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+    .container { max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; text-align: center; }
+    .header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .header p { font-size: 0.95rem; opacity: 0.9; margin-bottom: 0.5rem; }
+    .nav { background: #f8f9fa; padding: 1rem 2rem; border-bottom: 1px solid #e0e0e0; }
+    .nav a { color: #667eea; text-decoration: none; margin-right: 1rem; }
+    .nav a:hover { text-decoration: underline; }
+    .content { padding: 2rem; }
+    .contact-info { background: linear-gradient(135deg, #667eea22 0%, #764ba222 100%); border: 2px solid #667eea; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center; }
+    .contact-info h2 { color: #667eea; margin-bottom: 1rem; }
+    .contact-info p { margin-bottom: 0.5rem; }
+    .email-highlight { font-size: 1.3rem; color: #667eea; font-weight: bold; margin: 1rem 0; }
+    .section { margin-bottom: 2rem; }
+    .section h2 { color: #667eea; margin-bottom: 1rem; font-size: 1.3rem; border-bottom: 2px solid #667eea; padding-bottom: 0.5rem; }
+    .section p { margin-bottom: 1rem; }
+    .inquiry-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .inquiry-card { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; text-align: center; border: 1px solid #e0e0e0; }
+    .inquiry-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .inquiry-card h3 { color: #333; margin-bottom: 0.5rem; font-size: 1rem; }
+    .inquiry-card p { font-size: 0.85rem; color: #666; }
+    .notice-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin: 1.5rem 0; }
+    .notice-box h3 { color: #856404; margin-bottom: 0.5rem; }
+    .notice-box p { color: #856404; font-size: 0.9rem; }
+    .cta-button { display: inline-block; background: #667eea; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 1rem; }
+    .cta-button:hover { background: #5a6fd6; }
+    .footer { background: #333; color: white; padding: 2rem; text-align: center; }
+    .footer a { color: #aaa; margin: 0 0.5rem; text-decoration: none; }
+    .footer a:hover { color: white; }
+    .footer p { margin-top: 1rem; font-size: 0.9rem; opacity: 0.8; }
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.4rem; }
+      .content { padding: 1rem; }
+      .inquiry-types { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>문의하기</h1>
+      <p>서비스 관련 문의사항을 남겨주세요</p>
+    </header>
+
+    <nav class="nav">
+      <a href="/">← 홈으로</a>
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+      <a href="/copyright.html">저작권 정책</a>
+    </nav>
+
+    <main class="content">
+      <div class="contact-info">
+        <h2>연락처 안내</h2>
+        <p>본 사이트에 대한 문의, 오류 신고, 제휴 문의, 콘텐츠 관련 요청은</p>
+        <p>아래 이메일을 통해 언제든지 연락 주세요.</p>
+        <p class="email-highlight">운영자 이메일: kduaro124@naver.com</p>
+        <p>영업일 기준 1-2일 이내 답변드리겠습니다.</p>
+      </div>
+
+      <section class="section">
+        <h2>문의 유형</h2>
+        <div class="inquiry-types">
+          <div class="inquiry-card">
+            <div class="icon">💡</div>
+            <h3>기능 제안</h3>
+            <p>새로운 기능이나 개선 아이디어를 제안해주세요</p>
+          </div>
+          <div class="inquiry-card">
+            <div class="icon">🐛</div>
+            <h3>버그 신고</h3>
+            <p>서비스 이용 중 발견한 오류를 알려주세요</p>
+          </div>
+          <div class="inquiry-card">
+            <div class="icon">❓</div>
+            <h3>이용 문의</h3>
+            <p>서비스 이용 관련 궁금한 점을 문의해주세요</p>
+          </div>
+          <div class="inquiry-card">
+            <div class="icon">🤝</div>
+            <h3>제휴 문의</h3>
+            <p>비즈니스 제휴 및 협력 관련 문의</p>
+          </div>
+          <div class="inquiry-card">
+            <div class="icon">📰</div>
+            <h3>콘텐츠 요청</h3>
+            <p>콘텐츠 삭제, 수정 등 저작권 관련 요청</p>
+          </div>
+          <div class="inquiry-card">
+            <div class="icon">⭐</div>
+            <h3>칭찬/감사</h3>
+            <p>서비스에 대한 긍정적인 피드백</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>문의 시 포함해주세요</h2>
+        <ul>
+          <li><strong>문의 유형:</strong> 위 유형 중 해당하는 항목</li>
+          <li><strong>상세 내용:</strong> 문의하실 내용을 구체적으로 작성</li>
+          <li><strong>스크린샷:</strong> 오류 신고 시 화면 캡처 첨부 (선택)</li>
+          <li><strong>연락처:</strong> 답변받으실 이메일 주소</li>
+        </ul>
+      </section>
+
+      <div class="notice-box">
+        <h3>📌 참고사항</h3>
+        <p>본 서비스의 뉴스 콘텐츠는 AI가 요약한 것입니다. 정확한 정보 확인을 위해 반드시 원문 기사를 확인해주세요.</p>
+        <p>저작권 관련 요청(콘텐츠 삭제 등)은 72시간 이내 처리됩니다.</p>
+      </div>
+
+      <section class="section">
+        <h2>서비스 소개</h2>
+        <p>"내가 좋아하는 세상 정보"는 다양한 뉴스 매체의 기사를 AI가 요약하여 제공하는 뉴스 큐레이션 서비스입니다.</p>
+        <ul>
+          <li>실시간 뉴스 수집 및 AI 요약</li>
+          <li>카테고리별 맞춤 뉴스 제공</li>
+          <li>원문 기사 링크 제공</li>
+          <li>출처 명확히 표기</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <a href="/copyright.html">저작권 정책</a> |
+        <a href="/terms.html">이용약관</a> |
+        <a href="/privacy.html">개인정보처리방침</a> |
+        <a href="/feedback.html">문의하기</a>
+      </div>
+      <p>&copy; 2026 내가 좋아하는 세상 정보. All rights reserved.</p>
+      <p>운영자(김동욱) 이메일: kduaro124@naver.com</p>
+    </footer>
+  </div>
+</body>
+</html>
