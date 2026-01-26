@@ -1,29 +1,8 @@
 import { memo, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 const DetailModal = memo(function DetailModal({ item, category, color, onClose }) {
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isAuthenticated } = useAuth();
-
-  // 링크 클릭 시 로그인 체크
-  const handleLinkClick = (e, url) => {
-    e.preventDefault();
-    if (!isAuthenticated) {
-      // 클릭한 기사 URL 저장 (로그인 후 열기 위해)
-      if (url) {
-        localStorage.setItem('pendingArticleUrl', url);
-      }
-      onClose();
-      navigate('/login', { state: { from: location } });
-      return;
-    }
-    // 로그인된 경우 새 탭에서 열기
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
 
   useEffect(() => {
     // 모달 열릴 때 닫기 버튼에 포커스
@@ -104,7 +83,8 @@ const DetailModal = memo(function DetailModal({ item, category, color, onClose }
                   <li key={idx} className="source-item">
                     <a
                       href={source.url}
-                      onClick={(e) => handleLinkClick(e, source.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="source-link"
                     >
                       <span className="source-name">{source.name}</span>
@@ -143,7 +123,8 @@ const DetailModal = memo(function DetailModal({ item, category, color, onClose }
           {detailUrl ? (
             <a
               href={detailUrl}
-              onClick={(e) => handleLinkClick(e, detailUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="modal-btn modal-btn-primary"
               style={{ background: color }}
             >

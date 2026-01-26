@@ -1,6 +1,4 @@
 import { useState, useEffect, memo, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from '../data/headlines';
 
 const HeadlineRotator = memo(function HeadlineRotator({
@@ -8,9 +6,6 @@ const HeadlineRotator = memo(function HeadlineRotator({
   headlines: propHeadlines,
   isLoading = false,
 }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isAuthenticated } = useAuth();
 
   // props로 받은 headlines 사용, 없으면 fallback
   const headlines = propHeadlines || fallbackHeadlines;
@@ -39,24 +34,14 @@ const HeadlineRotator = memo(function HeadlineRotator({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // 헤드라인 클릭 핸들러 - 로그인 체크
+  // 헤드라인 클릭 핸들러
   const handleHeadlineClick = (e) => {
     e.preventDefault();
     const current = topHeadlines[currentIndex];
     const articleUrl = current.sources?.[0]?.url;
 
-    if (!isAuthenticated) {
-      // 클릭한 기사 URL 저장 (로그인 후 열기 위해)
-      if (articleUrl) {
-        localStorage.setItem('pendingArticleUrl', articleUrl);
-      }
-      // 로그인 페이지로 이동하면서 현재 위치 저장
-      navigate('/login', { state: { from: location } });
-    } else {
-      // 로그인된 경우 - 원본 기사로 이동
-      if (articleUrl) {
-        window.open(articleUrl, '_blank', 'noopener,noreferrer');
-      }
+    if (articleUrl) {
+      window.open(articleUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
