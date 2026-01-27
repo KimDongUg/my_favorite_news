@@ -41,6 +41,28 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
   const containerRef = useRef(null);
   const defaultVisibleCount = 5; // 기본 표시 개수
 
+  // 화면 크기에 따른 레이어 높이 (CSS와 동기화)
+  const [layerHeight, setLayerHeight] = useState(150);
+
+  useEffect(() => {
+    const updateLayerHeight = () => {
+      const width = window.innerWidth;
+      if (width <= 480) {
+        setLayerHeight(60);
+      } else if (width <= 767) {
+        setLayerHeight(70);
+      } else if (width <= 1199) {
+        setLayerHeight(80);
+      } else {
+        setLayerHeight(150);
+      }
+    };
+
+    updateLayerHeight();
+    window.addEventListener('resize', updateLayerHeight);
+    return () => window.removeEventListener('resize', updateLayerHeight);
+  }, []);
+
   // 실제 표시할 레이어 수 계산 (항상 5개, 전체화면은 8개)
   const actualVisibleCount = useMemo(() => {
     if (visibleLayerCount !== null) {
@@ -84,6 +106,11 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
 
     const interval = setInterval(() => {
       setScrollOffset((prev) => {
+        // 이미 마지막에 도달했으면 리셋 대기 중이므로 증가하지 않음
+        if (prev >= totalCategories) {
+          return prev;
+        }
+
         const next = prev + 1;
         // 원본 카테고리 수에 도달하면 (복제본 시작점)
         if (next >= totalCategories) {
@@ -115,9 +142,6 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
     setSelectedItem(null);
     setSelectedCategory(null);
   }, []);
-
-  // 레이어 높이 (PC 기준 150px)
-  const layerHeight = 150;
 
   return (
     <div className="multi-layer-ticker">
