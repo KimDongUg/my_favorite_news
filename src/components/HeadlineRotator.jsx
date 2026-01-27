@@ -57,7 +57,7 @@ const HeadlineRotator = memo(function HeadlineRotator({
         setCurrentIndex((prev) => (prev + 1) % topHeadlines.length);
         setIsAnimating(false);
       }, 300);
-    }, 3000); // 3초마다 변경
+    }, 10000); // 10초마다 변경
 
     return () => clearInterval(interval);
   }, [topHeadlines.length]);

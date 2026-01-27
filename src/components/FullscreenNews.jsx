@@ -10,69 +10,40 @@ const CATEGORY_PRIORITY = [
   '칼럼·사설', '여행', '음식', '휴먼스토리', '과학', '취업·직장', '재테크'
 ];
 
-const FULLSCREEN_CATEGORY_COUNT = 8;
-
 const FullscreenNews = memo(function FullscreenNews({
-  selectedCategories,
   headlines,
-  visibleCategories,
   speedMultiplier,
   onSpeedChange,
   isRefreshing,
   onClose,
 }) {
-  // 전체화면용 카테고리 계산 (항상 8개)
-  const fullscreenCategories = useMemo(() => {
-    // 사용자가 선택한 카테고리
-    const userSelected = selectedCategories || [];
-
-    // 8개 이상이면 8개까지만 자르기
-    if (userSelected.length >= FULLSCREEN_CATEGORY_COUNT) {
-      return userSelected.slice(0, FULLSCREEN_CATEGORY_COUNT);
-    }
-
-    // 8개 미만이면 우선순위가 높은 미선택 카테고리로 채우기
-    const result = [...userSelected];
+  // 모든 카테고리 목록 (우선순위 순서대로 정렬)
+  const allAvailableCategories = useMemo(() => {
     const availableCategories = Object.keys(headlines);
-
-    // 우선순위 순서대로 미선택 카테고리 추가
+    // 우선순위 순서대로 정렬
+    const ordered = [];
     for (const category of CATEGORY_PRIORITY) {
-      if (result.length >= FULLSCREEN_CATEGORY_COUNT) break;
-      if (!result.includes(category) && availableCategories.includes(category)) {
-        result.push(category);
+      if (availableCategories.includes(category)) {
+        ordered.push(category);
       }
     }
-
-    // 그래도 부족하면 headlines에 있는 나머지 카테고리 추가
+    // 나머지 카테고리 추가
     for (const category of availableCategories) {
-      if (result.length >= FULLSCREEN_CATEGORY_COUNT) break;
-      if (!result.includes(category)) {
-        result.push(category);
+      if (!ordered.includes(category)) {
+        ordered.push(category);
       }
     }
+    return ordered;
+  }, [headlines]);
 
-    return result;
-  }, [selectedCategories, headlines]);
-
-  // 전체화면용 visibleCategories 계산
+  // 전체화면용 visibleCategories 계산 (모든 카테고리)
   const fullscreenVisibleCategories = useMemo(() => {
     const visible = {};
-    fullscreenCategories.forEach(cat => {
+    allAvailableCategories.forEach(cat => {
       visible[cat] = true;
     });
     return visible;
-  }, [fullscreenCategories]);
-
-  // 전체화면용 headlines 필터링 (8개 카테고리만)
-  const fullscreenHeadlines = useMemo(() => {
-    const filtered = {};
-    fullscreenCategories.forEach(cat => {
-      if (headlines[cat]) {
-        filtered[cat] = headlines[cat];
-      }
-    });
-    return filtered;
-  }, [fullscreenCategories, headlines]);
+  }, [allAvailableCategories]);
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -128,8 +99,8 @@ const FullscreenNews = memo(function FullscreenNews({
         {/* 실시간 헤드라인 */}
         <div className="fullscreen-headline-section">
           <HeadlineRotator
-            selectedCategories={fullscreenCategories}
-            headlines={fullscreenHeadlines}
+            selectedCategories={allAvailableCategories}
+            headlines={headlines}
             isLoading={false}
             showFullscreenButton={false}
           />
@@ -141,9 +112,11 @@ const FullscreenNews = memo(function FullscreenNews({
             visibleCategories={fullscreenVisibleCategories}
             speedMultiplier={speedMultiplier}
             onSpeedChange={onSpeedChange}
-            headlines={fullscreenHeadlines}
+            headlines={headlines}
             isRefreshing={isRefreshing}
-            categoryOrder={fullscreenCategories}
+            categoryOrder={allAvailableCategories}
+            allCategories={allAvailableCategories}
+            visibleLayerCount={8}
           />
         </div>
 

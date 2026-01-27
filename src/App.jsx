@@ -7,8 +7,12 @@ import FullscreenNews from './components/FullscreenNews';
 import { useSummaries } from './hooks/useSummaries';
 import { newsAPI } from './services/api';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from './data/headlines';
+import { useAuth } from './contexts/AuthContext';
 
 function App() {
+  // 인증 상태
+  const { isAuthenticated } = useAuth();
+
   // API에서 요약 데이터 가져오기
   const {
     summaries,
@@ -217,6 +221,8 @@ function App() {
         headlines={headlines}
         isRefreshing={isRefreshing}
         categoryOrder={selectedCategories}
+        isAuthenticated={isAuthenticated}
+        allCategories={allCategories}
       />
 
       {/* 배너 광고 */}

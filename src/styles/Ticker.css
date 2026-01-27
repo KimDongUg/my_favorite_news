@@ -179,7 +179,23 @@
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: height 0.3s ease;
+  position: relative;
 }
+
+/* 비로그인 시 자동 스크롤 wrapper */
+.ticker-scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  will-change: transform;
+  /* GPU 가속 강화 - 깜빡임 방지 */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 
 /* Ticker Layer - Base with GPU Acceleration */
 .ticker-layer {
