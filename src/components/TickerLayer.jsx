@@ -37,9 +37,10 @@ const TickerLayer = memo(function TickerLayer({
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  // 무한 스크롤을 위해 아이템을 충분히 복제 (5배로 복제)
+  // 무한 스크롤을 위해 아이템을 충분히 복제 (6배로 복제)
+  // 6배 복제 + -50% 이동 = 3세트가 지나가고 3세트가 남아서 깔끔한 루프
   const duplicatedItems = useMemo(
-    () => [...items, ...items, ...items, ...items, ...items],
+    () => [...items, ...items, ...items, ...items, ...items, ...items],
     [items]
   );
 
