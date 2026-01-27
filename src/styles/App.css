@@ -419,7 +419,7 @@ body {
 }
 
 .rotator-title-text {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #333;
   white-space: nowrap;
@@ -427,7 +427,7 @@ body {
 }
 
 .rotator-desc-text {
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   color: #555;
   white-space: nowrap;
   overflow: hidden;
@@ -697,7 +697,7 @@ body {
   }
 
   .rotator-title-text {
-    font-size: 0.9rem;
+    font-size: 1rem;
     flex-shrink: 1;
     min-width: 0;
     overflow: hidden;
@@ -921,7 +921,7 @@ body {
   }
 
   .rotator-title-text {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     flex-shrink: 1;
     min-width: 0;
     overflow: hidden;
