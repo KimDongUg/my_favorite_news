@@ -33,8 +33,8 @@ function CategorySettings() {
         if (prev.length <= 1) return prev;
         return prev.filter((c) => c !== category);
       } else {
-        // 선택 안됨 -> 추가 (최대 10개)
-        if (prev.length >= 10) return prev;
+        // 선택 안됨 -> 추가 (최대 20개)
+        if (prev.length >= 20) return prev;
         return [...prev, category];
       }
     });
