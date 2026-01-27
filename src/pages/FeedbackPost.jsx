@@ -316,7 +316,7 @@ function FeedbackPost() {
           <Link to="/terms">이용약관</Link>
           <Link to="/privacy">개인정보처리방침</Link>
         </div>
-        <p>&copy; 2026 내가 좋아하는 세상 정보. All rights reserved.</p>
+        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
       </footer>
     </div>
   );

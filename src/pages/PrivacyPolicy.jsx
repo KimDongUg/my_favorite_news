@@ -29,7 +29,7 @@ function PrivacyPolicy() {
 
         <div className="legal-intro">
           <p>
-            "내가 좋아하는 세상 정보" (이하 "회사")는 개인정보보호법 제30조에 따라 정보주체의
+            "무빙아티클(Moving Article)" (이하 "회사")는 개인정보보호법 제30조에 따라 정보주체의
             개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여
             다음과 같이 개인정보 처리방침을 수립·공개합니다.
           </p>
@@ -362,7 +362,7 @@ function PrivacyPolicy() {
           <Link to="/terms">이용약관</Link>
           <Link to="/monitoring">컴플라이언스 현황</Link>
         </div>
-        <p>&copy; 2026 내가 좋아하는 세상 정보. All rights reserved.</p>
+        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
       </footer>
     </div>
   );

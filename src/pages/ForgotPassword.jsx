@@ -68,8 +68,11 @@ export default function ForgotPassword() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-logo">
-            <span className="logo-icon">📰</span>
-            <span className="logo-text">MyNews</span>
+            <div className="auth-logo-icon">
+              <span className="logo-globe">💫</span>
+              <span className="logo-heart">🌈</span>
+            </div>
+            <div className="auth-logo-text">무빙아티클(Moving Article)</div>
           </div>
           <h1>비밀번호 찾기</h1>
           <p>가입한 이메일 주소를 입력하세요</p>

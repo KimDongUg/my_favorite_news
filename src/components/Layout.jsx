@@ -27,13 +27,13 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
           <div className="header-top">
             <div className="logo">
               <div className="logo-icon">
-                <span className="logo-globe">🌏</span>
-                <span className="logo-heart">💜</span>
+                <span className="logo-globe">💫</span>
+                <span className="logo-heart">🌈</span>
               </div>
               <div>
-                <h1 style={{ color: "white" }}>내가 좋아하는 세상 정보</h1>
+                <h1 style={{ color: "white" }}>무빙아티클</h1>
                 <p style={{ color: "#d1d5db" }}>
-                  실시간으로 만나는 맞춤형 뉴스
+                  Moving Article - 실시간 뉴스가 흐르는 곳
                 </p>
               </div>
               <div className="header-login">
@@ -97,7 +97,7 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
           )}
         </div>
         <p className="footer-copyright">
-          &copy; 2026 내가 좋아하는 세상 정보. All rights reserved.
+          &copy; 2026 무빙아티클(Moving Article). All rights reserved.
         </p>
         <p className="footer-author">
           운영자(김동욱) 이메일: kduaro124@naver.com

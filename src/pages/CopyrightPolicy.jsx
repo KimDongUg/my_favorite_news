@@ -27,7 +27,7 @@ function CopyrightPolicy() {
         <section id="purpose" className="legal-section">
           <h2>1. 정책 목적</h2>
           <p>
-            본 정책은 뉴스 큐레이션 서비스 "내가 좋아하는 세상 정보"가 뉴스 콘텐츠 수집 및
+            본 정책은 뉴스 큐레이션 서비스 "무빙아티클(Moving Article)"이 뉴스 콘텐츠 수집 및
             큐레이션 과정에서 발생할 수 있는 저작권 침해를 예방하고, 신속하게 대응하기 위한
             체계를 수립하기 위해 제정되었습니다.
           </p>
@@ -177,7 +177,7 @@ function CopyrightPolicy() {
           <Link to="/privacy">개인정보처리방침</Link>
           <Link to="/monitoring">컴플라이언스 현황</Link>
         </div>
-        <p>&copy; 2026 내가 좋아하는 세상 정보. All rights reserved.</p>
+        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
       </footer>
     </div>
   );

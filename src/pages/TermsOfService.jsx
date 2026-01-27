@@ -27,7 +27,7 @@ function TermsOfService() {
         <section id="general" className="legal-section">
           <h2>제1조 (목적)</h2>
           <p>
-            본 약관은 "내가 좋아하는 세상 정보" (이하 "서비스")가 제공하는 뉴스 큐레이션 서비스의
+            본 약관은 "무빙아티클(Moving Article)" (이하 "서비스")가 제공하는 뉴스 큐레이션 서비스의
             이용조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
           </p>
 
@@ -201,7 +201,7 @@ function TermsOfService() {
           <Link to="/privacy">개인정보처리방침</Link>
           <Link to="/monitoring">컴플라이언스 현황</Link>
         </div>
-        <p>&copy; 2026 내가 좋아하는 세상 정보. All rights reserved.</p>
+        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
       </footer>
     </div>
   );

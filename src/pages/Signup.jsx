@@ -69,8 +69,11 @@ export default function Signup() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-logo">
-            <span className="logo-icon">📰</span>
-            <span className="logo-text">MyNews</span>
+            <div className="auth-logo-icon">
+              <span className="logo-globe">💫</span>
+              <span className="logo-heart">🌈</span>
+            </div>
+            <div className="auth-logo-text">무빙아티클(Moving Article)</div>
           </div>
           <h1>회원가입</h1>
           <p>나만의 맞춤 뉴스 대시보드를 만들어보세요</p>
