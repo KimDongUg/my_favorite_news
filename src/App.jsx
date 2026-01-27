@@ -246,6 +246,7 @@ function App() {
           onSpeedChange={handleSpeedChange}
           isRefreshing={isRefreshing}
           onClose={handleFullscreenClose}
+          isAuthenticated={isAuthenticated}
         />
       )}
     </Layout>

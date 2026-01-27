@@ -16,6 +16,8 @@ const FullscreenNews = memo(function FullscreenNews({
   onSpeedChange,
   isRefreshing,
   onClose,
+  isAuthenticated = false,
+  selectedCategories = [],
 }) {
   // 모든 카테고리 목록 (우선순위 순서대로 정렬)
   const allAvailableCategories = useMemo(() => {
@@ -36,14 +38,24 @@ const FullscreenNews = memo(function FullscreenNews({
     return ordered;
   }, [headlines]);
 
-  // 전체화면용 visibleCategories 계산 (모든 카테고리)
+  // 표시할 카테고리 결정: 로그인 시 선택한 카테고리, 비로그인 시 전체
+  const displayCategories = useMemo(() => {
+    if (isAuthenticated && selectedCategories.length > 0) {
+      // 로그인: 사용자가 선택한 카테고리만 (headlines에 있는 것만)
+      return selectedCategories.filter(cat => headlines[cat]);
+    }
+    // 비로그인: 모든 카테고리
+    return allAvailableCategories;
+  }, [isAuthenticated, selectedCategories, allAvailableCategories, headlines]);
+
+  // 전체화면용 visibleCategories 계산
   const fullscreenVisibleCategories = useMemo(() => {
     const visible = {};
-    allAvailableCategories.forEach(cat => {
+    displayCategories.forEach(cat => {
       visible[cat] = true;
     });
     return visible;
-  }, [allAvailableCategories]);
+  }, [displayCategories]);
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -99,7 +111,7 @@ const FullscreenNews = memo(function FullscreenNews({
         {/* 실시간 헤드라인 */}
         <div className="fullscreen-headline-section">
           <HeadlineRotator
-            selectedCategories={allAvailableCategories}
+            selectedCategories={displayCategories}
             headlines={headlines}
             isLoading={false}
             showFullscreenButton={false}
@@ -114,8 +126,8 @@ const FullscreenNews = memo(function FullscreenNews({
             onSpeedChange={onSpeedChange}
             headlines={headlines}
             isRefreshing={isRefreshing}
-            categoryOrder={allAvailableCategories}
-            allCategories={allAvailableCategories}
+            categoryOrder={displayCategories}
+            allCategories={displayCategories}
             visibleLayerCount={8}
           />
         </div>

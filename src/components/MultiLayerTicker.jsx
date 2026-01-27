@@ -41,16 +41,14 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
   const containerRef = useRef(null);
   const defaultVisibleCount = 5; // 기본 표시 개수
 
-  // 실제 표시할 레이어 수 계산
+  // 실제 표시할 레이어 수 계산 (항상 5개, 전체화면은 8개)
   const actualVisibleCount = useMemo(() => {
     if (visibleLayerCount !== null) {
       return visibleLayerCount;
     }
-    if (!isAuthenticated) {
-      return defaultVisibleCount;
-    }
-    return Object.values(visibleCategories).filter(Boolean).length;
-  }, [isAuthenticated, visibleCategories, visibleLayerCount]);
+    // 로그인/비로그인 모두 기본 5개 표시
+    return defaultVisibleCount;
+  }, [visibleLayerCount]);
 
   // 스크롤 애니메이션 시간 (speedMultiplier에 따라 조절)
   const scrollDuration = useMemo(() => {
@@ -69,21 +67,20 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
 
   // 무한 스크롤을 위해 카테고리 복제 (표시 개수만큼 끝에 추가)
   const displayCategories = useMemo(() => {
-    if (isAuthenticated) return baseCategories;
-    // 무한 루프를 위해 표시 개수만큼 끝에 복제
-    return [...baseCategories, ...baseCategories.slice(0, actualVisibleCount)];
-  }, [isAuthenticated, baseCategories, actualVisibleCount]);
+    // 카테고리가 표시 개수보다 많으면 무한 루프를 위해 복제
+    if (baseCategories.length > actualVisibleCount) {
+      return [...baseCategories, ...baseCategories.slice(0, actualVisibleCount)];
+    }
+    return baseCategories;
+  }, [baseCategories, actualVisibleCount]);
 
-  // 비로그인 시 20초마다 자동 스크롤
+  // 10초마다 자동 스크롤 (로그인/비로그인 모두 동작)
   useEffect(() => {
-    if (isAuthenticated) {
+    const totalCategories = baseCategories.length;
+    if (totalCategories <= actualVisibleCount) {
       setScrollOffset(0);
-      setIsTransitioning(true);
       return;
     }
-
-    const totalCategories = baseCategories.length;
-    if (totalCategories <= actualVisibleCount) return;
 
     const interval = setInterval(() => {
       setScrollOffset((prev) => {
@@ -107,7 +104,7 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
     }, 10000); // 10초
 
     return () => clearInterval(interval);
-  }, [isAuthenticated, baseCategories.length, scrollDuration, actualVisibleCount]);
+  }, [baseCategories.length, scrollDuration, actualVisibleCount]);
 
   const handleItemClick = useCallback((item, category) => {
     setSelectedItem(item);
@@ -141,8 +138,8 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
         <div
           className="ticker-scroll-wrapper"
           style={{
-            transform: !isAuthenticated ? `translateY(-${scrollOffset * layerHeight}px)` : 'none',
-            transition: !isAuthenticated && isTransitioning ? `transform ${scrollDuration}s ease-in-out` : 'none',
+            transform: `translateY(-${scrollOffset * layerHeight}px)`,
+            transition: isTransitioning ? `transform ${scrollDuration}s ease-in-out` : 'none',
           }}
         >
           {displayCategories.map((category, index) => (
