@@ -55,13 +55,26 @@ function App() {
   const loading = summaryLoading || newsLoading;
   const error = summaryError || newsError;
 
-  // 모든 카테고리 (fallback 포함)
+  // 모든 카테고리 (서버 데이터 + fallback 통합)
   const allCategories = useMemo(() => {
-    if (summaries.length > 0) {
-      return summaries.map((s) => s.category);
-    }
-    return Object.keys(fallbackHeadlines);
-  }, [summaries]);
+    // 서버 데이터와 fallback을 합쳐서 모든 카테고리 수집
+    const categorySet = new Set([
+      ...Object.keys(fallbackHeadlines),           // fallback 카테고리
+      ...summaries.map((s) => s.category),         // 서버 요약 카테고리
+      ...Object.keys(newsData),                    // 서버 뉴스 카테고리
+    ]);
+
+    // fallback 순서를 기준으로 정렬 (새 카테고리는 뒤에 추가)
+    const fallbackOrder = Object.keys(fallbackHeadlines);
+    return Array.from(categorySet).sort((a, b) => {
+      const aIdx = fallbackOrder.indexOf(a);
+      const bIdx = fallbackOrder.indexOf(b);
+      if (aIdx === -1 && bIdx === -1) return 0;
+      if (aIdx === -1) return 1;
+      if (bIdx === -1) return -1;
+      return aIdx - bIdx;
+    });
+  }, [summaries, newsData]);
 
   // 선택된 카테고리를 상태로 관리 (순서 포함)
   const [selectedCategories, setSelectedCategories] = useState(() => {
