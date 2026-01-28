@@ -128,7 +128,7 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
         }
         return next;
       });
-    }, 10000); // 10초
+    }, 7000); // 7초
 
     return () => clearInterval(interval);
   }, [baseCategories.length, scrollDuration, actualVisibleCount]);
