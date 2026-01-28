@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
+import WakeBackend from './components/WakeBackend'
 import App from './App.jsx'
 import CategorySettings from './pages/CategorySettings.jsx'
 import ComplianceMonitoring from './pages/ComplianceMonitoring.jsx'
@@ -32,6 +33,8 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        {/* Render 백엔드 자동 깨우기 (세션당 1회) */}
+        <WakeBackend />
         <Routes>
           {/* 메인 페이지 */}
           <Route path="/" element={<App />} />

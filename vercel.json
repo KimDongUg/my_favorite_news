@@ -6,6 +6,7 @@
     { "source": "/contact", "destination": "/feedback.html", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/((?!.*\\.html$).*)", "destination": "/index.html" }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/((?!api|.*\\.html$).*)", "destination": "/index.html" }
   ]
 }
