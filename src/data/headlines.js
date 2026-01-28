@@ -62,6 +62,12 @@ export const headlines = {
   '국방': [
     { id: 21, title: '국방 뉴스', description: '군사, 안보, 방위 관련 소식' },
   ],
+  '주식': [
+    { id: 22, title: '주식 뉴스', description: '증시, 코스피, 코스닥, 종목 분석' },
+  ],
+  '드라마': [
+    { id: 23, title: '드라마 뉴스', description: 'TV 드라마, 예능, 방송 소식' },
+  ],
 };
 
 export const categoryColors = {
@@ -86,6 +92,8 @@ export const categoryColors = {
   '취업·직장': '#3949AB',  // 짙은 파랑
   '재테크': '#FFB300',     // 금색
   '국방': '#37474F',       // 군청색
+  '주식': '#4CAF50',       // 초록 (상승)
+  '드라마': '#E91E63',     // 핑크
 };
 
 export const categoryIcons = {
@@ -110,4 +118,6 @@ export const categoryIcons = {
   '취업·직장': '💼',
   '재테크': '💰',
   '국방': '🪖',
+  '주식': '📈',
+  '드라마': '📺',
 };
