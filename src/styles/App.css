@@ -241,8 +241,9 @@ body {
 }
 
 .mobile-row-2 {
-  padding-bottom: 0.5rem;
-  gap: 0.5rem;
+  padding-bottom: 0.6rem;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
 }
 
 .mobile-logo-link {
@@ -286,17 +287,18 @@ body {
 .mobile-action-btn {
   display: flex;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.3rem 0.55rem;
+  gap: 0.25rem;
+  padding: 0.4rem 0.7rem;
   background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.2s ease;
+  flex-shrink: 0;
 }
 
 .mobile-action-btn:hover {
@@ -310,10 +312,11 @@ body {
 .mobile-speed-compact {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.5rem;
+  gap: 0.35rem;
+  padding: 0.4rem 0.7rem;
   background: rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   flex: 1;
   min-width: 0;
 }
@@ -322,17 +325,20 @@ body {
   width: 100%;
   flex: 1;
   min-width: 0;
+  height: 4px;
 }
 
 .mobile-speed-compact .speed-emoji {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   flex-shrink: 0;
 }
 
 .mobile-speed-compact .speed-val {
-  font-size: 0.65rem;
-  min-width: 24px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 28px;
   flex-shrink: 0;
+  text-align: center;
 }
 
 /* Main Content */
@@ -839,13 +845,28 @@ body {
     font-size: 0.6rem;
   }
 
+  .mobile-row-2 {
+    gap: 0.3rem;
+  }
+
   .mobile-action-btn {
-    padding: 0.25rem 0.4rem;
-    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.68rem;
+    border-radius: 14px;
+  }
+
+  .mobile-speed-compact {
+    padding: 0.3rem 0.5rem;
+    gap: 0.25rem;
   }
 
   .mobile-speed-compact .speed-emoji {
     font-size: 0.7rem;
+  }
+
+  .mobile-speed-compact .speed-val {
+    font-size: 0.63rem;
+    min-width: 24px;
   }
 
   .headline-rotator-inline {
