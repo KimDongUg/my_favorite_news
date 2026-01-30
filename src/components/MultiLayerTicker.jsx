@@ -39,7 +39,7 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
   const [scrollOffset, setScrollOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const containerRef = useRef(null);
-  const defaultVisibleCount = 8; // 기본 표시 개수
+  const defaultVisibleCount = 5; // 기본 표시 개수 (PC)
 
   // 화면 크기에 따른 레이어 높이 (CSS와 동기화)
   const [layerHeight, setLayerHeight] = useState(150);
