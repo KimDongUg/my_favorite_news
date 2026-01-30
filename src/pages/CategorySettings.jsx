@@ -76,7 +76,7 @@ function CategorySettings() {
     <div className="settings-page">
       <div className="settings-container">
         <header className="settings-header">
-          <h1>좋아하는 정보 설정하기</h1>
+          <h1>아티클 카테고리 설정 하기</h1>
           <p>관심 있는 카테고리를 클릭하여 선택하세요 (클릭 순서대로 표시됩니다)</p>
         </header>
 

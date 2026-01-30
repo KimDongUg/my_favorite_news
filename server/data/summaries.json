@@ -1,293 +1,583 @@
 {
-  "lastUpdated": "2026-01-23T09:30:58.028Z",
+  "lastUpdated": "2026-01-27T07:32:27.494Z",
   "summaries": [
     {
-      "id": "e3214b661cdc97662f8136fd09fce157",
-      "category": "뉴스",
-      "aiTitle": "카타르 선물한 6천억짜리 '하늘 궁전'…올여름 트럼프 에어포스원 된다",
-      "aiSummary": "작년 10월 카타르를 방문한 도널드 트럼프 미국 대통령 [UPI 연합뉴스 자료사진. 재판매 및 DB 금지]작년 10월 카타르를 방문한 도널드 트...",
+      "id": "f0634424f985119b65422cf533eeffbc",
+      "category": "속보",
+      "aiTitle": "강원 원주 빙벽장서 50대 추락해 중상…\"등반 중 얼음 깨져\"",
+      "aiSummary": "[강원특별자치도소방본부 제공][강원특별자치도소방본부 제공] 27일 오전 10시 35분쯤 강원도 원주시 지정면 판대리의 한 빙벽장에서 50대 A씨...",
       "sources": [
         {
-          "url": "https://www.yonhapnewstv.co.kr/news/AKR20260123182831iMa",
-          "name": "연합뉴스",
-          "originalTitle": "카타르 선물한 6천억짜리 '하늘 궁전'…올여름 트럼프 에어포스원 된다",
-          "publishedDate": "Fri, 23 Jan 2026 18:28:32 +0900"
+          "url": "https://www.yonhapnewstv.co.kr/news/AKR20260127162158hy9",
+          "name": "연합뉴스 속보",
+          "originalTitle": "강원 원주 빙벽장서 50대 추락해 중상…\"등반 중 얼음 깨져\"",
+          "publishedDate": "Tue, 27 Jan 2026 16:21:59 +0900"
         },
         {
-          "url": "https://www.yonhapnewstv.co.kr/news/MYH202601231827109zR",
-          "name": "연합뉴스",
-          "originalTitle": "방탄소년단 '아리랑' 선주문량 400만 장 돌파",
-          "publishedDate": "Fri, 23 Jan 2026 18:27:22 +0900"
+          "url": "https://www.yonhapnewstv.co.kr/news/AKR20260127162033Zb9",
+          "name": "연합뉴스 속보",
+          "originalTitle": "[속보] 중국 \"서해 구조물 일부 이동 작업 진행 중\"",
+          "publishedDate": "Tue, 27 Jan 2026 16:20:34 +0900"
         },
         {
-          "url": "https://www.yonhapnewstv.co.kr/news/AKR202601231825133EI",
-          "name": "연합뉴스",
-          "originalTitle": "이미 사무직 1만 4천명 내보냈는데…아마존, 다음 주 추가 감원 예정",
-          "publishedDate": "Fri, 23 Jan 2026 18:25:15 +0900"
+          "url": "https://www.yonhapnewstv.co.kr/news/MYH20260127161947vs9",
+          "name": "연합뉴스 속보",
+          "originalTitle": "[날씨] 내일 아침 '서울 -10도'…건조·강풍 산불 비상",
+          "publishedDate": "Tue, 27 Jan 2026 16:20:05 +0900"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:47.934Z",
+      "generatedAt": "2026-01-27T07:32:07.346Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "f19bc129ae154221422a4559ec77a42a",
-      "category": "스포츠",
-      "aiTitle": "LeBron brushes off Buss report: 'Don't really care'",
-      "aiSummary": "LeBron James said he wasn't bothered by an ESPN story this week that detailed hi...",
+      "id": "b211f79943ebe80fc20b2aea004c92df",
+      "category": "정치",
+      "aiTitle": "사회민주당, 한창민 대표 재신임 시험대 - 1gan.co.kr",
+      "aiSummary": "사회민주당, 한창민 대표 재신임 시험대 1gan.co.kr",
       "sources": [
         {
-          "url": "https://www.espn.com/nba/story/_/id/47701838/lebron-buss-report-care-how-somebody-feels-me",
-          "name": "ESPN",
-          "originalTitle": "LeBron brushes off Buss report: 'Don't really care'",
-          "publishedDate": "Fri, 23 Jan 2026 03:21:45 EST"
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBJbTJZRW1WYTFEOG1YNE9RZVUzODZ2MV9sdl9XeFozMFd4M0hiWVZkTWhMLTdvdWVfR1pTcDAxclBhaVVuekhkMThXS2tTZHlGMTFLS0UyZ1ljbFFQU3FWUnZ6Yk02dERZ?oc=5",
+          "name": "국회뉴스",
+          "originalTitle": "사회민주당, 한창민 대표 재신임 시험대 - 1gan.co.kr",
+          "publishedDate": "Tue, 27 Jan 2026 07:14:06 GMT"
         },
         {
-          "url": "https://www.espn.com/tennis/story/_/id/47701347/alcaraz-stays-sharp-sweeps-game-moutet-australian-open",
-          "name": "ESPN",
-          "originalTitle": "Alcaraz stays sharp, sweeps past game Moutet",
-          "publishedDate": "Fri, 23 Jan 2026 03:21:45 EST"
+          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9id1NPQnhqVDVGTUFQcTlNSWVOTHUxSkM3ckg1YVNJOTliV1Y2NEYtRHVnQzdxVkVQZnE4UkFyYnh3U1RCUFpDVWd5R0F3OVE?oc=5",
+          "name": "Google News 정치",
+          "originalTitle": "[월드 이슈] 또 시작된 ‘51번째 주’ 타령?…한치 양보없는 미·캐 ‘설전’ - v.daum.net",
+          "publishedDate": "Tue, 27 Jan 2026 06:38:42 GMT"
         },
         {
-          "url": "https://www.espn.com/nfl/story/_/id/47696974/ravens-hiring-chargers-dc-jesse-minter-new-head-coach",
-          "name": "ESPN",
-          "originalTitle": "Ravens hiring Bolts' Minter as new head coach",
-          "publishedDate": "Fri, 23 Jan 2026 03:20:51 EST"
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9QMGlQeXE4T24tV1pIWXkxWUpVLW5oWElEd3VOek0wQkZmdE01NkQwNjZMYnRPbEltSFhpUVpFdXRsOFp1eWNzd0VUWFdwR3ZOTDRrcmFn?oc=5",
+          "name": "국회뉴스",
+          "originalTitle": "\"한동훈에 한 짓이 정상이야?\" 친윤에 버럭, 장동혁이었다 - 중앙일보",
+          "publishedDate": "Tue, 27 Jan 2026 06:32:29 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:48.943Z",
+      "generatedAt": "2026-01-27T07:32:08.354Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "c3e6ab6cbfb0178036edd346432a8e1d",
-      "category": "연예",
-      "aiTitle": "[포토] 최립우, 대만 최씨 - iMBC 연예",
-      "aiSummary": "[포토] 최립우, 대만 최씨 iMBC 연예",
+      "id": "9464a54d0f6dfbb41d4dcd5e25bc4a0e",
+      "category": "경제·금융",
+      "aiTitle": "수도권 땅값 상승률 인구감소지역의 5배 - 농민신문",
+      "aiSummary": "수도권 땅값 상승률 인구감소지역의 5배 농민신문 서울 땅값 작년 4% 올랐다⋯34개월 연속 상승세 v.daum.net 2025년 경기·인천 지가...",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBTbXJSdHhZTmlnN1V4VkI0UkUwNFFHeVl1MEpOcXdDY0tKWWEza24ycGtkRXpST0lxX1BYSnQ3aEV2RncwZUpKNGRjeDRUUm8?oc=5",
-          "name": "Google News Entertainment",
-          "originalTitle": "[포토] 최립우, 대만 최씨 - iMBC 연예",
-          "publishedDate": "Fri, 23 Jan 2026 03:30:00 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5GNm45V2xHV0l0T09QSjhKc09Ya1NRUnFJZFhxdjZuTm1GQzA5WDl5QVhuSEJ0YkNlWXpLYXloNUhCWUZPWDJqUGVaMVFFS2ZsaFg4VnpYV29kQQ?oc=5",
+          "name": "Google News 경제",
+          "originalTitle": "수도권 땅값 상승률 인구감소지역의 5배 - 농민신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:52:00 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBsWmlUTmF5SW15RDBuZDJ1WlRSZ3JDUEx5LUxHZGRmQ280TF9jNXQxWFYtY0hIV2ZDNjVSclRpYVJxY3pCUjB6N3FkRTRRRDZzcWVr?oc=5",
-          "name": "Google News Entertainment",
-          "originalTitle": "[단독] \"학폭은 안돼\"…황영웅, 강진축제 출연 취소 - 네이트",
-          "publishedDate": "Fri, 23 Jan 2026 02:35:00 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5USUp0OFBBYnB6V3QwNzJwUEt6blVXTVV4VWtzLU1Bdl9EQUI3WVgwUElnS1MtN2pNbGI4MW9rMzRoM19MUXF5M19fN3lMUkhJRVo1TGNsT3VGUdIBX0FVX3lxTE5lc3R3aUhZcEFocFR6RXU1aExPQ3dZbDdndURvR3VJNFVtY2VSaV9FR1NvRlJaSG54cW93RzFESGpjR3VJMGNCdHVORm55TXdiQS1jWWRvWVFWaE9zYWZF?oc=5",
+          "name": "Google News 경제",
+          "originalTitle": "이젠 ‘80만닉스’ ‘16만전자’···반도체 타고 코스피 종가도 ‘5000피’ 돌파 - 경향신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:50:00 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9BejB5RDdMeEZPdmlWTll2TnRvY1pRLUpUc20xVU1rYl9yU0ZLcnRTa2k3bzNFbVJuZG5OejVGZDBHaldHbTNwOUJaNjlYeEl4U1dJ?oc=5",
-          "name": "Google News Entertainment",
-          "originalTitle": "[단독] \"뭐라도 해야죠\"…박나래, 막걸리 학원서 근황 첫 포착 - 네이트",
-          "publishedDate": "Thu, 22 Jan 2026 23:36:00 GMT"
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1xdms5bVpncGl1dmFrT1JLbWNDaS03ODFVbVVZMTZYTW1VQURWM0wxaTFsVDZjYVJCX0ZOUUpORGJNNWtsYy1XcjBvV1p4dzdrZXVFdGFRenhMNmRyR19ITTBtQUNkMHB3TnlISWZ0dw?oc=5",
+          "name": "금융 뉴스",
+          "originalTitle": "SK증권, 무궁화신탁 주담대 논란 해명 - 뉴스톱",
+          "publishedDate": "Tue, 27 Jan 2026 06:47:46 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:49.947Z",
+      "generatedAt": "2026-01-27T07:32:09.362Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "2bb78bf89e461ed623efcff6be99efe7",
-      "category": "반려동물",
-      "aiTitle": "광주대–24시 노아동물메디컬센터 '반려동물 전문인력 양성 업무협약' - 베리타스알파",
-      "aiSummary": "광주대–24시 노아동물메디컬센터 '반려동물 전문인력 양성 업무협약' 베리타스알파",
+      "id": "21088640da00c55399ab54be24f06ce2",
+      "category": "범죄·법",
+      "aiTitle": "김건희 1심 선고 공판, 법원 생중계 허가...28일 오후 2시10분 - v.daum.net",
+      "aiSummary": "김건희 1심 선고 공판, 법원 생중계 허가...28일 오후 2시10분 v.daum.net",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE01bmhaOWFFWUNwdldUV3gwQzBzbDlsblhsaDhSN2tFNWt6LTFCZHA1MnJlTXZ4VU5PTDdrejVyUE5OdEwzTDVmd1JadjN0cWZqNmlQYkJSb2kwd25ZcFVOZmgtSnVtbHJCVFhv?oc=5",
-          "name": "Google News Pets",
-          "originalTitle": "광주대–24시 노아동물메디컬센터 '반려동물 전문인력 양성 업무협약' - 베리타스알파",
-          "publishedDate": "Fri, 23 Jan 2026 06:55:47 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9EYzNyQjZXMWFocGtrUnkzVmFnSkREQ3RVVnpaMmEyNlRlUlowRERwSlY0a0Z6UE5XOU9ENGVJLW5USFpTSUpGd0JXN2JfWFU?oc=5",
+          "name": "법원 재판",
+          "originalTitle": "김건희 1심 선고 공판, 법원 생중계 허가...28일 오후 2시10분 - v.daum.net",
+          "publishedDate": "Tue, 27 Jan 2026 05:39:58 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9LWEw5a2ZyUHBiXy1FclNKMzc3N0R6MVE0ZGVLNThXdlJVUjI4MnFfV1gyNTJaVWFydV91a3NNWDlDSHREZ3E2eHFnUXJxLVk?oc=5",
-          "name": "Google News Pets",
-          "originalTitle": "반려동물용품점 폴리파크 ‘오늘배달’ 확대, 즉시 배송 수요 일상화 - v.daum.net",
-          "publishedDate": "Fri, 23 Jan 2026 05:58:12 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE53bmU1TzlkYnNWQUlKRm1CZTdFSTBycVdxWU1ESFlaVncxQW9wV2hKMEJkb1JEMWVqbEk0QV9mOGdfMExJTmRPM3FTM0pjWnM?oc=5",
+          "name": "법원 재판",
+          "originalTitle": "'尹 재판 직결' 김건희 첫 판결…권성동·윤영호도 선고 - v.daum.net",
+          "publishedDate": "Tue, 27 Jan 2026 02:05:03 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1vZU9VaVRmVHE0ZDhIRWNoeEF3RVNUZVdCTTNNOHU0N2pnc04xUEtFbm1YalQ3akVQUjVLTmVlZUMwcUV1bDZYU2ZyNExBcmdHeGRjdGQtWUJjXzFEUnplU1RVSVllZW9GVTd3ZzBvSDFFdUJkcGc?oc=5",
-          "name": "Google News Pets",
-          "originalTitle": "김포 국내 첫 반려동물 공공진료센터 이용률·만족도 '호실적' - 연합뉴스",
-          "publishedDate": "Fri, 23 Jan 2026 05:36:37 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1MclhmbDh5OFZLTXdMbXJqbHVJRUNIYlBpdFE1TmVuWVdxZGxvNG50a1hyQTlaajZ0dmVyOHRfV0pfemt3R1U3MDFmV1paRW05cmxR?oc=5",
+          "name": "법원 재판",
+          "originalTitle": "'尹 재판 직결' 김건희 첫 판결…권성호·윤영호도 선고 - 네이트",
+          "publishedDate": "Tue, 27 Jan 2026 02:04:00 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:50.949Z",
+      "generatedAt": "2026-01-27T07:32:10.365Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "098e49593de011191af69cd837fb68d6",
-      "category": "IT",
-      "aiTitle": "[인사] 과학기술정보통신부 - IT조선",
-      "aiSummary": "[인사] 과학기술정보통신부 IT조선",
+      "id": "4406a7a555f6c61e343ba3faade17c72",
+      "category": "국내",
+      "aiTitle": "항만 경쟁력은 현장에 있다…부산항, 연관산업 육성 위한 범기관 협력 출범 - 해사신문",
+      "aiSummary": "항만 경쟁력은 현장에 있다…부산항, 연관산업 육성 위한 범기관 협력 출범 해사신문 부산시·BPA 등 부산항 항만연관산업 육성·지원 업무협약 연합...",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5VeWNpNHppMmQ2TldodTVDTldKRkVZbnlfNllPWC1JY3hpSlRiRzFINk1kT250MW1ncDFfZHRrbTJvbG1ORU5VdEIxaEJ0RmduWnlWWU1vTzhITEVVTFZsRXBMd3E0UnBUcHA4VFZWT0XSAXRBVV95cUxNUGlNUF9IVnFRQ3ZwczRzNkEwejMwdDRBNEVxb2hzUGNnVkJfRjQ5NEtaRnNRc3FiN2Jtc3ZnSTVNTUdJS0RuQzMzaHRMQ0ZVY0JpUVJCV245MGwzaHlETGEtQzBvVExXUFllYnFoY1dGWjR6VQ?oc=5",
-          "name": "Google News Tech",
-          "originalTitle": "[인사] 과학기술정보통신부 - IT조선",
-          "publishedDate": "Fri, 23 Jan 2026 06:28:52 GMT"
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9NcmtnbHVnMzRkWDRKYkY0SXdRRXQxMjFRaTczZFFlcHNXamJFNEJoc1E1SnhZUmZ3MFo3N2dBNDRWMDJYVTl3bDBEUVVycVVDLW5pNk5Kb0d0STYzSWFTRlBnWUJnOGZZWURj?oc=5",
+          "name": "Google News 국내",
+          "originalTitle": "항만 경쟁력은 현장에 있다…부산항, 연관산업 육성 위한 범기관 협력 출범 - 해사신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:41:52 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1qd1p6UEo3YTlaXzRqTUJrNzRVajhlLXdJaVRvWjc1cXFzSm5HaGp2b2pEWkZfeUdiandxVkNucTFUSEtnVF9fWG9XZkNWUmlONExWUS1B?oc=5",
-          "name": "Google News Tech",
-          "originalTitle": "기술 수출 넘어 자립까지…코히어가 韓 AI 생태계 지원하는 방법은 - 지디넷코리아",
-          "publishedDate": "Fri, 23 Jan 2026 06:17:36 GMT"
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1qbFYtaTZvMWg4TVh5djdDaVFRWmFZNWxybkZzbjl2UDZaSFpUMDQ1R3Q1emhqdFo1ZFQ4Y3M5NzdNTTcyZHNYUkRIRXdISHVhRWZVQWQwdUY4NlVyWThqT24xYmNldGdITHplRw?oc=5",
+          "name": "Google News 국내",
+          "originalTitle": "[총회=은평] \"약사 직능은 선택이 아닌 책임\" - 약사공론",
+          "publishedDate": "Tue, 27 Jan 2026 06:10:39 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5PNk9QZmZBUGc4ZU8zQVBBcnVZS1BWeF9NVVZyRG1qYlZlSUMyTlYtYTJVU2RvUnh5N2V1eWo4ekJjZXZkemU4TjRNODNSZEg5ZjBxV3R1UkNiQjF2V0FnM2RRYWQxSmM?oc=5",
-          "name": "Google News Tech",
-          "originalTitle": "차환주 한국정보공학기술사회 부회장, 대학교육 혁신포럼 공로상 수상 - 아이티데일리",
-          "publishedDate": "Fri, 23 Jan 2026 03:36:03 GMT"
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE8zdFQ2UlhRRmpVVEt3SlpfNlh5dWNKTTIzb0stck9yTDFZbUQzZXdTdk5Bd195U1RYUmIydHBCc20yNUVxUGxnWGxKMEFyWUlxaXNweUxhU0dzYjRMZ2NpMzd0SEtUa2JTY2l3UFd3?oc=5",
+          "name": "Google News 국내",
+          "originalTitle": "나토 총장 “미국 없는 유럽 안보, 꿈 같은 얘기…푸틴은 좋아할 것” - 한겨레",
+          "publishedDate": "Tue, 27 Jan 2026 05:29:00 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:51.962Z",
+      "generatedAt": "2026-01-27T07:32:11.371Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "bcf5817fb52e9237cfa69d7d226f4acc",
+      "id": "7aee0b8a613f896a798b8cf097929b53",
+      "category": "국제",
+      "aiTitle": "트럼프 이민정책 지지율, 집권 2기 ‘최저’···연방정부 셧다운 우려도 커져 - 경향신문",
+      "aiSummary": "트럼프 이민정책 지지율, 집권 2기 ‘최저’···연방정부 셧다운 우려도 커져 경향신문 트럼프, 이민단속 책임자 교체하고 주지사 통화...지지율...",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBmWXoxSG1uZnNEaG1meWNLTFJVTkxtZlNmYjBrMl9QMm9QRzVTRGlUVGsxNzBkeHRBOGFMRDdNMlBYa1FjcElQR0lMa3llMDd5b29Zc3VQczYzd9IBX0FVX3lxTE12dE1ERnNETEdvdnVzdW1YNERzdWNaSDc4R0xIM2VhSmpkUVNTUHVWMXIxMW9wVUpEM29CemlwNl9pcjFKQTRiZVVKMHdGSWZsV3hnWGFiNWxFTUFPdlE4?oc=5",
+          "name": "Google News 국제",
+          "originalTitle": "트럼프 이민정책 지지율, 집권 2기 ‘최저’···연방정부 셧다운 우려도 커져 - 경향신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:57:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE55M1UwaTRaTHoxaXdwZ0VOVGVXVXFRTFZmOGRFZXdhNWkzd0lZZGtxWmpPa1lldXZiS1VteTdYeTViaWM3N3UtaEVudUNqbDkyRU5xNEhZNEhRVDJNRVB2WG5TOXBTWGR4UVZoQg?oc=5",
+          "name": "Google News 국제",
+          "originalTitle": "영국 총리 8년 만에 방중…미국과 틀어진 동맹국들, 중국에 손짓 - 한겨레",
+          "publishedDate": "Tue, 27 Jan 2026 06:36:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE8zdFQ2UlhRRmpVVEt3SlpfNlh5dWNKTTIzb0stck9yTDFZbUQzZXdTdk5Bd195U1RYUmIydHBCc20yNUVxUGxnWGxKMEFyWUlxaXNweUxhU0dzYjRMZ2NpMzd0SEtUa2JTY2l3UFd3?oc=5",
+          "name": "Google News 국제",
+          "originalTitle": "나토 총장 “미국 없는 유럽 안보, 꿈 같은 얘기…푸틴은 좋아할 것” - 한겨레",
+          "publishedDate": "Tue, 27 Jan 2026 05:29:00 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:12.372Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "ce0c46ffe68c754c268a09151f693828",
       "category": "건강",
-      "aiTitle": "유니세프·부산시·부산교육청, 아동·청소년 마음건강 위해 손잡았다 - 동아일보",
-      "aiSummary": "유니세프·부산시·부산교육청, 아동·청소년 마음건강 위해 손잡았다 동아일보",
+      "aiTitle": "국내 첫 대규모 췌장암 유전체 연구, 맞춤형 치료 길 열었다 - 병원신문",
+      "aiSummary": "국내 첫 대규모 췌장암 유전체 연구, 맞춤형 치료 길 열었다 병원신문",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBZUlRFckZkWTdvOEh2cTdiMTNmMGstUDBCU2pTRGdhaWdjS1JtODJJWFpreDY2OWV3LWxiRDdpTzZfMlZEcURYbmRtbTFybGRnYnRjLW45dXN5bTRaemxQSGE0VVFWVUtYeTk5M3dSLXNQM3F1QUHSAWZBVV95cUxOaEgwUGhLVXJJamVFZTNZYnFabklERGF3OEZSR2RJa3F0YlZWRUNMc2pVemppeUpvOERBYVNkbmZfMHN4OFlaNDV6MVJDajlTN193anZTVm94QWZMVVJIX084T3JWdUE?oc=5",
-          "name": "Google News Health",
-          "originalTitle": "유니세프·부산시·부산교육청, 아동·청소년 마음건강 위해 손잡았다 - 동아일보",
-          "publishedDate": "Fri, 23 Jan 2026 08:24:44 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFB4a2FRNFpCTW1Nd3BvTi1EZUNiaHJnWkVudE9HbDdvX1ZoUHZQWV9SNjVfUl92QWlRVUJRaXo2Tl95TE5ra1B3eG4xRlVXWXF2ekFVeXFKaWQ3bVR6eEprY3VYQ25OVHJOWFE?oc=5",
+          "name": "의료 뉴스",
+          "originalTitle": "국내 첫 대규모 췌장암 유전체 연구, 맞춤형 치료 길 열었다 - 병원신문",
+          "publishedDate": "Tue, 27 Jan 2026 07:25:04 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1Hc3JhQ2JkUk41UjllNVlMRDlieVl0eHFaMEV1OWRCbHBZZWxnbXFOUV9GRHJ2bDFVbl9QVUUyTXRtdFp2QlpjRzdXRk1hNmZjb1dhdVNuMHZNbHNVYk9xTUFIVElqeWV0?oc=5",
-          "name": "Google News Health",
-          "originalTitle": "손등에 커다란 '멍 자국'...트럼프, 건강이상설 또 터졌다 - 머니투데이",
-          "publishedDate": "Fri, 23 Jan 2026 05:26:02 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5VclF4Z1VaUWIyZXFDSGdfaVJWNlZPZ3FZdTFlczJTNF9nUWtqMDJGTHdVYUJRRHhDdG5SOUQzaDc2Z0FMUGVKNUJwUTQ0VHpIdEwwSWR2a1NGZnJuendv?oc=5",
+          "name": "Google News 건강",
+          "originalTitle": "KB손보, 건강보험에 '시니어 돌봄' 결합…보장 넘어 케어로 - IB토마토",
+          "publishedDate": "Tue, 27 Jan 2026 07:04:35 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBpSXVrX0wxU05TMmN2LWpCNzBzcG90MXdPYjNrakM1SVk1MHpXQzBYXzByd2hlVUEzZ0FBRkZZaXR5VXVobmJIRVhVV0tJS2NMbnpvNkVqdFI?oc=5",
-          "name": "Google News Health",
-          "originalTitle": "막연한 건강 걱정 끝! 체력 측정에 포인트까지 '체력인증센터' - mediahub.seoul.go.kr",
-          "publishedDate": "Fri, 23 Jan 2026 05:25:00 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9RMUdYeTh2SWZCSVNKTGhPLWszMDI3anlXajJ3Zkt3R0NOUW5ld05lQjFHcUh2WGxoa1lmQUt0d3RNY3pIUmZidDJwU1JSUmFVVDZuMEswR0REUl83Wm1oZGxXVi1RUQ?oc=5",
+          "name": "Google News 건강",
+          "originalTitle": "‘의료·요양 통합돌봄’ 본격 추진…4억 예산 절감까지 - jntimes.kr",
+          "publishedDate": "Tue, 27 Jan 2026 06:59:20 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:52.976Z",
+      "generatedAt": "2026-01-27T07:32:13.386Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "2e771a887155e61fc62c09b529118851",
-      "category": "여행",
-      "aiTitle": "제주 여행 숙박예약, ‘온라인 여행사’가 대세 - 조선일보",
-      "aiSummary": "제주 여행 숙박예약, ‘온라인 여행사’가 대세 조선일보",
+      "id": "8cdd4b1572f58404054f1ee492ddf52f",
+      "category": "연예·문화",
+      "aiTitle": "성동일 \"이번엔 웃음기 없다…절실함 보여주려 10㎏ 감량도\" - 연합뉴스",
+      "aiSummary": "성동일 \"이번엔 웃음기 없다…절실함 보여주려 10㎏ 감량도\" 연합뉴스 [포토] 에스파 닝닝 '반가운 손인사' 네이트 려운, 17명 죽인 살인마...",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPa3hjT1k1c19sVkhGUmRQR01UeTg2MU9zUzhvRy15eUdJTmRyT0QzNXFYOFZ0UHpZQ1dIdW1zOWtTQkVUWG1Pd19RUno0SVhvTk52aXZFVTJqT3k2WUxERUFmeW5EQ1hhN1pMSlRaRWxnOTV5Zm1sX2Y1SGs5aUFWUm50ZDVrQdIBmgFBVV95cUxOdnJ2SWgyLU02c0JRb2w3blo4OFR4SjgyUlB5cGs4REcxcUpiMlFDUnYzZnBVQUJTT1pqVkZBT0FZYTJyOXZqWk1NdXlHN1RSUGpxSFY1QkdmcXRGcEpOMEwwTmRzVUw2eFZMRGZrbFduZTNGYjVpUkhKMmZKQnhHbEV3bnF2Q2NyZ0F2a3BNQnd3aGlSOTdMYzNR?oc=5",
-          "name": "Google News Travel",
-          "originalTitle": "제주 여행 숙박예약, ‘온라인 여행사’가 대세 - 조선일보",
-          "publishedDate": "Fri, 23 Jan 2026 00:27:00 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE04QTE2ZEFWV3MtR01rLUFZbjVMUDVvLTFRanZHbDcxTHA5dHVCU0J6UUQ3OEwtUzhMbkdscElYb0hHV1NZVWhsRXRDRVVRbExpTlk5VjQzeVVLeEHSAWBBVV95cUxQa0swU21PRXdiUFFoeTUyckt3UjM2eFZLZnNhRjFLbHU3SEt3emFqYVhFdVFVZEptOWd6MVJyOHVmc3NhS0pFNUo5Vm0tbHU3dTVwTkhZOUZfd09GRXdDN2U?oc=5",
+          "name": "Google News 연예",
+          "originalTitle": "성동일 \"이번엔 웃음기 없다…절실함 보여주려 10㎏ 감량도\" - 연합뉴스",
+          "publishedDate": "Tue, 27 Jan 2026 07:16:53 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5xSUc2NUNMdlVmTmU1RVBHeGNybENjT0hxeVJIYmpXU0J4N3dUNzc4S0VkaFBKdWRZZmV2UHZqNVlVSVpFc0V3MmNGTjlhOG13NHRfLXJR?oc=5",
-          "name": "Google News Travel",
-          "originalTitle": "홈앤쇼핑, 내일투어와 ‘중앙아시아 3개국’ 여행 특집 방송…“노쇼핑·노옵션” - 헤럴드경제",
-          "publishedDate": "Fri, 23 Jan 2026 00:11:18 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5VUVd0bG5CSVp5dmI4X2h1TkVEYWRfVXZXMTBZQ2F0Z1VyV0E3ZkMtOVhwRU5sLW1va0lNcncwUUZ1VnVqbk9YeUduT0V6alU2RVhKUEhaRnZiSFMzd2U4dQ?oc=5",
+          "name": "Google News 연예",
+          "originalTitle": "'손예진♥' 현빈 \"아들에 화낸 적 없어..자랑스러운 아빠 되고파\"[인터뷰③] - ASIA ARTIST AWARDS 2025",
+          "publishedDate": "Tue, 27 Jan 2026 06:59:09 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5PWWlxQUdIRUc0MlRRa3VObElGMHZSSnVtcG5Yck4zTG1YUWxRTUh2bTB1RTI2bTJMYklVMENHc2FqUUR6czNFUmVwQk84QzRRTV9zbmNLaWdhXzZ6Ty1PZg?oc=5",
-          "name": "Google News Travel",
-          "originalTitle": "\"실크로드로 떠나요\" 홈앤쇼핑, 중앙아시아 3개국 여행 특집 방송 - 뉴스1",
-          "publishedDate": "Thu, 22 Jan 2026 23:16:36 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1wRjI1eDRLdzRZUlRFTUVaWUNGZUROX2dVVEQydXBOSFNmQkpGclJ5cVZJV19nYkhRMmV1Z1N4cWZiNjY4NHk0dlptUGFBQ2pRc2NmSS0zTXROdUU?oc=5",
+          "name": "Google News 연예",
+          "originalTitle": "박지훈 “비운의 단종 연기하려고 물도 잘 안 마셔…소중한 추억” - KBS 뉴스",
+          "publishedDate": "Tue, 27 Jan 2026 06:13:00 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:53.991Z",
+      "generatedAt": "2026-01-27T07:32:14.400Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "192895c7d3f25a5316a00e2d7549c7da",
-      "category": "음식",
-      "aiTitle": "'생생정보 묵은지수육찜 맛집 - bntnews.co.kr",
-      "aiSummary": "'생생정보 묵은지수육찜 맛집 bntnews.co.kr",
+      "id": "8703a463c3b606680e895891244e4aa9",
+      "category": "스포츠",
+      "aiTitle": "Barnwell: What went right for the Seahawks, Patriots -- and wrong for the Rams, Broncos -- on Sunday",
+      "aiSummary": "The Seahawks and Patriots both won one-score conference title games -- but in ve...",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9pM1NFekNTM0JyUktrX0dCbzNwZzNfbHp2TklDelpRN1p5UnpXSGwzYWhXa0pRV19QYU03RG5Rb1dEVVdXSjVwekdkZTNXWndGcEFSTU41ZjZJc2o2OVFER1g4bEo?oc=5",
-          "name": "Google News Food",
-          "originalTitle": "'생생정보 묵은지수육찜 맛집 - bntnews.co.kr",
-          "publishedDate": "Thu, 22 Jan 2026 08:00:02 GMT"
+          "url": "https://www.espn.com/nfl/story/_/id/47729285/nfl-playoffs-nfc-afc-conference-championship-patriots-broncos-seahawks-rams-barnwell-2026",
+          "name": "ESPN",
+          "originalTitle": "Barnwell: What went right for the Seahawks, Patriots -- and wrong for the Rams, Broncos -- on Sunday",
+          "publishedDate": "Tue, 27 Jan 2026 01:14:00 EST"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFAzb01OcnJsYXRvN2FXNmhGY1ZxYllqa284YU15SXd4VFdxMnFGcGFsOXRuMTMzX0VONUppMzlQclNONkRyTndQYWk2aFNUblJJa1NONVpQeFo5OGM0Rmg1S0dic2xsWTVnSkE?oc=5",
-          "name": "Google News Food",
-          "originalTitle": "맛집 소개로 충북 음식문화를 알린다 - 동양일보",
-          "publishedDate": "Thu, 22 Jan 2026 07:44:00 GMT"
+          "url": "https://www.espn.com/nfl/story/_/id/47684830/seahawks-patriots-super-bowl-2026-lx-predictions-picks-odds-stats",
+          "name": "ESPN",
+          "originalTitle": "First look at Seahawks-Patriots: Early Super Bowl picks, big questions, key matchups",
+          "publishedDate": "Tue, 27 Jan 2026 01:14:00 EST"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1GV0wtajlHUEhaQzdKV2tvMlRuSjBKYTVWcmUxb1daNVZqcjk1dXV6dWtlTlUtQmlNMzVmVUFIUjJVTE1EVmhfdFZiMS1tQ0VIYWIwaldKZU1kY09YcXBydVZn?oc=5",
-          "name": "Google News Food",
-          "originalTitle": "맛집 가이드북 '충북의 맛' 책자 발간…대물림 음식업소 등 - inews365.com",
-          "publishedDate": "Wed, 21 Jan 2026 07:49:02 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1NUTJ0c0ZzOU1BRWZnczFBaUMxLV8xYmhLRk9OZzN1Y3R2aWlvb1JhSUpkc2RhQ0FfLTFNOEl6R01yaUJ3Y2lCcGRpTm5YUjhsdmc?oc=5",
+          "name": "Google News 스포츠",
+          "originalTitle": "전직 프로야구 스타 '상간남 의혹'…\"아내가 아들 코치와 불륜\" - 노컷뉴스",
+          "publishedDate": "Tue, 27 Jan 2026 05:47:00 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:55.007Z",
+      "generatedAt": "2026-01-27T07:32:15.411Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "1b114d419184cce62a1546daa8e62609",
-      "category": "경제",
-      "aiTitle": "BNK부산은행, 해양금융·생산적금융으로 지역경제 뒷받침 선언 - 파이낸셜투데이",
-      "aiSummary": "BNK부산은행, 해양금융·생산적금융으로 지역경제 뒷받침 선언 파이낸셜투데이",
+      "id": "68974642afe07d4534e6e13ab67ff8c9",
+      "category": "IT·기술",
+      "aiTitle": "공공기관 5천만명 주민번호, 감사원 ‘화이트 해커’에 털려 - 한겨레",
+      "aiSummary": "공공기관 5천만명 주민번호, 감사원 ‘화이트 해커’에 털려 한겨레",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1MWmNldmFNcjZqN1hMODd2dEd0dU1ianExWEV3bWRTUzBCY25mczYtSWtnd3dOZFRKRkNRM1lLNmhLZTNnM2ZJV2V5aVdmUmFOX2VWRFdZMEFUOWRkazQyekpPMmhDLURqYVHSAW5BVV95cUxQVC1rTk53Y1BaWldzdnkzSlQyVnhaNzlDb3RVV2RQQXV0VDNWWjk0YTU5SXR3RFRwa0FPb2dVeG1oSml6dFd2RFF0RFNHb3NYeHhnREZ2UEdWQkZwMi1lS3l0MFVvU1NQQk5sMDNQdw?oc=5",
-          "name": "Google News Economy",
-          "originalTitle": "BNK부산은행, 해양금융·생산적금융으로 지역경제 뒷받침 선언 - 파이낸셜투데이",
-          "publishedDate": "Fri, 23 Jan 2026 08:17:35 GMT"
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE81c1l3UUFoWjhUdzY3MzNCeVByREc0MlFHVlc3dV9US05ncU00b0RTYU1Kb1JoSXNzMnAyX2dpa2hsaXBKYjVHTmNBNDhjb05meTUyY3NPV3BhZVFLODBoZ3AyYVpabzI4Vk1ranJMTHNDTlRO?oc=5",
+          "name": "Google News IT",
+          "originalTitle": "공공기관 5천만명 주민번호, 감사원 ‘화이트 해커’에 털려 - 한겨레",
+          "publishedDate": "Tue, 27 Jan 2026 06:32:00 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE52MGoyc3FyNDNHVmVxSUdRRUx5MDZBb0g0VzV2ZTVhNk1XUjhsVTVZendzdTVmTER2TnprNUMzTVpoYXhJcUZMbnZWcU5oeGdPY2JmT0Y5UXczZjBVd19TNV9ITmVIcWswZXNN?oc=5",
-          "name": "Google News Economy",
-          "originalTitle": "김성주 BNK부산은행장, 해양·지역경제 금융 혁신 선언...\"DYNAMIC MOVE, MAKE WAVE’\" - 서울타임즈뉴스",
-          "publishedDate": "Fri, 23 Jan 2026 08:04:24 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB6RlVvRnRSbWk5dXY5dHd0VlZhSVJUbGs5cHBPemV5Zk1JUDY0aEVtVFJfcGZmZE44Smpjb3habW5uNXdLUENjb2tuTWZmUklLVjNCTlZfcFNiYVN2dlI5edIBZkFVX3lxTE1oWDJYR1Vza1ZKX0dTU2N6UXhzRFZYbE1kaHFlRzQtZ3gwcW05OFdqRmpVQWRqTkkwYVNSLURJUTBZSjVoNnRvaHRldE83VGhMVGp5ZER4c1dBeTNSRzZzZk5oU256QQ?oc=5",
+          "name": "Google News IT",
+          "originalTitle": "XRP, 트럼프發 악재에 하방 압력 심화…'0달러 가능성' 까지 거론 - tokenpost.kr",
+          "publishedDate": "Tue, 27 Jan 2026 06:13:41 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE56bk5aWUhtNHlsbk50VF9jckV5cXF6eE9HREd0c1RyNUdMdnA5YUhVUkU3QVVDd3JwOUV0UlpHRUt6bkpKN240ZkUzTFlScjFkMVlkaU1n?oc=5",
-          "name": "Google News Economy",
-          "originalTitle": "이창용 한은 총재, ‘제19차 아시아금융포럼’ 참석 - 헤럴드경제",
-          "publishedDate": "Fri, 23 Jan 2026 05:01:11 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5MaFEtYi1VQjRvQ3pxOXFldW1HRjloUHBwakI5cVpyeEc4a1UzYW1scHZqcXRMbWNRODdUdGJYUGF2Wm1pS2JSdWltdTByc1VlTFRFR2Zn?oc=5",
+          "name": "Google News IT",
+          "originalTitle": "'큰손' 애플도 백기...삼성·SK, 아이폰용 LPDDR 가격 인상 - 지디넷코리아",
+          "publishedDate": "Tue, 27 Jan 2026 05:25:49 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:56.013Z",
+      "generatedAt": "2026-01-27T07:32:16.426Z",
       "validationPassed": true,
       "isFallback": true
     },
     {
-      "id": "2938f66d6c7b7040c9cc4805867d8c9b",
+      "id": "24f18cc8035f185c09bdbaee502c14dc",
+      "category": "라이프",
+      "aiTitle": "80개 브랜드에 1000억…무신사파트너스, 패션 넘어 라이프스타일 - numbers.co.kr",
+      "aiSummary": "80개 브랜드에 1000억…무신사파트너스, 패션 넘어 라이프스타일 numbers.co.kr",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBFcXdqU2ZSUkNNcTRqOVh3UjdTZGgyaDM2VkdXU1Qwdm9KZWZnNVFSelBSZV90dkJnMnBrWnhMUWxfc3hCb3ZBYmFrUVJoZmJvVHVMWkM3QS1IdXZZQXpidV9Jd3htLXpOcFpZ?oc=5",
+          "name": "Google News 라이프스타일",
+          "originalTitle": "80개 브랜드에 1000억…무신사파트너스, 패션 넘어 라이프스타일 - numbers.co.kr",
+          "publishedDate": "Thu, 22 Jan 2026 00:22:30 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBGMTQ1eFNfTUgwdFE1WUZiclVfQkhwMm5lNFBEajh1Q2g2RkVKYTJULW5hc2hUV1pXdzJLaHU0OUttUFRZTzFDVVJ4Z0dTMFM1UG9pNy1FNjFDeDBsRVYwcVg2VGw0UFhZZHFVZ1JSRW8xOGM?oc=5",
+          "name": "Google News 라이프스타일",
+          "originalTitle": "프리미엄 라이프스타일 ‘아르주엘’, 뷰티 이어 가방 런칭 - 어패럴뉴스",
+          "publishedDate": "Mon, 19 Jan 2026 13:50:56 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBaeEJod25FYjBMNlR2SkZLM2xVUGdIM05EbXk2d3JGbFd0dmp5OVRwalN1d01oNzR3NHdXTmJ4SFVaWlJvSDV6NzdmUE5KN09ndUxWMjZRckxpVnN3bE9ubEJrTEpOQmhFTG5FQw?oc=5",
+          "name": "취미 트렌드",
+          "originalTitle": "시니어를 위해 새로운 활력을 불어넣을 11가지 트렌드 취미 - 캐어유 뉴스",
+          "publishedDate": "Sat, 17 Jan 2026 08:00:00 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:17.427Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "8e53425fb88c8b79b46a876dd1c72324",
       "category": "교육",
-      "aiTitle": "지구촌나눔운동, KOICA 청년중기봉사단 특수교육·아시아 분야 발대식 - 동아일보",
-      "aiSummary": "지구촌나눔운동, KOICA 청년중기봉사단 특수교육·아시아 분야 발대식 동아일보",
+      "aiTitle": "지역의사제 노리고 지방 유학? 복지부 \"입시 제도 아니다\" 경계 - 네이트",
+      "aiSummary": "지역의사제 노리고 지방 유학? 복지부 \"입시 제도 아니다\" 경계 네이트",
       "sources": [
         {
-          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5IN2dCTVA2V2FPd0hjSGlsMkVTMnpUYXdDZnl6MU1JYUpvWDdNdDBMN2NHRjhTaHo4bl9wcGQxeVdnSUkycEo5Zmh2OHZuNVhwRHUzdlRKVjBSc21NZm9nX3dnalJfeTBqdUUwOW1hVkg2dVB5a3fSAWZBVV95cUxObWhGQUlFNVNnNnRpMTFmV1pSWmkzZUU3WTVoNC1jLWhabU1NU21vQzRlWE5zTVVvZlZnMjYtcjlMX0U0SGI1UVhpeVNfRUFvZzIzOE1famxKVDhPaFozcEY4WkxlT1E?oc=5",
-          "name": "Google News Education",
-          "originalTitle": "지구촌나눔운동, KOICA 청년중기봉사단 특수교육·아시아 분야 발대식 - 동아일보",
-          "publishedDate": "Fri, 23 Jan 2026 08:51:32 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1EV3FFdVNkVEZ0WEVSbWVoWmI1WUF2WmhqRGY4aUpZelNCZXZMdm1QekU1Zl9JNWZZcWRXOXZMdzJKREQyWDNXWGdHQ2pxNE5TNmRV?oc=5",
+          "name": "Google News 교육",
+          "originalTitle": "지역의사제 노리고 지방 유학? 복지부 \"입시 제도 아니다\" 경계 - 네이트",
+          "publishedDate": "Tue, 27 Jan 2026 06:54:00 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE8zUDB0MmRfUnJuTmhNRk9Hc1FrYS1OSjhEYnBBLXEyVDFYUzgtb21mVkNVV25FazZVUlN3VlBxRWlSV24wendTRDZwcmF1UUhqTDNnS29DdUh1MC1RUUJtY0VsOXJ3dnhFUy1DTGl3?oc=5",
-          "name": "Google News Education",
-          "originalTitle": "대구·경북 교육감, 교육통합 방향 논의 - gukjenews.com",
-          "publishedDate": "Fri, 23 Jan 2026 08:30:01 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5vNHZlTHk4SE1GOV9ERFZLUXlyajhoejhETU1xazdTbGlpR19IT2J3bk5HR1J2UUpmdkVYTFhjWDNydXo5NUpjZ2g3LUNsaEJZRWRWS1E2T0I4V3RFdFB3TGFEMXpJU3E0c1E?oc=5",
+          "name": "Google News 교육",
+          "originalTitle": "과목 선택, 왜 대학 입시에 ‘직접적 불이익’ 될까? - 에듀진 인터넷 교육신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:34:42 GMT"
         },
         {
-          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4tTDdXX1FpbEJYZkNxV2FDMzYwd1c2M21ySGhSTHJJeUliWnllWWhfTGZaVUJabFNLc1phYWp2Z0NaUFZQVlNOOXJqTXJSVHc?oc=5",
-          "name": "Google News Education",
-          "originalTitle": "사각지대 있는 충남교육 정책 다 잡는다… 도의회 3년마다 정책 효과성 검증 - v.daum.net",
-          "publishedDate": "Fri, 23 Jan 2026 08:14:46 GMT"
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPcWZ4U2ZHRGNCYU5fYi1kb2tROXJWZWJlTExtbTBkOEFMaHNocjFQTjN0MVI2QTVLaTVJWVpDNHFvZHRLZGROdlZybXlmX1JBMG9IdDQ3Wmt3MnRjZG9pOXlXZDhUWGtfY2RCQ2hia1ktMG5KNXFfNG9oU2FGQk9xNF9hZlJMWVFmUWc?oc=5",
+          "name": "Google News 교육",
+          "originalTitle": "호찌민시 교육훈련국장이 10학년 입학시험 폐지 제안에 대해 언급했습니다. - Vietnam.vn",
+          "publishedDate": "Tue, 27 Jan 2026 06:18:19 GMT"
         }
       ],
-      "generatedAt": "2026-01-23T09:30:57.016Z",
+      "generatedAt": "2026-01-27T07:32:18.434Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "e0ae8bd20e05bea48a21316116adb863",
+      "category": "환경",
+      "aiTitle": "생수 고를 때 달라진 기준…무라벨 제품이 '표준' [기후·환경 통신문] - 네이트",
+      "aiSummary": "생수 고를 때 달라진 기준…무라벨 제품이 '표준' [기후·환경 통신문] 네이트",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1XSlZyLUJRbUhReWV4d29pREp4ak1LTjdONUVzZnFRQlQ3QWgyUjNFVmh3TTY3ckVjNmtPeXdSZWJiQnVjM2NYbGdtQVhmYlhYLWY0?oc=5",
+          "name": "Google News 환경",
+          "originalTitle": "생수 고를 때 달라진 기준…무라벨 제품이 '표준' [기후·환경 통신문] - 네이트",
+          "publishedDate": "Tue, 27 Jan 2026 07:21:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1qbU9idGNjSHRnNHljd0hzaTRpVE16SnU1S0hlcklNYXlYN3QzVnFCX3hJLU1HZ0RkXzBMbTZXRnh6Xy0zTl96aGZNTkZWUmVTZ0RHdEw2WdIBWEFVX3lxTFBNcm02MFMyR25WeE4wYms1bTY3cDhQRFNYZmhPcHJYNHNzWm1SbFBrbTBZc2d1dDBjVTZqSk96elU3a1hZUjhKWHE4bXZ2TTJBRHV0WU9iRUM?oc=5",
+          "name": "Google News 환경",
+          "originalTitle": "기후부, 환경보건 과제 공개…가습기살균제 배상체계 전환 추진 - 데일리안",
+          "publishedDate": "Tue, 27 Jan 2026 05:01:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1ieFVwQ3BUdXVGMTlKbG42R3dXTHpFODBOQmdtdW00RzA5RGk4QUhpbVlPM2ZLQTN0U3c4U2RXRmd3VWZtWGh3UlBETkNKbGNKS0k5VDlMZWNXNXpPbktNTUJrRlZlTGdkSFNfNk5fNkZxQlk?oc=5",
+          "name": "Google News 환경",
+          "originalTitle": "\"지구온난화라는데 겨울 폭풍은 왜 오나\", 트럼프 반복된 주장에 기후학계 반발 폭발 - 비즈니스포스트",
+          "publishedDate": "Tue, 27 Jan 2026 04:44:59 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:19.447Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "eb687e1869b0828c004d1b2b7834895d",
+      "category": "칼럼·사설",
+      "aiTitle": "[데스크칼럼] 권력남용... - jgtimes.com",
+      "aiSummary": "[데스크칼럼] 권력남용... jgtimes.com",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9GckhGbWJJUUsxalJBdm0wUUxydlQxQzR1WWdEVkdteWd0YzJVOHFVai1qODYwTFFlbFRNbFRJMDU3a3AwX1Zlc2hiRlNhV25uMnF4Skc5RExqa25MOGY1eXdPc2x4YzJX?oc=5",
+          "name": "Google News 칼럼",
+          "originalTitle": "[데스크칼럼] 권력남용... - jgtimes.com",
+          "publishedDate": "Mon, 26 Jan 2026 07:58:30 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5TUU5acWhmdmh4ci1WR1BNanMtM1RUeEtvX0o2WEQyTVlaaC1Qa1U3eXllZGI3UndrWGlBZTJDYzlLNUVUSllFUTJsWnB2NU5IVjdmTXBKVVpJelJEc3ZGcjZKQmowcnlU?oc=5",
+          "name": "Google News 칼럼",
+          "originalTitle": "대구 경북 통합/ 안병윤 전 경국대 공공 부총장 - y-cnews.com",
+          "publishedDate": "Mon, 26 Jan 2026 07:23:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE4waWctTkFYRDFZLWc0M2JLYUVDTGFDblFhaWhQWk1FUTVsb183VG1QVzExWkRIaDNGbDhMWkdCcFNib0JIenVhQ3pkWVJPN1dza3VKZzZrSmNMNmpiSGRSV0dIUGxHVzFOTDB6WkdiVQ?oc=5",
+          "name": "Google News 칼럼",
+          "originalTitle": "[사설] 차별금지법 제정, 정당별 ‘6·3선거 공약’토록 해야 - 미디어생활",
+          "publishedDate": "Mon, 26 Jan 2026 00:13:12 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:20.451Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "869fb23ec9ce12e5eee55a05abe74297",
+      "category": "여행",
+      "aiTitle": "[묘청의 차이나로그] 일상에 더 가까워진 '한중 관광' 교류 - 스포츠월드",
+      "aiSummary": "[묘청의 차이나로그] 일상에 더 가까워진 '한중 관광' 교류 스포츠월드",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9sLW5JR3U2UmNRMHoxbzZpNWFyaGtiWm9ucXNMNTRBNHo5TllMVnlRd1FGdTN6NzdWT3JhMG1nZE4wRktGT2hDTGk5WHd6Z0tfY2VDY1FGb3RJZVpRM1BPZWp3?oc=5",
+          "name": "Google News 여행",
+          "originalTitle": "[묘청의 차이나로그] 일상에 더 가까워진 '한중 관광' 교류 - 스포츠월드",
+          "publishedDate": "Tue, 27 Jan 2026 06:49:46 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBOd3p4UFRzbnlnaHVHSGtENDRUY0VoNFF5YXJjV2x4ZUJWWk1sNk9kLUZxUllfd2lRZ0VXM09DSmFnSG5VR0tJZ3E1YVF2MWNaZlhjaWtwRFJwRkhaZl9OVlJYcTIzQ0lOVkE?oc=5",
+          "name": "지역 문화",
+          "originalTitle": "[영암] 왕인문화축제, 문광부 문화관광축제 재선정 - newsinjn.com",
+          "publishedDate": "Tue, 27 Jan 2026 04:06:13 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE45U2lrWTh1dDZWMFJmeE5USGljTGdlemxIQnNZUWlNUGF2bXllVk9keW5HYmNwUk83YWFObG96NUtvb1Ntc3FqbUF5NWdEc3hpcXMzXw?oc=5",
+          "name": "Google News 여행",
+          "originalTitle": "노랑풍선, 외국인 관광객 위한 ‘옐로 라운지’ 설치… “관광정보·편의 서비스 제공” - 매일경제",
+          "publishedDate": "Tue, 27 Jan 2026 02:22:16 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:21.461Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "fc00c9673afcc6fe401b37cf7fc9a2de",
+      "category": "음식",
+      "aiTitle": "홍윤화, 다이어트 버전 새우완자 게살 스프 레시피 공개[동상이몽 2] - 싱글리스트",
+      "aiSummary": "홍윤화, 다이어트 버전 새우완자 게살 스프 레시피 공개[동상이몽 2] 싱글리스트",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBiQ19SbFh2Nkd1WE1XYzhuTGMzUVVvOFdaRWRuNUl1U2NObng4Y29LdjlpaGd4LU40VV9sMC10bnNhazJTaFU4TXdKeEFUbTVOV2RycllGaGN5ejdDVFVrZkZOUmI1Zw?oc=5",
+          "name": "레시피",
+          "originalTitle": "홍윤화, 다이어트 버전 새우완자 게살 스프 레시피 공개[동상이몽 2] - 싱글리스트",
+          "publishedDate": "Mon, 26 Jan 2026 14:39:19 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9OVnZQYWs3Qmk4RWo2cGNLenlvNDBsWlAtb0laYnZxcEVnSGlWQU9FUzlHOGZjdHlzemZWT3c1TzZUQ2hLdWVUQjhhaUdPSlppSnAw?oc=5",
+          "name": "레시피",
+          "originalTitle": "[요리예능 전성시대] 류수영·이정현·김재중·이찬원…요리하는 스타 - 네이트",
+          "publishedDate": "Mon, 26 Jan 2026 05:52:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5mbDJzZnJCQ25OeFVCRmhQZkhuMXVjVWdSLXNGcG81YUZUblBzT1VTRFdjc0trOE4zZWF1ZWdXVVlLOTRrUFlXbVk2c24yZFBGN3ZCZzFsYmt3VGxOLTRjS2NrbDRObmZTSVNrWXo4Rm1SMEth?oc=5",
+          "name": "레시피",
+          "originalTitle": "가전 기업 '자이글'이 요리 소스를 출시한 이유 - 캠페인 인사이트",
+          "publishedDate": "Mon, 26 Jan 2026 05:02:08 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:22.465Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "3c35280f34376fdb4e3aaead3d13b65d",
+      "category": "휴먼스토리",
+      "aiTitle": "러시아 선수 연달아 격파한 '우크라이나 전사' 스비톨리나의 감동 메시지 - v.daum.net",
+      "aiSummary": "러시아 선수 연달아 격파한 '우크라이나 전사' 스비톨리나의 감동 메시지 v.daum.net",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9HcWdFODdaQnJ4dlBUeXpPdkM4TlVvLVh1OEdpd0dFaDNNdFBWU0JjWlUybmtYZDdKQ2cydGFCUURyc1loYzMtS0cyU3NkWW8?oc=5",
+          "name": "Google News 휴먼",
+          "originalTitle": "러시아 선수 연달아 격파한 '우크라이나 전사' 스비톨리나의 감동 메시지 - v.daum.net",
+          "publishedDate": "Mon, 26 Jan 2026 02:45:26 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBEbDViMVV4RGJmekh4T2dkblRpYThpR3h2d3BWWENLcmNnUW5rdWZkYUpySWxaaklTNHd0SDRnTEh4TXhtRkJ2ckRhOFJUOXVxQ1VOYTBKQTcydGxxUzA0RktuVHhvRVZFQVFPMmNlUE53SG5HSzNJ?oc=5",
+          "name": "Google News 휴먼",
+          "originalTitle": "니카라과 '백마 탄 여인'의 감동 스토리... 한국인이었다 - 오마이뉴스",
+          "publishedDate": "Sat, 24 Jan 2026 08:17:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1MTEF2cWlqalQ5ZElySUplckhjOGlBbGpaX2N1Z0l1eUFiT1ZRUjZBLXl4clpaY3RlRVNBU2hIQzhBaHluMDFMYVZkOXdOazZlbDJHUDl1dWpBYmhFTUdqZGhnbmg4NGZseHRpbEhrRHNLS21JU2c?oc=5",
+          "name": "Google News 휴먼",
+          "originalTitle": "KB국민은행, 고객 사연 담은 감동 영상으로 ‘KB골든라이프’ 시니어 브랜드 강화 - 일요주간",
+          "publishedDate": "Tue, 20 Jan 2026 00:58:27 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:23.468Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "39b7d2afc14a78b6a764083b6e1290f6",
+      "category": "과학",
+      "aiTitle": "고교생 40% “난 수포자”…초등생 73% “수학 때문에 스트레스” - 한겨레",
+      "aiSummary": "고교생 40% “난 수포자”…초등생 73% “수학 때문에 스트레스” 한겨레",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9SUHlwOFRyUXR4dTkwbU1pQkJ6cUNBTThUYnFGeTZHYldIR1ZpSFJkZHFBUi1QeHB0TElILTc0X3JzSWE3Sm5Gazd5OWszUDRLMDlRVVZLOE84WkNpRHF2MVlraVdXTXB6V0E?oc=5",
+          "name": "Google News 과학",
+          "originalTitle": "고교생 40% “난 수포자”…초등생 73% “수학 때문에 스트레스” - 한겨레",
+          "publishedDate": "Tue, 27 Jan 2026 06:07:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNMG95WFZ3M1ZsRE5fVFliWGp2elFUbi1LSkItWTVaSlBtLU1FbVFCZjhJU1JtLU1uUUk1SnJiRjRxczNYaE9PbVVZSG01aGc5bzRKUUhJRHVGSWk3SzhwNWQwTFlwcDU2MVBWSlg5dXpfUlMzTmNkbTNxTGFSOHN5ZlFXRdIBlwFBVV95cUxPd2oxZXN5NDBpSE9iN2VfRDdBQ0MzdjhjdG5pWThMVGdfY1VkRTFERFc4c3JkRHlKS0tsbHA5cGhjWENVTExOMUF0V0pwNlBwSkxDRmdNb3k3dVl2eHJZTEJCN2p1cGJGZW80NGxRUk1xZEFyX29WOUlZY0w5S2piNDZWRV9ubnhkazJ2VnBfNTVJZVdnUDdB?oc=5",
+          "name": "Google News 과학",
+          "originalTitle": "AI도 경력직 시대?… 신입 AI에게 족집게 지식 전하는 기술 등장 - 조선일보",
+          "publishedDate": "Tue, 27 Jan 2026 05:08:00 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBvdk9SOVNEcXBkMWwtMnZGZWw2bWppVWhjZnBLS2ZkaTVXelZfWEVLM01JVGY1eW5Bc1FfMDdTNERYbUJWY0Z0XzdUazBDbkVQMkZadlVySmdvNDhLN0NaV3JhdE8?oc=5",
+          "name": "우주 과학",
+          "originalTitle": "우주청, 국내 우주기업 美 파견...NASA·스페이스X 간다 - MTN 머니투데이방송",
+          "publishedDate": "Tue, 27 Jan 2026 04:38:04 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:24.473Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "16db38f279ccde0b6d89e3aa5073d4a4",
+      "category": "취업·직장",
+      "aiTitle": "KBIOHealth, ‘교육-멘토링-취업설명회’패키지 본격 강화 - 메드월드뉴스",
+      "aiSummary": "KBIOHealth, ‘교육-멘토링-취업설명회’패키지 본격 강화 메드월드뉴스",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1DTXFkeWtLXzl0RGRXOUo1dHFrMXd2WVpmTFVubXgwRUdncUZIbk1HM0NWVVJhME9XdUVFTDJoWEY2SEJjUjZMZlBPYXJyTm5MMzZsaXFVVjdSRzFzM18tdVRGOU9mNGN2UTJjeQ?oc=5",
+          "name": "Google News 취업",
+          "originalTitle": "KBIOHealth, ‘교육-멘토링-취업설명회’패키지 본격 강화 - 메드월드뉴스",
+          "publishedDate": "Tue, 27 Jan 2026 06:12:14 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1IX04wQ085VnNLMkROdXQtN3ZlZUdxTEZjMEFfeHk0X1ZyamlTN0JLUE8tU0YwTUhVVkVBTUxtZ3Q1eGpaNDVrZTBYSTg5LWRsTGhoS2pxZG1CNkZVa1VLOXRVbG04ZHN0UzJUT0dINHY?oc=5",
+          "name": "Google News 취업",
+          "originalTitle": "[취업 5070] 천안 '시니어 바리스타 모집' 외 (1월 4주) - B world",
+          "publishedDate": "Tue, 27 Jan 2026 05:56:10 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9WZ3VZOWJkb2xtSmZSc2xFaTd4TjVSOWFQYnVQcmFuNjlZNnNhcDdsX0hnbHlMUUczaUQyUjhpRUZTSS13OVZGajB1LWNEc1gybENZUEd0dmhPWGNWZHNRZ1FHOFpTak1ua28w?oc=5",
+          "name": "Google News 취업",
+          "originalTitle": "순천향대, 졸업생 대상 ‘NEW YEAR 취업 올인 마스터 시리즈’ 성료 - 현대경제",
+          "publishedDate": "Mon, 26 Jan 2026 14:04:38 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:25.487Z",
+      "validationPassed": true,
+      "isFallback": true
+    },
+    {
+      "id": "d3ed45e0869ea5800692eaf969279c96",
+      "category": "재테크",
+      "aiTitle": "삼성액티브자산운용 '차이나바이오헬스케어액티브 ETF' 상장 - 중소기업신문",
+      "aiSummary": "삼성액티브자산운용 '차이나바이오헬스케어액티브 ETF' 상장 중소기업신문",
+      "sources": [
+        {
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFAxQjNJMmFQdDFnVkpRWVh4a1c0Zm5FOGJCSXlWYkh5eTh2T3Y2NWl2VWVpaXRra1hrMWpaRE9oUkpXb2syUmZsQTFSQkdaYlFaOURVWkZ1YjRXRjlRLVc3NmQ1QXlITERDVnlSTQ?oc=5",
+          "name": "Google News 재테크",
+          "originalTitle": "삼성액티브자산운용 '차이나바이오헬스케어액티브 ETF' 상장 - 중소기업신문",
+          "publishedDate": "Tue, 27 Jan 2026 06:08:20 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1kVnlfNDZwNm9aT09OSjBTamFwYkJfRGpOb0JuNFp3VEJoLXFjdDhQaEtYY2tOSWpOdGtBOWxCcm5pTVVnaXN5SmxIaXB0NUJXWjBRSWRKNlo0VERrM1h3WWtJT2hOeVNjcXpENlln?oc=5",
+          "name": "Google News 재테크",
+          "originalTitle": "코스피 5000 돌파, 증권·금융주로 쏠린다 - 더리포트",
+          "publishedDate": "Tue, 27 Jan 2026 03:32:57 GMT"
+        },
+        {
+          "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE8tLXptSk9FaVkxRkJsTWRZQXZnb0p4bjl4VkxhY1d0b3hiQS1SM213X0lGNVJPcktnb0tRQXZKNW4yOTh1eEJNcDQ5ak83dVNNLUduVXpSc091WU5ucEVLZm43bEJHV1FUWURCaQ?oc=5",
+          "name": "Google News 재테크",
+          "originalTitle": "한화자산운용 'PLUS 미국고배당주액티브 ETF' 상장 - 중소기업신문",
+          "publishedDate": "Tue, 27 Jan 2026 01:57:19 GMT"
+        }
+      ],
+      "generatedAt": "2026-01-27T07:32:26.488Z",
       "validationPassed": true,
       "isFallback": true
     }

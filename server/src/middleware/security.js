@@ -8,6 +8,7 @@ import rateLimit from 'express-rate-limit';
 
 /**
  * Helmet 보안 헤더 설정
+ * CORS와 충돌하지 않도록 설정
  */
 export const helmetMiddleware = helmet({
   contentSecurityPolicy: {
@@ -17,12 +18,19 @@ export const helmetMiddleware = helmet({
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       scriptSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "http://localhost:*", "https://accounts.google.com"],
+      connectSrc: [
+        "'self'",
+        "http://localhost:*",
+        "https://accounts.google.com",
+        "https://myfavoritenews.vercel.app",
+        "https://*.vercel.app"
+      ],
       frameSrc: ["'self'", "https://accounts.google.com"],
     },
   },
   crossOriginEmbedderPolicy: false, // 외부 리소스 허용
   crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: false, // CORS 허용을 위해 비활성화
 });
 
 /**

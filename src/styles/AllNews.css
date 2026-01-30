@@ -3,43 +3,24 @@
    ======================================== */
 
 .all-news-page {
-  min-height: 100vh;
   background: #f5f7fa;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Header */
-.all-news-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
+/* 페이지 제목 */
+.all-news-page-title {
   text-align: center;
+  padding: 1.5rem 1rem 0.5rem;
 }
 
-.all-news-header .back-link {
-  position: absolute;
-  left: 2rem;
-  top: 2rem;
-  color: white;
-  text-decoration: none;
+.all-news-page-title h1 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.all-news-page-title .header-desc {
   font-size: 0.9rem;
-  opacity: 0.9;
-  transition: opacity 0.2s;
-}
-
-.all-news-header .back-link:hover {
-  opacity: 1;
-}
-
-.all-news-header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.all-news-header .header-desc {
-  font-size: 1rem;
-  opacity: 0.9;
+  color: #666;
 }
 
 /* Content */
@@ -169,7 +150,7 @@
 
 .refresh-btn {
   padding: 0.75rem 1.25rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1E2A5E 0%, #2A3A7C 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -181,7 +162,7 @@
 
 .refresh-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(30, 42, 94, 0.3);
 }
 
 .refresh-btn:disabled {

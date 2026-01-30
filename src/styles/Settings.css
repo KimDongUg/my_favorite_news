@@ -1,7 +1,7 @@
 /* Settings Page */
 .settings-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1E2A5E 0%, #2A3A7C 100%);
   padding: 2rem;
 }
 
@@ -41,7 +41,7 @@
 
 .selected-count {
   font-weight: 600;
-  color: #667eea;
+  color: #1E2A5E;
 }
 
 .quick-actions {
@@ -61,8 +61,8 @@
 }
 
 .action-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: #1E2A5E;
+  color: #1E2A5E;
 }
 
 .category-grid {
@@ -175,14 +175,14 @@
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1E2A5E 0%, #2A3A7C 100%);
   border: none;
   color: white;
 }
 
 .save-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(30, 42, 94, 0.4);
 }
 
 /* Responsive */

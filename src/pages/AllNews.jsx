@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import Layout from '../components/Layout';
 import { newsAPI } from '../services/api';
 import { headlines as fallbackHeadlines, categoryColors, categoryIcons } from '../data/headlines';
 import '../styles/AllNews.css';
@@ -120,12 +121,12 @@ function AllNews() {
   };
 
   return (
+    <Layout>
     <div className="all-news-page">
-      <header className="all-news-header">
-        <Link to="/" className="back-link">← 홈으로</Link>
+      <div className="all-news-page-title">
         <h1>전체 정보 보기</h1>
         <p className="header-desc">카테고리별 최대 20개의 정보를 확인하세요</p>
-      </header>
+      </div>
 
       <div className="all-news-content">
         {/* 필터 영역 */}
@@ -266,10 +267,8 @@ function AllNews() {
         )}
       </div>
 
-      <footer className="all-news-footer">
-        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
-      </footer>
     </div>
+    </Layout>
   );
 }
 

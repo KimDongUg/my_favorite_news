@@ -281,6 +281,48 @@ export const sources = {
       type: 'rss',
       enabled: true
     }
+  ],
+  '국방': [
+    {
+      name: 'Google News 국방',
+      url: 'https://news.google.com/rss/search?q=%EA%B5%AD%EB%B0%A9+%EA%B5%B0%EC%82%AC&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: '안보 뉴스',
+      url: 'https://news.google.com/rss/search?q=%EC%95%88%EB%B3%B4+%EB%B6%81%ED%95%9C+%EB%AF%B8%EC%82%AC%EC%9D%BC&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    }
+  ],
+  '주식': [
+    {
+      name: 'Google News 주식',
+      url: 'https://news.google.com/rss/search?q=%EC%A3%BC%EC%8B%9D+%EC%A6%9D%EC%8B%9C&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: '증권 뉴스',
+      url: 'https://news.google.com/rss/search?q=%EC%BD%94%EC%8A%A4%ED%94%BC+%EC%BD%94%EC%8A%A4%EB%8B%A5&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    }
+  ],
+  '드라마': [
+    {
+      name: 'Google News 드라마',
+      url: 'https://news.google.com/rss/search?q=%EB%93%9C%EB%9D%BC%EB%A7%88+%EB%B0%A9%EC%86%A1&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: 'TV 예능',
+      url: 'https://news.google.com/rss/search?q=%EC%98%88%EB%8A%A5+%EB%B0%A9%EC%86%A1%EA%B0%80&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    }
   ]
 };
 
@@ -296,7 +338,7 @@ export const crawlConfig = {
   userAgent: 'MyNewsBot/1.0 (+https://mynews.example.com/bot)',
 
   // 카테고리당 최대 아이템 수
-  maxItemsPerCategory: 10,
+  maxItemsPerCategory: 20,
 
   // 타임아웃
   timeout: 10000 // 10초

@@ -69,42 +69,56 @@ import { auditAllSummaries, getComplianceStats } from './compliance/complianceCh
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// 보안 미들웨어 (가장 먼저 적용)
-app.use(helmetMiddleware);
-app.use(addSecurityHeaders);
+// ============================================
+// 🔥 CORS 설정 - 가장 먼저, 모든 요청에 적용
+// ============================================
 
-// CORS 설정 - 모든 Vercel 도메인 허용
+// 직접 CORS 헤더 설정 (가장 확실한 방법)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  // 모든 origin 허용 (또는 특정 패턴만 허용)
+  if (origin) {
+    // Vercel 도메인 (프로덕션 + 프리뷰) 허용
+    if (origin.includes('vercel.app') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+      // 그 외 origin도 허용
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+  } else {
+    // origin이 없는 경우 (서버간 통신, cron 등)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+
+  // CORS 헤더 설정
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control');
+  res.setHeader('Access-Control-Expose-Headers', 'Content-Length, X-Request-Id');
+  res.setHeader('Access-Control-Max-Age', '86400');
+
+  // OPTIONS preflight 요청 즉시 응답
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
+  next();
+});
+
+// cors 패키지도 백업으로 사용
 app.use(cors({
-  origin: (origin, callback) => {
-    // origin이 없는 경우 (같은 origin, Postman 등) 허용
-    if (!origin) return callback(null, true);
-
-    // localhost 개발 환경 모두 허용
-    if (origin.includes('localhost')) {
-      return callback(null, true);
-    }
-
-    // 모든 vercel.app 도메인 허용 (프로덕션 + 프리뷰)
-    if (origin.includes('vercel.app')) {
-      return callback(null, true);
-    }
-
-    // FRONTEND_URL 허용
-    if (origin === process.env.FRONTEND_URL) {
-      return callback(null, true);
-    }
-
-    // 그 외는 로그만 남기고 허용 (디버깅용)
-    console.log(`[CORS] 알 수 없는 origin (허용): ${origin}`);
-    callback(null, true);
-  },
+  origin: true, // 모든 origin 허용
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Cache-Control'],
 }));
 
-// OPTIONS 프리플라이트 요청 처리
-app.options('*', cors());
+// 보안 미들웨어 (CORS 다음에 적용)
+app.use(helmetMiddleware);
+app.use(addSecurityHeaders);
 
 // 기본 미들웨어
 app.use(express.json({ limit: '10mb' }));

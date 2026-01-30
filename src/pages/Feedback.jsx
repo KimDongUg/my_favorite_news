@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import { getPosts, getCategories } from '../services/feedbackApi';
 import '../styles/Feedback.css';
@@ -112,9 +113,9 @@ function Feedback() {
   };
 
   return (
+    <Layout>
     <div className="feedback-page-container">
-      <header className="feedback-header">
-        <Link to="/" className="back-link">← 홈으로</Link>
+      <div className="feedback-page-title">
         <h1>고객 의견 게시판</h1>
         <p className="header-desc">서비스 개선을 위한 소중한 의견을 남겨주세요</p>
         <div className="contact-info">
@@ -122,7 +123,7 @@ function Feedback() {
           <p>아래 게시판 또는 이메일을 통해 언제든지 연락 주세요.</p>
           <p className="operator-email">운영자 이메일: kduaro124@naver.com</p>
         </div>
-      </header>
+      </div>
 
       <div className="feedback-content">
         {/* 카테고리 탭 */}
@@ -240,15 +241,8 @@ function Feedback() {
         )}
       </div>
 
-      <footer className="feedback-footer">
-        <div className="footer-links">
-          <Link to="/copyright">저작권 정책</Link>
-          <Link to="/terms">이용약관</Link>
-          <Link to="/privacy">개인정보처리방침</Link>
-        </div>
-        <p>&copy; 2026 무빙아티클(Moving Article). All rights reserved.</p>
-      </footer>
     </div>
+    </Layout>
   );
 }
 
