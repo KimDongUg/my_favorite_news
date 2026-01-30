@@ -10,7 +10,6 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
   const location = useLocation();
   const navigate = useNavigate();
   const isAdmin = isAuthenticated && user?.email && ADMIN_EMAILS.includes(user.email);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   // 스크롤 감지
@@ -19,11 +18,6 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // 페이지 이동 시 모바일 메뉴 닫기
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
 
   // 로그인 필요한 페이지 클릭 핸들러
   const handleProtectedClick = (e, targetPath) => {
@@ -95,56 +89,58 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
             </div>
           </div>
 
-          {/* 모바일: 햄버거 버튼 */}
-          <button
-            className={`hamburger-btn${mobileMenuOpen ? ' open' : ''}`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="메뉴 열기"
-          >
-            <span className="hamburger-line" />
-            <span className="hamburger-line" />
-            <span className="hamburger-line" />
-          </button>
         </div>
 
-        {/* 모바일 드롭다운 메뉴 */}
-        <div className={`mobile-menu${mobileMenuOpen ? ' mobile-menu-open' : ''}`}>
-          {onSpeedChange && (
-            <div className="mobile-speed">
-              <span className="speed-emoji">🐢</span>
-              <input
-                type="range"
-                min="0.3"
-                max="5"
-                step="0.1"
-                value={speedMultiplier}
-                onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
-                className="header-speed-slider"
-                aria-label="스크롤 속도 조절"
-              />
-              <span className="speed-emoji">🐰</span>
-              <span className="speed-val">{speedMultiplier.toFixed(1)}x</span>
+        {/* 모바일 2줄 레이아웃 */}
+        <div className="mobile-header-rows">
+          {/* 1줄: 로고 + 모든 아티클 보기 + 아티클 설정 + 로그인 */}
+          <div className="mobile-row mobile-row-1">
+            <Link to="/" className="mobile-logo-link">
+              <span className="logo-emoji-main">💫</span>
+              <span className="mobile-logo-title">무빙아티클</span>
+            </Link>
+            <div className="mobile-row-actions">
+              <Link to="/news" className="mobile-action-btn">
+                <span>📋</span> 아티클
+              </Link>
+              <Link
+                to="/settings"
+                className="mobile-action-btn"
+                onClick={(e) => handleProtectedClick(e, '/settings')}
+              >
+                <span>❤️</span> 설정
+              </Link>
+              <div className="mobile-login-area">
+                <UserMenu />
+              </div>
             </div>
-          )}
-          <Link to="/news" className="mobile-menu-item">
-            <span>📋</span> 모든 아티클 보기
-          </Link>
-          <Link
-            to="/settings"
-            className="mobile-menu-item"
-            onClick={(e) => handleProtectedClick(e, '/settings')}
-          >
-            <span>❤️</span> 아티클 설정 ({categoryCount})
-          </Link>
-          <Link
-            to="/feedback"
-            className="mobile-menu-item"
-            onClick={(e) => handleProtectedClick(e, '/feedback')}
-          >
-            <span>💬</span> 고객 의견 게시판
-          </Link>
-          <div className="mobile-menu-item mobile-user-area">
-            <UserMenu />
+          </div>
+          {/* 2줄: 고객의견 게시판 + 속도조절기 */}
+          <div className="mobile-row mobile-row-2">
+            <Link
+              to="/feedback"
+              className="mobile-action-btn"
+              onClick={(e) => handleProtectedClick(e, '/feedback')}
+            >
+              <span>💬</span> 고객 의견
+            </Link>
+            {onSpeedChange && (
+              <div className="mobile-speed-compact">
+                <span className="speed-emoji">🐢</span>
+                <input
+                  type="range"
+                  min="0.3"
+                  max="5"
+                  step="0.1"
+                  value={speedMultiplier}
+                  onChange={(e) => onSpeedChange(parseFloat(e.target.value))}
+                  className="header-speed-slider"
+                  aria-label="스크롤 속도 조절"
+                />
+                <span className="speed-emoji">🐰</span>
+                <span className="speed-val">{speedMultiplier.toFixed(1)}x</span>
+              </div>
+            )}
           </div>
         </div>
       </header>

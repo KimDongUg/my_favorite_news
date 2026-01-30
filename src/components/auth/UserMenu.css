@@ -30,13 +30,13 @@
   font-size: 0.9rem;
   font-weight: 600;
   padding: 0.4rem 1rem;
-  background: rgba(255, 255, 255, 0.15);
+  background: #166534;
   border-radius: 20px;
   transition: all 0.2s ease;
 }
 
 .user-menu-guest .login-link:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: #14532d;
 }
 
 .user-menu-logged-in {
