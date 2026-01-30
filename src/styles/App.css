@@ -259,16 +259,28 @@ body {
   animation: none;
 }
 
+.mobile-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
 .mobile-logo-title {
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: -0.3px;
 }
 
-.mobile-row-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+.mobile-logo-en {
+  font-weight: 600;
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.mobile-logo-sub {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  font-weight: 500;
 }
 
 .mobile-action-btn {
@@ -817,6 +829,14 @@ body {
 
   .mobile-logo-title {
     font-size: 0.85rem;
+  }
+
+  .mobile-logo-en {
+    font-size: 0.6rem;
+  }
+
+  .mobile-logo-sub {
+    font-size: 0.6rem;
   }
 
   .mobile-action-btn {

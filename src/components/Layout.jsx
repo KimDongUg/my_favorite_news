@@ -93,30 +93,31 @@ function Layout({ children, categoryCount = 5, speedMultiplier = 1, onSpeedChang
 
         {/* 모바일 2줄 레이아웃 */}
         <div className="mobile-header-rows">
-          {/* 1줄: 로고 + 모든 아티클 보기 + 아티클 설정 + 로그인 */}
+          {/* 1줄: 로고 + 부제 + 로그인 */}
           <div className="mobile-row mobile-row-1">
             <Link to="/" className="mobile-logo-link">
               <span className="logo-emoji-main">💫</span>
-              <span className="mobile-logo-title">무빙아티클</span>
-            </Link>
-            <div className="mobile-row-actions">
-              <Link to="/news" className="mobile-action-btn">
-                <span>📋</span> 아티클
-              </Link>
-              <Link
-                to="/settings"
-                className="mobile-action-btn"
-                onClick={(e) => handleProtectedClick(e, '/settings')}
-              >
-                <span>❤️</span> 설정
-              </Link>
-              <div className="mobile-login-area">
-                <UserMenu />
+              <div className="mobile-logo-text">
+                <span className="mobile-logo-title">무빙아티클 <span className="mobile-logo-en">Moving Article</span></span>
+                <span className="mobile-logo-sub">실시간 뉴스가 흐르는 곳</span>
               </div>
+            </Link>
+            <div className="mobile-login-area">
+              <UserMenu />
             </div>
           </div>
-          {/* 2줄: 고객의견 게시판 + 속도조절기 */}
+          {/* 2줄: 아티클 + 설정 + 고객의견 + 속도조절기 */}
           <div className="mobile-row mobile-row-2">
+            <Link to="/news" className="mobile-action-btn">
+              <span>📋</span> 아티클
+            </Link>
+            <Link
+              to="/settings"
+              className="mobile-action-btn"
+              onClick={(e) => handleProtectedClick(e, '/settings')}
+            >
+              <span>❤️</span> 설정
+            </Link>
             <Link
               to="/feedback"
               className="mobile-action-btn"
