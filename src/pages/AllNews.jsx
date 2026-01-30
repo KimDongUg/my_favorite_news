@@ -152,28 +152,30 @@ function AllNews() {
             </div>
           </div>
 
-          <div className="search-filter">
-            <input
-              type="text"
-              placeholder="뉴스 검색..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button className="clear-search" onClick={() => setSearchQuery('')}>
-                ✕
+          <div className="news-filters-row">
+            <div className="search-filter">
+              <input
+                type="text"
+                placeholder="뉴스 검색..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button className="clear-search" onClick={() => setSearchQuery('')}>
+                  ✕
+                </button>
+              )}
+            </div>
+
+            {selectedCategory !== 'all' && (
+              <button className="view-all-btn" onClick={() => setSelectedCategory('all')}>
+                📋 전체 보기
               </button>
             )}
-          </div>
-
-          {selectedCategory !== 'all' && (
-            <button className="view-all-btn" onClick={() => setSelectedCategory('all')}>
-              📋 전체 보기
+            <button className="refresh-btn" onClick={fetchNews} disabled={loading}>
+              {loading ? '로딩 중...' : '🔄 새로고침'}
             </button>
-          )}
-          <button className="refresh-btn" onClick={fetchNews} disabled={loading}>
-            {loading ? '로딩 중...' : '🔄 새로고침'}
-          </button>
+          </div>
         </div>
 
         {/* 통계 */}
