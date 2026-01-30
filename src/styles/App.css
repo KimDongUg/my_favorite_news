@@ -514,8 +514,8 @@ body {
   pointer-events: none;
 }
 
-/* 모바일에서 전체화면 버튼 텍스트 숨김 */
-@media (max-width: 768px) {
+/* 태블릿/모바일에서 전체화면 버튼 텍스트 숨김 */
+@media (max-width: 1024px) {
   .fullscreen-toggle-btn {
     padding: 0.5rem;
   }
@@ -713,6 +713,16 @@ body {
 
 /* 태블릿/iPad Mini (1024px 이하) */
 @media (max-width: 1024px) {
+  /* 태블릿: 데스크탑 숨기고 2줄 레이아웃 표시 */
+  .header-inner {
+    display: none;
+  }
+
+  .mobile-header-rows {
+    display: flex;
+    flex-direction: column;
+  }
+
   .headline-rotator-inline {
     gap: 0.4rem;
     padding: 0.4rem 0.6rem;
@@ -757,16 +767,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 헤더: 데스크탑 숨기고 모바일 2줄 표시 */
-  .header-inner {
-    display: none;
-  }
-
-  .mobile-header-rows {
-    display: flex;
-    flex-direction: column;
-  }
-
   .main-content {
     padding: 1rem;
   }
