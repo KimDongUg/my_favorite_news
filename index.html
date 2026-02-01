@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>무빙아티클(Moving Article) - AI 뉴스 요약 서비스</title>
+    <meta name="description" content="무빙아티클은 다양한 뉴스 매체의 기사를 AI가 요약하여 제공하는 뉴스 큐레이션 서비스입니다. 실시간 뉴스, 카테고리별 맞춤 정보를 확인하세요." />
+    <meta name="keywords" content="뉴스, AI 요약, 뉴스 큐레이션, 실시간 뉴스, 맞춤 뉴스, 속보, 정치, 경제, 금융, 부동산, 재테크, 무빙아티클, Moving Article" />
+    <meta name="author" content="김동욱" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://myfavoritenews.vercel.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="무빙아티클(Moving Article) - AI 뉴스 요약 서비스" />
+    <meta property="og:description" content="다양한 뉴스 매체의 기사를 AI가 요약하여 제공하는 뉴스 큐레이션 서비스입니다." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myfavoritenews.vercel.app/" />
+    <meta property="og:site_name" content="무빙아티클(Moving Article)" />
+    <meta property="og:locale" content="ko_KR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="무빙아티클(Moving Article) - AI 뉴스 요약 서비스" />
+    <meta name="twitter:description" content="다양한 뉴스 매체의 기사를 AI가 요약하여 제공하는 뉴스 큐레이션 서비스입니다." />
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3771731838128372"
+     crossorigin="anonymous"></script>
+
+    <style>
+      /* 초기 로딩 및 noscript 스타일 */
+      .static-intro {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        line-height: 1.6;
+        color: #333;
+      }
+      .static-intro h1 {
+        color: #667eea;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+      }
+      .static-intro h2 {
+        color: #667eea;
+        margin: 1.5rem 0 1rem;
+        font-size: 1.3rem;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 0.5rem;
+      }
+      .static-intro p {
+        margin-bottom: 1rem;
+      }
+      .static-intro ul {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+      .static-intro li {
+        margin-bottom: 0.5rem;
+      }
+      .static-intro .contact {
+        background: #f0f0f0;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+      }
+      .static-intro .links {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ddd;
+      }
+      .static-intro .links a {
+        color: #667eea;
+        margin-right: 1rem;
+      }
+      /* 정적 뉴스 리스트 스타일 */
+      .static-news-list {
+        margin: 2rem 0;
+      }
+      .static-news-list ul {
+        list-style: none;
+        padding: 0;
+      }
+      .static-news-list li {
+        background: #f8f9fa;
+        border-left: 4px solid #667eea;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0 8px 8px 0;
+      }
+      .static-news-list li:nth-child(2n) {
+        border-left-color: #764ba2;
+      }
+      .static-news-list li:nth-child(3n) {
+        border-left-color: #f093fb;
+      }
+      .static-news-list h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+        color: #333;
+      }
+      .static-news-list .news-meta {
+        font-size: 0.85rem;
+        color: #666;
+      }
+      .static-news-list .news-meta a {
+        color: #667eea;
+        text-decoration: none;
+      }
+      .static-news-list .news-meta a:hover {
+        text-decoration: underline;
+      }
+      .static-news-list .ai-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 0.5rem;
+      }
+      .category-tag {
+        display: inline-block;
+        background: #e8f4fd;
+        color: #667eea;
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+      }
+      /* React 로드 후 숨김 */
+      #root:not(:empty) + .static-intro {
+        display: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/my_favorite_news/assets/index-1jKlM9gT.js"></script>
+    <link rel="stylesheet" crossorigin href="/my_favorite_news/assets/index-CxkgzXNe.css">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- 정적 콘텐츠 (SEO 및 noscript 대응) -->
+    <div class="static-intro">
+      <h1>무빙아티클(Moving Article)</h1>
+      <p><strong>실시간 뉴스가 흐르는 곳</strong></p>
+
+      <h2>서비스 소개</h2>
+      <p>
+        "무빙아티클(Moving Article)"은 다양한 뉴스 매체의 기사를 AI가 요약하여 제공하는 뉴스 큐레이션 서비스입니다.
+        속보, 정치, 경제, 금융/글로벌, 부동산, 재테크 등 다양한 카테고리의 뉴스를 실시간으로 확인할 수 있습니다.
+      </p>
+
+      <section class="static-news-list">
+        <h2>오늘의 주요 뉴스 TOP 20</h2>
+        <p>AI가 요약한 최신 뉴스를 카테고리별로 확인하세요. 모든 뉴스는 원문 링크를 통해 상세 내용을 확인할 수 있습니다.</p>
+        <ul>
+          <li>
+            <span class="category-tag">속보</span>
+            <h3>4번의 민주정부 수립 함께한 '전략가'이자 '킹메이커'…이해찬 전 총리 별세</h3>
+            <p class="news-meta">출처: 한겨레 | <a href="https://www.hani.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">속보</span>
+            <h3>李대통령 "재연장 생각했다면 오산"…양도세중과 유예종료 재강조</h3>
+            <p class="news-meta">출처: 연합뉴스 | <a href="https://www.yna.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">속보</span>
+            <h3>'북방외교' 핵심 공로명 전 외교부 장관 별세</h3>
+            <p class="news-meta">출처: 연합뉴스TV | <a href="https://www.yonhapnewstv.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">정치</span>
+            <h3>[김동호의 시선] 국회가 만든 '쿠팡 천하'</h3>
+            <p class="news-meta">출처: 중앙일보 | <a href="https://www.joongang.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">정치</span>
+            <h3>이 대통령, 이혜훈 지명 철회…무산된 통합 인사</h3>
+            <p class="news-meta">출처: 한겨레 | <a href="https://www.hani.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">정치</span>
+            <h3>여야, 국회 정상화 협상 난항…쟁점 법안 처리 불투명</h3>
+            <p class="news-meta">출처: KBS뉴스 | <a href="https://news.kbs.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">경제·금융</span>
+            <h3>'아틀라스'발 AI 일자리 대체 논란...노동부, 로드맵 구상</h3>
+            <p class="news-meta">출처: YTN | <a href="https://www.ytn.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">경제·금융</span>
+            <h3>토큰증권 장외거래소, '공정위 협의' 누락 논란…금융위 "본인가서 진행"</h3>
+            <p class="news-meta">출처: 바이라인네트워크 | <a href="https://byline.network" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">경제·금융</span>
+            <h3>한국은행, 기준금리 동결…"물가 안정 우선"</h3>
+            <p class="news-meta">출처: 한국경제 | <a href="https://www.hankyung.com" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">범죄·법</span>
+            <h3>120억 캄보디아 로맨스스캠 주범 부부 구속</h3>
+            <p class="news-meta">출처: iusm.co.kr | <a href="https://iusm.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">범죄·법</span>
+            <h3>검찰, 대기업 회계부정 수사 착수…임원 소환 예정</h3>
+            <p class="news-meta">출처: 법률신문 | <a href="https://www.lawtimes.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">국제</span>
+            <h3>트럼프 달래느니 맞서기 시작한 미 동맹국들</h3>
+            <p class="news-meta">출처: v.daum.net | <a href="https://v.daum.net" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">국제</span>
+            <h3>EU, 대중국 관세 정책 재검토…무역 긴장 고조</h3>
+            <p class="news-meta">출처: 조선일보 | <a href="https://www.chosun.com" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">부동산</span>
+            <h3>서울 아파트 매매가, 3주 연속 상승세 유지</h3>
+            <p class="news-meta">출처: 부동산뉴스 | <a href="https://land.naver.com" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">부동산</span>
+            <h3>정부, 재건축 규제 완화 방안 발표…강남권 호재</h3>
+            <p class="news-meta">출처: 머니투데이 | <a href="https://news.mt.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">재테크</span>
+            <h3>2026년 투자 전망: 전문가들이 주목하는 유망 섹터</h3>
+            <p class="news-meta">출처: 매일경제 | <a href="https://www.mk.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">재테크</span>
+            <h3>개인연금 세제혜택 확대…노후 준비 전략 변화</h3>
+            <p class="news-meta">출처: 이데일리 | <a href="https://www.edaily.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">IT·과학</span>
+            <h3>AI 반도체 시장, 올해 역대 최대 성장 전망</h3>
+            <p class="news-meta">출처: 전자신문 | <a href="https://www.etnews.com" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">IT·과학</span>
+            <h3>삼성전자, 차세대 폴더블폰 공개…혁신 디자인 적용</h3>
+            <p class="news-meta">출처: 디지털타임스 | <a href="https://www.dt.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+          <li>
+            <span class="category-tag">사회</span>
+            <h3>수도권 미세먼지 '나쁨'…마스크 착용 권고</h3>
+            <p class="news-meta">출처: SBS뉴스 | <a href="https://news.sbs.co.kr" target="_blank" rel="noopener noreferrer">원문 보기</a> <span class="ai-badge">AI 요약</span></p>
+          </li>
+        </ul>
+      </section>
+
+      <h2>뉴스 카테고리</h2>
+      <ul>
+        <li><strong>속보:</strong> 실시간 주요 뉴스 속보</li>
+        <li><strong>정치:</strong> 국내외 정치 관련 뉴스</li>
+        <li><strong>경제·금융:</strong> 경제 동향 및 금융 시장 소식</li>
+        <li><strong>부동산:</strong> 부동산 시장 및 정책 뉴스</li>
+        <li><strong>재테크:</strong> 투자 및 자산관리 정보</li>
+        <li><strong>국제:</strong> 글로벌 뉴스 및 국제 정세</li>
+        <li><strong>IT·과학:</strong> 기술 및 과학 분야 소식</li>
+        <li><strong>사회:</strong> 사회 이슈 및 생활 뉴스</li>
+      </ul>
+
+      <h2>주요 기능</h2>
+      <ul>
+        <li><strong>AI 뉴스 요약:</strong> 인공지능이 핵심 내용을 요약하여 빠르게 정보를 파악할 수 있습니다.</li>
+        <li><strong>실시간 업데이트:</strong> 주요 언론사의 뉴스를 실시간으로 수집하여 제공합니다.</li>
+        <li><strong>카테고리별 맞춤 정보:</strong> 관심 있는 분야의 뉴스만 선택하여 볼 수 있습니다.</li>
+        <li><strong>원문 링크 제공:</strong> 모든 뉴스에 원문 기사 링크를 제공하여 상세 내용을 확인할 수 있습니다.</li>
+        <li><strong>출처 명시:</strong> 모든 콘텐츠에 출처를 명확히 표기합니다.</li>
+      </ul>
+
+      <h2>이용 안내</h2>
+      <p>
+        본 서비스의 요약 콘텐츠는 AI가 생성한 것으로, 정확한 정보 확인을 위해 반드시 원문 기사 링크를 통해 상세 내용을 확인하시기 바랍니다.
+        뉴스 콘텐츠의 저작권은 원 저작권자(언론사)에게 있습니다.
+      </p>
+
+      <div class="contact">
+        <h3>문의 안내</h3>
+        <p>서비스 관련 문의, 오류 신고, 제휴 문의, 콘텐츠 관련 요청은 아래 이메일로 연락해 주세요.</p>
+        <p><strong>운영자 이메일: kduaro124@naver.com</strong></p>
+      </div>
+
+      <div class="links">
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/copyright.html">저작권 정책</a>
+        <a href="/feedback.html">문의하기</a>
+      </div>
+
+      <p style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+        &copy; 2026 무빙아티클(Moving Article). All rights reserved.
+      </p>
+    </div>
+
+    <noscript>
+      <div class="static-intro">
+        <h1>무빙아티클(Moving Article)</h1>
+        <p>이 서비스를 이용하려면 JavaScript를 활성화해주세요.</p>
+        <p>JavaScript가 비활성화된 상태에서도 정책 페이지는 확인하실 수 있습니다:</p>
+        <ul>
+          <li><a href="/privacy.html">개인정보처리방침</a></li>
+          <li><a href="/terms.html">이용약관</a></li>
+          <li><a href="/copyright.html">저작권 정책</a></li>
+          <li><a href="/feedback.html">문의하기</a></li>
+        </ul>
+      </div>
+    </noscript>
+
+  </body>
+</html>
