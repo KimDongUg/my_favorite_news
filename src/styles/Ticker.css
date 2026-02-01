@@ -170,7 +170,7 @@
 .ticker-container {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
   height: calc(var(--visible-layers, 5) * 150px);
   min-height: 150px;
   background: #f8f9fa;
@@ -180,6 +180,14 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: height 0.3s ease;
   position: relative;
+}
+
+/* 속보 고정 레이어 (엑셀 틀고정) */
+.ticker-pinned-layer {
+  position: relative;
+  z-index: 5;
+  flex-shrink: 0;
+  border-bottom: 2px solid #E53935;
 }
 
 /* 비로그인 시 자동 스크롤 wrapper */

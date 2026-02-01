@@ -80,26 +80,38 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
 
   // 비로그인 시: 모든 카테고리 사용
   // 로그인 시: 선택된 카테고리만 보여줌
-  const baseCategories = useMemo(() => {
+  const baseAllCategories = useMemo(() => {
     if (!isAuthenticated) {
       return allCategories.length > 0 ? allCategories : categories;
     }
     return categories.filter(cat => visibleCategories[cat]);
   }, [isAuthenticated, allCategories, categories, visibleCategories]);
 
+  // 속보 카테고리를 고정 레이어로 분리
+  const pinnedCategory = '속보';
+  const hasPinnedCategory = baseAllCategories.includes(pinnedCategory);
+
+  // 속보를 제외한 스크롤 대상 카테고리
+  const baseCategories = useMemo(() => {
+    return baseAllCategories.filter(cat => cat !== pinnedCategory);
+  }, [baseAllCategories]);
+
+  // 고정 레이어를 제외한 스크롤 영역의 표시 개수
+  const scrollVisibleCount = hasPinnedCategory ? actualVisibleCount - 1 : actualVisibleCount;
+
   // 무한 스크롤을 위해 카테고리 복제 (표시 개수만큼 끝에 추가)
   const displayCategories = useMemo(() => {
     // 카테고리가 표시 개수보다 많으면 무한 루프를 위해 복제
-    if (baseCategories.length > actualVisibleCount) {
-      return [...baseCategories, ...baseCategories.slice(0, actualVisibleCount)];
+    if (baseCategories.length > scrollVisibleCount) {
+      return [...baseCategories, ...baseCategories.slice(0, scrollVisibleCount)];
     }
     return baseCategories;
-  }, [baseCategories, actualVisibleCount]);
+  }, [baseCategories, scrollVisibleCount]);
 
   // 10초마다 자동 스크롤 (로그인/비로그인 모두 동작)
   useEffect(() => {
     const totalCategories = baseCategories.length;
-    if (totalCategories <= actualVisibleCount) {
+    if (totalCategories <= scrollVisibleCount) {
       setScrollOffset(0);
       return;
     }
@@ -131,7 +143,7 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
     }, 7000); // 7초
 
     return () => clearInterval(interval);
-  }, [baseCategories.length, scrollDuration, actualVisibleCount]);
+  }, [baseCategories.length, scrollDuration, scrollVisibleCount]);
 
   const handleItemClick = useCallback((item, category) => {
     setSelectedItem(item);
@@ -159,6 +171,21 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
           '--visible-layers': actualVisibleCount,
         }}
       >
+        {hasPinnedCategory && (
+          <div className="ticker-pinned-layer">
+            <TickerLayer
+              key={`${pinnedCategory}-pinned`}
+              category={pinnedCategory}
+              items={headlines[pinnedCategory] || []}
+              color={categoryColors[pinnedCategory]}
+              icon={categoryIcons[pinnedCategory]}
+              speed={baseSpeeds[0] / speedMultiplier}
+              layerIndex={1}
+              isVisible={true}
+              onItemClick={(item) => handleItemClick(item, pinnedCategory)}
+            />
+          </div>
+        )}
         <div
           className="ticker-scroll-wrapper"
           style={{
@@ -173,8 +200,8 @@ const MultiLayerTicker = memo(function MultiLayerTicker({
               items={headlines[category] || []}
               color={categoryColors[category]}
               icon={categoryIcons[category]}
-              speed={baseSpeeds[index % baseSpeeds.length] / speedMultiplier}
-              layerIndex={index + 1}
+              speed={baseSpeeds[(index + 1) % baseSpeeds.length] / speedMultiplier}
+              layerIndex={index + 2}
               isVisible={true}
               onItemClick={(item) => handleItemClick(item, category)}
             />
