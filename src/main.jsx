@@ -31,7 +31,7 @@ import './styles/Admin.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/my_favorite_news">
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/+$/, '')}>
       <AuthProvider>
         {/* Render 백엔드 자동 깨우기 (세션당 1회) */}
         <WakeBackend />
