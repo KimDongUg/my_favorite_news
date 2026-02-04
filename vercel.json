@@ -7,6 +7,6 @@
   ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/:path*" },
-    { "source": "/((?!api|.*\\.html$).*)", "destination": "/index.html" }
+    { "source": "/((?!api|.*\\.html$|ads\\.txt$).*)", "destination": "/index.html" }
   ]
 }
