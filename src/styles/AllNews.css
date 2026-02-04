@@ -424,6 +424,46 @@
   font-size: 0.85rem;
 }
 
+/* ========================================
+   Editorial Intent (편집 의도 섹션)
+   ======================================== */
+.editorial-intent {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.06) 0%, rgba(118, 75, 162, 0.06) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 0 2rem 1rem;
+  line-height: 1.7;
+}
+
+.editorial-intent p {
+  font-size: 0.85rem;
+  color: #5a6577;
+  margin-bottom: 0.5rem;
+}
+
+.editorial-intent p:last-child {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   Editor Comment (하단 운영자 코멘트)
+   ======================================== */
+.editor-comment {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+
+.editor-comment p {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .all-news-header {
@@ -476,5 +516,22 @@
 
   .card-title {
     font-size: 1rem;
+  }
+
+  .editorial-intent {
+    margin: 0 1rem 0.75rem;
+    padding: 1rem 1.15rem;
+  }
+
+  .editorial-intent p {
+    font-size: 0.8rem;
+  }
+
+  .editor-comment {
+    padding: 0.85rem 1rem;
+  }
+
+  .editor-comment p {
+    font-size: 0.78rem;
   }
 }

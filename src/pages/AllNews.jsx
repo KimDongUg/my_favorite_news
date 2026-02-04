@@ -128,6 +128,20 @@ function AllNews() {
         <p className="header-desc">카테고리별 최대 20개의 정보를 확인하세요</p>
       </div>
 
+      {/* 편집 의도 설명 */}
+      <section className="editorial-intent">
+        <p>
+          이 페이지는 카테고리별로 엄선된 뉴스를 모아 보여드립니다.
+          각 기사는 신뢰할 수 있는 언론사 원문을 기반으로 선별되었으며,
+          독자의 빠른 이해를 돕기 위해 AI 요약을 함께 제공합니다.
+        </p>
+        <p>
+          단순 기사 나열이 아닌, 각 분야의 핵심 흐름을 파악할 수 있도록
+          최신순·중요도 기준으로 편집하고 있습니다.
+          원문 보기 링크를 통해 언제든 전체 기사를 확인하실 수 있습니다.
+        </p>
+      </section>
+
       <div className="all-news-content">
         {/* 필터 영역 */}
         <div className="news-filters">
@@ -266,6 +280,17 @@ function AllNews() {
               ))
             )}
           </div>
+        )}
+
+        {/* 운영자 코멘트 */}
+        {!loading && !error && filteredItems.length > 0 && (
+          <aside className="editor-comment">
+            <p>
+              위 뉴스는 편집팀이 주요 언론사 보도를 바탕으로 선별·정리한 것입니다.
+              뉴스의 정확한 내용은 각 기사의 '원문 보기' 링크를 통해 확인해 주세요.
+              제공되는 AI 요약은 참고용이며, 원문의 맥락과 다를 수 있습니다.
+            </p>
+          </aside>
         )}
       </div>
 

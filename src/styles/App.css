@@ -407,6 +407,53 @@ body {
 }
 
 /* ========================================
+   Editor Description (메인 페이지 운영자 설명)
+   ======================================== */
+.editor-description {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.06) 0%, rgba(118, 75, 162, 0.06) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.editor-description-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin-bottom: 0.6rem;
+}
+
+.editor-description p {
+  font-size: 0.85rem;
+  color: #5a6577;
+  margin-bottom: 0.5rem;
+}
+
+.editor-description p:last-child {
+  margin-bottom: 0;
+}
+
+.editor-description strong {
+  color: #4a5568;
+}
+
+@media (max-width: 768px) {
+  .editor-description {
+    padding: 1rem 1.15rem;
+  }
+
+  .editor-description-title {
+    font-size: 0.9rem;
+  }
+
+  .editor-description p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ========================================
    Headline Rotator (인라인 스타일)
    ======================================== */
 .headline-rotator-inline {

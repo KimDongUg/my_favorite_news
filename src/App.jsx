@@ -218,6 +218,23 @@ function App() {
         </div>
       )}
 
+      {/* 운영자 설명 */}
+      <section className="editor-description">
+        <h2 className="editor-description-title">무빙아티클(Moving Article) 소개</h2>
+        <p>
+          무빙아티클(Moving Article)은 국내외 주요 뉴스를 카테고리별로 큐레이션하여
+          한눈에 전달하는 뉴스 편집 서비스입니다.
+        </p>
+        <p>
+          <strong>편집 기준:</strong> 매일 수백 건의 뉴스 중 신뢰도 높은 언론사의 기사를 선별하고,
+          AI 기술을 활용해 핵심 내용을 요약·정리합니다. 정치·경제·사회·IT·문화 등
+          23개 카테고리로 분류하여 독자가 관심 분야의 뉴스를 빠르게 파악할 수 있도록 합니다.
+        </p>
+        <p>
+          모든 뉴스는 원문 링크를 함께 제공하며, 원본 기사의 저작권은 해당 언론사에 있습니다.
+        </p>
+      </section>
+
       {/* 실시간 헤드라인 (네이버 스타일) */}
       <HeadlineRotator
         selectedCategories={selectedCategories}
