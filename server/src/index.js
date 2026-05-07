@@ -21,6 +21,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import complianceRoutes from './routes/complianceRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
+import statsRoutes from './routes/statsRoutes.js';
 
 // 크롤러 & 요약
 import { loadFromFile, getCrawledData } from './crawlers/crawlerManager.js';
@@ -39,6 +40,7 @@ import * as tokenService from './auth/tokenService.js';
 import * as User from './models/User.js';
 import { createAuthTables } from './db/authSchema.js';
 import { createFeedbackTables } from './db/feedbackSchema.js';
+import { createStatsTable } from './db/statsSchema.js';
 import { initEmailService } from './services/emailService.js';
 
 // 미들웨어
@@ -143,6 +145,7 @@ app.use('/api/summary', applyCopyrightSafety, summaryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/compliance', complianceRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/stats', statsRoutes);
 
 // 헬스 체크
 app.get('/api/health', (req, res) => {
@@ -320,6 +323,10 @@ async function startServer() {
     // 3. 게시판 테이블 생성
     console.log('[Server] 게시판 테이블 초기화...');
     await createFeedbackTables();
+
+    // 4. 접속 통계 테이블 생성
+    console.log('[Server] 접속 통계 테이블 초기화...');
+    await createStatsTable();
 
     // PostgreSQL은 database.js의 query 함수를 사용하므로 setDatabase는 호환성 유지용
     tokenService.setDatabase(null);

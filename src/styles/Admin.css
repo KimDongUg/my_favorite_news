@@ -225,6 +225,202 @@
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
+/* ── Tabs ── */
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.admin-tab {
+  padding: 0.6rem 1.4rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.admin-tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.admin-tab:hover:not(.active) {
+  color: #555;
+}
+
+/* ── Stats Summary Cards ── */
+.stats-summary .stat-card {
+  position: relative;
+}
+
+.stats-summary .stat-card small {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.stat-today  { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.stat-month  { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.stat-total  { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+
+/* ── Chart Section ── */
+.chart-section {
+  margin-top: 2rem;
+  background: #fafbfc;
+  border: 1px solid #e8ecf0;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.chart-header h2 {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+}
+
+.visitor-count {
+  font-size: 0.85rem;
+  color: #888;
+  background: #f0f0f0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+}
+
+.no-data {
+  color: #aaa;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ── Range Buttons ── */
+.range-buttons {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.range-btn {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.15s;
+}
+
+.range-btn.active {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+/* ── Bar Chart ── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 160px;
+  overflow-x: auto;
+  padding: 0 0 2rem 0;
+}
+
+.bar-chart-monthly {
+  gap: 8px;
+}
+
+.bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 28px;
+  max-width: 48px;
+  height: 100%;
+}
+
+.bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 100%;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.bar:hover { opacity: 0.8; }
+
+.bar-green {
+  background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.bar-val {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #555;
+  white-space: nowrap;
+}
+
+.bar-label {
+  font-size: 0.65rem;
+  color: #999;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* ── Visitors Table ── */
+.visitors-table .td-time  { white-space: nowrap; font-size: 0.8rem; color: #666; }
+.visitors-table .td-path  { font-size: 0.85rem; color: #444; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.visitors-table .td-ip    { font-size: 0.8rem; color: #888; white-space: nowrap; }
+.visitors-table .td-ua    { font-size: 0.8rem; color: #888; }
+
+.badge-login {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: #e8f4fd;
+  color: #2d7dd2;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-anon {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: #f0f0f0;
+  color: #888;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .admin-page {

@@ -8,6 +8,7 @@ import bcrypt from 'bcryptjs';
 import Joi from 'joi';
 import * as User from '../models/User.js';
 import * as tokenService from '../auth/tokenService.js';
+import { query } from '../db/database.js';
 import { authenticate, optionalAuth, rateLimit } from '../auth/authMiddleware.js';
 import { passwordPolicy, rateLimitConfig, magicLinkConfig, oauthConfig } from '../config/auth.js';
 import { getAvailableProviders } from '../auth/passport.js';
@@ -1197,6 +1198,111 @@ router.get('/admin/check', authenticate, (req, res) => {
     success: true,
     data: { isAdmin }
   });
+});
+
+/**
+ * GET /auth/admin/stats/daily?days=30
+ * 일별 접속 통계 (관리자 전용)
+ */
+router.get('/admin/stats/daily', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const days = Math.min(parseInt(req.query.days) || 30, 90);
+    const result = await query(
+      `SELECT
+         DATE(visited_at) AS date,
+         COUNT(*) AS total_views,
+         COUNT(DISTINCT session_id) AS unique_visitors
+       FROM page_views
+       WHERE visited_at >= NOW() - ($1 * INTERVAL '1 day')
+       GROUP BY DATE(visited_at)
+       ORDER BY date ASC`,
+      [days]
+    );
+    res.json({ success: true, data: result.rows });
+  } catch (error) {
+    console.error('[Admin] 일별 통계 오류:', error);
+    res.status(500).json({ success: false, error: '통계 조회 중 오류가 발생했습니다.' });
+  }
+});
+
+/**
+ * GET /auth/admin/stats/monthly?months=12
+ * 월별 접속 통계 (관리자 전용)
+ */
+router.get('/admin/stats/monthly', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const months = Math.min(parseInt(req.query.months) || 12, 24);
+    const result = await query(
+      `SELECT
+         TO_CHAR(visited_at, 'YYYY-MM') AS month,
+         COUNT(*) AS total_views,
+         COUNT(DISTINCT session_id) AS unique_visitors
+       FROM page_views
+       WHERE visited_at >= NOW() - ($1 * INTERVAL '1 month')
+       GROUP BY TO_CHAR(visited_at, 'YYYY-MM')
+       ORDER BY month ASC`,
+      [months]
+    );
+    res.json({ success: true, data: result.rows });
+  } catch (error) {
+    console.error('[Admin] 월별 통계 오류:', error);
+    res.status(500).json({ success: false, error: '통계 조회 중 오류가 발생했습니다.' });
+  }
+});
+
+/**
+ * GET /auth/admin/stats/visitors?limit=100
+ * 접속자 목록 (관리자 전용)
+ */
+router.get('/admin/stats/visitors', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit) || 100, 500);
+    const result = await query(
+      `SELECT
+         pv.id,
+         pv.session_id,
+         pv.user_id,
+         u.email AS user_email,
+         u.display_name AS user_name,
+         pv.path,
+         pv.referrer,
+         pv.ip_address,
+         pv.user_agent,
+         pv.visited_at
+       FROM page_views pv
+       LEFT JOIN users u ON pv.user_id = u.id
+       ORDER BY pv.visited_at DESC
+       LIMIT $1`,
+      [limit]
+    );
+    res.json({ success: true, data: result.rows });
+  } catch (error) {
+    console.error('[Admin] 접속자 목록 오류:', error);
+    res.status(500).json({ success: false, error: '접속자 목록 조회 중 오류가 발생했습니다.' });
+  }
+});
+
+/**
+ * GET /auth/admin/stats/summary
+ * 통계 요약 (오늘/이번달/전체)
+ */
+router.get('/admin/stats/summary', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const result = await query(`
+      SELECT
+        COUNT(*) FILTER (WHERE visited_at >= CURRENT_DATE) AS today_views,
+        COUNT(DISTINCT session_id) FILTER (WHERE visited_at >= CURRENT_DATE) AS today_visitors,
+        COUNT(*) FILTER (WHERE visited_at >= DATE_TRUNC('month', NOW())) AS month_views,
+        COUNT(DISTINCT session_id) FILTER (WHERE visited_at >= DATE_TRUNC('month', NOW())) AS month_visitors,
+        COUNT(*) AS total_views,
+        COUNT(DISTINCT session_id) AS total_visitors
+      FROM page_views
+    `);
+    res.json({ success: true, data: result.rows[0] });
+  } catch (error) {
+    console.error('[Admin] 통계 요약 오류:', error);
+    res.status(500).json({ success: false, error: '통계 요약 조회 중 오류가 발생했습니다.' });
+  }
 });
 
 // ============================================
