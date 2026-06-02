@@ -68,6 +68,9 @@ export const headlines = {
   '드라마': [
     { id: 23, title: '드라마 뉴스', description: 'TV 드라마, 예능, 방송 소식' },
   ],
+  'AI': [
+    { id: 24, title: 'AI 뉴스', description: '인공지능, ChatGPT, LLM, 머신러닝 최신 소식' },
+  ],
 };
 
 export const categoryColors = {
@@ -94,6 +97,7 @@ export const categoryColors = {
   '국방': '#37474F',       // 군청색
   '주식': '#4CAF50',       // 초록 (상승)
   '드라마': '#E91E63',     // 핑크
+  'AI': '#00BCD4',        // 사이언 (AI/미래 이미지)
 };
 
 export const categoryIcons = {
@@ -120,4 +124,5 @@ export const categoryIcons = {
   '국방': '🪖',
   '주식': '📈',
   '드라마': '📺',
+  'AI': '🤖',
 };

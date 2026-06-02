@@ -323,6 +323,40 @@ export const sources = {
       type: 'rss',
       enabled: true
     }
+  ],
+  'AI': [
+    // 국내
+    {
+      name: 'Google News AI (국내)',
+      url: 'https://news.google.com/rss/search?q=%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5+AI+LLM&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: 'Google News ChatGPT (국내)',
+      url: 'https://news.google.com/rss/search?q=ChatGPT+%EC%83%9D%EC%84%B1AI+%EB%94%A5%EB%9F%AC%EB%8B%9D&hl=ko&gl=KR&ceid=KR:ko',
+      type: 'rss',
+      enabled: true
+    },
+    // 해외
+    {
+      name: 'VentureBeat AI',
+      url: 'https://venturebeat.com/category/ai/feed/',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: 'The Verge AI',
+      url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
+      type: 'rss',
+      enabled: true
+    },
+    {
+      name: 'MIT Technology Review',
+      url: 'https://www.technologyreview.com/feed/',
+      type: 'rss',
+      enabled: true
+    }
   ]
 };
 
