@@ -38,12 +38,21 @@ function AllNews() {
     fetchNews();
   }, [fetchNews]);
 
-  // 모든 카테고리 목록
+  // 모든 카테고리 목록 (fallback 순서 기준, API 카테고리 병합)
   const allCategoryNames = Object.keys(fallbackHeadlines);
   const categories = useMemo(() => {
     if (newsData?.categories) {
       const apiCategories = Object.keys(newsData.categories);
-      return ['all', ...apiCategories];
+      const merged = new Set([...allCategoryNames, ...apiCategories]);
+      const sorted = Array.from(merged).sort((a, b) => {
+        const aIdx = allCategoryNames.indexOf(a);
+        const bIdx = allCategoryNames.indexOf(b);
+        if (aIdx === -1 && bIdx === -1) return 0;
+        if (aIdx === -1) return 1;
+        if (bIdx === -1) return -1;
+        return aIdx - bIdx;
+      });
+      return ['all', ...sorted];
     }
     return ['all', ...allCategoryNames];
   }, [newsData, allCategoryNames]);
@@ -52,20 +61,24 @@ function AllNews() {
   const filteredItems = useMemo(() => {
     let items = [];
 
-    if (newsData?.categories) {
-      Object.entries(newsData.categories).forEach(([category, newsItems]) => {
-        // 카테고리 필터
-        if (selectedCategory !== 'all' && category !== selectedCategory) {
-          return;
-        }
+    // 표시할 카테고리 목록 결정
+    const targetCategories = selectedCategory === 'all'
+      ? allCategoryNames.concat(
+          newsData?.categories
+            ? Object.keys(newsData.categories).filter(c => !allCategoryNames.includes(c))
+            : []
+        )
+      : [selectedCategory];
 
-        // 카테고리별 최대 20개
-        const limitedItems = newsItems.slice(0, 20);
+    targetCategories.forEach(category => {
+      const apiItems = newsData?.categories?.[category];
 
-        limitedItems.forEach((news, idx) => {
+      if (apiItems && apiItems.length > 0) {
+        // API 데이터 사용
+        apiItems.slice(0, 20).forEach((news, idx) => {
           items.push({
             id: `${category}-${idx}`,
-            category: category,
+            category,
             title: news.originalTitle || news.title,
             description: news.snippet || news.rawContent || news.description || '',
             url: news.originalUrl || news.link || news.url,
@@ -74,26 +87,21 @@ function AllNews() {
             isMain: idx === 0
           });
         });
-      });
-    } else {
-      // Fallback 데이터 사용
-      Object.entries(fallbackHeadlines).forEach(([category, headlineItems]) => {
-        if (selectedCategory !== 'all' && category !== selectedCategory) {
-          return;
-        }
-
-        headlineItems.forEach((item, idx) => {
+      } else {
+        // API 데이터 없으면 fallback 사용
+        const fallbackItems = fallbackHeadlines[category] || [];
+        fallbackItems.forEach((item, idx) => {
           items.push({
             id: `${category}-fallback-${idx}`,
-            category: category,
+            category,
             title: item.title,
             description: item.description,
             isMain: idx === 0,
             isFallback: true
           });
         });
-      });
-    }
+      }
+    });
 
     // 검색 필터
     if (searchQuery.trim()) {
