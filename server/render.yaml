@@ -12,9 +12,9 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: CORS_ORIGINS
-        value: https://myfavoritenews.vercel.app
+        value: https://articlemovie.com,https://www.articlemovie.com,https://myfavoritenews.vercel.app
       - key: FRONTEND_URL
-        value: https://myfavoritenews.vercel.app
+        value: https://articlemovie.com
       - key: JWT_ACCESS_SECRET
         generateValue: true
       - key: JWT_REFRESH_SECRET

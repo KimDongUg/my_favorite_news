@@ -22,6 +22,8 @@ export const helmetMiddleware = helmet({
         "'self'",
         "http://localhost:*",
         "https://accounts.google.com",
+        "https://articlemovie.com",
+        "https://www.articlemovie.com",
         "https://myfavoritenews.vercel.app",
         "https://*.vercel.app"
       ],
