@@ -71,6 +71,9 @@ import { auditAllSummaries, getComplianceStats } from './compliance/complianceCh
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Render 프록시 뒤에서 req.ip가 실제 클라이언트 IP가 되도록 (rate limit, 접속 통계용)
+app.set('trust proxy', 1);
+
 // ============================================
 // 🔥 CORS 설정 - 가장 먼저, 모든 요청에 적용
 // ============================================

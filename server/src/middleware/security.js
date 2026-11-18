@@ -46,8 +46,8 @@ export const generalLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {
-    // 헬스체크는 제외
-    return req.path === '/api/health';
+    // 헬스체크와 페이지뷰 기록(자체 limiter 사용)은 제외
+    return req.path === '/api/health' || req.path === '/api/stats/pageview';
   }
 });
 

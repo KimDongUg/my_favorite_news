@@ -22,6 +22,7 @@ import {
 } from '../services/emailService.js';
 import { validatePasswordStrength } from '../utils/passwordPolicy.js';
 import { loginLimiter, signupLimiter, emailActionLimiter } from '../middleware/security.js';
+import { ADMIN_EMAILS } from '../config/admin.js';
 
 const router = Router();
 
@@ -1137,8 +1138,6 @@ router.delete('/providers/:provider', authenticate, async (req, res) => {
 // 관리자 전용 API
 // ============================================
 
-// 관리자 이메일 목록
-const ADMIN_EMAILS = ['kduaro124@naver.com'];
 
 /**
  * 관리자 권한 확인 미들웨어
@@ -1200,21 +1199,53 @@ router.get('/admin/check', authenticate, (req, res) => {
   });
 });
 
+// ── 접속 통계 공통 SQL ──
+// page_views.visited_at 은 TIMESTAMP(시간대 없음, UTC 저장). 모든 날짜는 한국 시간(Asia/Seoul) 기준.
+const KST_TS = `(visited_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul')`;
+const KST_TODAY = `(NOW() AT TIME ZONE 'Asia/Seoul')::date`;
+// 한국 시간 기준 구간 시작 시각을 UTC TIMESTAMP로 (visited_at 인덱스를 그대로 사용)
+const kstStartUtc = (kstTimestampExpr) => `((${kstTimestampExpr}) AT TIME ZONE 'Asia/Seoul' AT TIME ZONE 'UTC')`;
+const KST_TODAY_START = kstStartUtc(`date_trunc('day', NOW() AT TIME ZONE 'Asia/Seoul')`);
+const KST_MONTH_START = kstStartUtc(`date_trunc('month', NOW() AT TIME ZONE 'Asia/Seoul')`);
+// 오늘 포함 최근 $1일의 시작 시각
+const KST_DAYS_START = kstStartUtc(`date_trunc('day', NOW() AT TIME ZONE 'Asia/Seoul') - (($1::int - 1) * INTERVAL '1 day')`);
+const HUMAN = `NOT is_bot AND NOT is_admin`;
+
+// 자기 도메인 (유입 경로에서 "(내부 이동)"으로 묶음)
+const SELF_HOSTS = (() => {
+  const hosts = new Set(['articlemovie.com', 'localhost', '127.0.0.1']);
+  const urls = [process.env.FRONTEND_URL, ...(process.env.CORS_ORIGINS || '').split(',')];
+  for (const u of urls) {
+    try {
+      if (u && u.trim()) hosts.add(new URL(u.trim()).hostname.toLowerCase().replace(/^www\./, ''));
+    } catch { /* 잘못된 URL 무시 */ }
+  }
+  return [...hosts];
+})();
+
+function parseAnalyticsDays(value) {
+  const n = parseInt(value, 10);
+  return n === 30 ? 30 : 7;
+}
+
 /**
  * GET /auth/admin/stats/daily?days=30
- * 일별 접속 통계 (관리자 전용)
+ * 일별 접속 통계 (관리자 전용, 한국 날짜 기준)
+ * total_views / unique_visitors: 기존 의미 유지 (봇 포함 전체)
  */
 router.get('/admin/stats/daily', authenticate, requireAdmin, async (req, res) => {
   try {
-    const days = Math.min(parseInt(req.query.days) || 30, 90);
+    const days = Math.min(Math.max(parseInt(req.query.days) || 30, 1), 90);
     const result = await query(
       `SELECT
-         DATE(visited_at) AS date,
+         TO_CHAR(${KST_TS}::date, 'YYYY-MM-DD') AS date,
          COUNT(*) AS total_views,
-         COUNT(DISTINCT session_id) AS unique_visitors
+         COUNT(DISTINCT session_id) AS unique_visitors,
+         COUNT(DISTINCT session_id) FILTER (WHERE ${HUMAN}) AS human_sessions,
+         COUNT(DISTINCT session_id) FILTER (WHERE is_bot) AS bot_sessions
        FROM page_views
-       WHERE visited_at >= NOW() - ($1 * INTERVAL '1 day')
-       GROUP BY DATE(visited_at)
+       WHERE visited_at >= ${KST_DAYS_START}
+       GROUP BY 1
        ORDER BY date ASC`,
       [days]
     );
@@ -1227,19 +1258,21 @@ router.get('/admin/stats/daily', authenticate, requireAdmin, async (req, res) =>
 
 /**
  * GET /auth/admin/stats/monthly?months=12
- * 월별 접속 통계 (관리자 전용)
+ * 월별 접속 통계 (관리자 전용, 한국 시간 기준)
  */
 router.get('/admin/stats/monthly', authenticate, requireAdmin, async (req, res) => {
   try {
-    const months = Math.min(parseInt(req.query.months) || 12, 24);
+    const months = Math.min(Math.max(parseInt(req.query.months) || 12, 1), 24);
     const result = await query(
       `SELECT
-         TO_CHAR(visited_at, 'YYYY-MM') AS month,
+         TO_CHAR(${KST_TS}, 'YYYY-MM') AS month,
          COUNT(*) AS total_views,
-         COUNT(DISTINCT session_id) AS unique_visitors
+         COUNT(DISTINCT session_id) AS unique_visitors,
+         COUNT(DISTINCT session_id) FILTER (WHERE ${HUMAN}) AS human_sessions,
+         COUNT(DISTINCT session_id) FILTER (WHERE is_bot) AS bot_sessions
        FROM page_views
-       WHERE visited_at >= NOW() - ($1 * INTERVAL '1 month')
-       GROUP BY TO_CHAR(visited_at, 'YYYY-MM')
+       WHERE visited_at >= ${kstStartUtc(`date_trunc('month', NOW() AT TIME ZONE 'Asia/Seoul') - (($1::int - 1) * INTERVAL '1 month')`)}
+       GROUP BY 1
        ORDER BY month ASC`,
       [months]
     );
@@ -1261,6 +1294,7 @@ router.get('/admin/stats/visitors', authenticate, requireAdmin, async (req, res)
       `SELECT
          pv.id,
          pv.session_id,
+         pv.visitor_id,
          pv.user_id,
          u.email AS user_email,
          u.display_name AS user_name,
@@ -1268,6 +1302,8 @@ router.get('/admin/stats/visitors', authenticate, requireAdmin, async (req, res)
          pv.referrer,
          pv.ip_address,
          pv.user_agent,
+         pv.is_bot,
+         pv.is_admin,
          pv.visited_at
        FROM page_views pv
        LEFT JOIN users u ON pv.user_id = u.id
@@ -1284,24 +1320,144 @@ router.get('/admin/stats/visitors', authenticate, requireAdmin, async (req, res)
 
 /**
  * GET /auth/admin/stats/summary
- * 통계 요약 (오늘/이번달/전체)
+ * 통계 요약 (오늘/이번달/전체, 한국 시간 기준)
+ * 기존 필드(*_views, *_visitors)는 의미 유지(봇 포함 전체). 사람/봇 구분 지표는 새 필드로 추가.
  */
 router.get('/admin/stats/summary', authenticate, requireAdmin, async (req, res) => {
   try {
+    const periodColumns = (prefix, cond) => {
+      const c = cond ? `${cond} AND ` : '';
+      const all = cond ? `FILTER (WHERE ${cond})` : '';
+      return `
+        COUNT(DISTINCT session_id) FILTER (WHERE ${c}${HUMAN}) AS ${prefix}_human_sessions,
+        COUNT(DISTINCT visitor_id) FILTER (WHERE ${c}${HUMAN} AND visitor_id IS NOT NULL) AS ${prefix}_unique_visitors,
+        COUNT(*) FILTER (WHERE ${c}${HUMAN}) AS ${prefix}_human_pageviews,
+        COUNT(DISTINCT session_id) FILTER (WHERE ${c}is_bot) AS ${prefix}_bot_sessions,
+        COUNT(DISTINCT session_id) ${all} AS ${prefix}_all_sessions,
+        COUNT(*) ${all} AS ${prefix}_all_pageviews`;
+    };
+    const todayCond = `visited_at >= ${KST_TODAY_START}`;
+    const monthCond = `visited_at >= ${KST_MONTH_START}`;
+
     const result = await query(`
       SELECT
-        COUNT(*) FILTER (WHERE visited_at >= CURRENT_DATE) AS today_views,
-        COUNT(DISTINCT session_id) FILTER (WHERE visited_at >= CURRENT_DATE) AS today_visitors,
-        COUNT(*) FILTER (WHERE visited_at >= DATE_TRUNC('month', NOW())) AS month_views,
-        COUNT(DISTINCT session_id) FILTER (WHERE visited_at >= DATE_TRUNC('month', NOW())) AS month_visitors,
+        COUNT(*) FILTER (WHERE ${todayCond}) AS today_views,
+        COUNT(DISTINCT session_id) FILTER (WHERE ${todayCond}) AS today_visitors,
+        COUNT(*) FILTER (WHERE ${monthCond}) AS month_views,
+        COUNT(DISTINCT session_id) FILTER (WHERE ${monthCond}) AS month_visitors,
         COUNT(*) AS total_views,
-        COUNT(DISTINCT session_id) AS total_visitors
+        COUNT(DISTINCT session_id) AS total_visitors,
+        ${periodColumns('today', todayCond)},
+        ${periodColumns('month', monthCond)},
+        ${periodColumns('total', null)},
+        TO_CHAR(MIN(${KST_TS}) FILTER (WHERE visitor_id IS NOT NULL), 'YYYY-MM-DD') AS visitor_tracking_since,
+        TO_CHAR(${KST_TODAY}, 'YYYY-MM-DD') AS kst_today
       FROM page_views
     `);
     res.json({ success: true, data: result.rows[0] });
   } catch (error) {
     console.error('[Admin] 통계 요약 오류:', error);
     res.status(500).json({ success: false, error: '통계 요약 조회 중 오류가 발생했습니다.' });
+  }
+});
+
+/**
+ * GET /auth/admin/stats/analytics?days=7|30
+ * 사람/봇 분석 (관리자 전용, 기본 7일, 한국 날짜 기준)
+ * daily, referrers, top_pages, bots, suspicious_ips
+ */
+router.get('/admin/stats/analytics', authenticate, requireAdmin, async (req, res) => {
+  try {
+    const days = parseAnalyticsDays(req.query.days);
+    const inRange = `visited_at >= ${KST_DAYS_START}`;
+
+    const [daily, referrers, topPages, bots, suspiciousIps] = await Promise.all([
+      query(
+        `WITH d AS (
+           SELECT generate_series(${KST_TODAY} - ($1::int - 1), ${KST_TODAY}, INTERVAL '1 day')::date AS day
+         ), agg AS (
+           SELECT ${KST_TS}::date AS day,
+                  COUNT(DISTINCT session_id) FILTER (WHERE ${HUMAN}) AS human_sessions,
+                  COUNT(DISTINCT session_id) FILTER (WHERE is_bot) AS bot_sessions
+           FROM page_views
+           WHERE ${inRange}
+           GROUP BY 1
+         )
+         SELECT TO_CHAR(d.day, 'YYYY-MM-DD') AS date,
+                COALESCE(agg.human_sessions, 0) AS human_sessions,
+                COALESCE(agg.bot_sessions, 0) AS bot_sessions
+         FROM d LEFT JOIN agg ON agg.day = d.day
+         ORDER BY d.day ASC`,
+        [days]
+      ),
+      query(
+        `SELECT CASE
+                  WHEN host IS NULL THEN '(직접 유입)'
+                  WHEN host = ANY($2::text[]) THEN '(내부 이동)'
+                  ELSE host
+                END AS source,
+                COUNT(DISTINCT session_id) AS sessions
+         FROM (
+           SELECT session_id,
+                  NULLIF(regexp_replace(lower(substring(referrer FROM '^[A-Za-z][A-Za-z0-9+.-]*://([^/:?#]+)')), '^www[.]', ''), '') AS host
+           FROM page_views
+           WHERE ${inRange} AND ${HUMAN}
+         ) t
+         GROUP BY 1
+         ORDER BY sessions DESC, source ASC
+         LIMIT 10`,
+        [days, SELF_HOSTS]
+      ),
+      query(
+        `SELECT path,
+                COUNT(DISTINCT session_id) AS sessions,
+                COUNT(*) AS pageviews
+         FROM page_views
+         WHERE ${inRange} AND ${HUMAN}
+         GROUP BY path
+         ORDER BY sessions DESC, pageviews DESC
+         LIMIT 10`,
+        [days]
+      ),
+      query(
+        `SELECT COALESCE(NULLIF(btrim(user_agent), ''), '(빈 UA)') AS user_agent,
+                COUNT(DISTINCT session_id) AS sessions,
+                COUNT(*) AS pageviews
+         FROM page_views
+         WHERE ${inRange} AND is_bot
+         GROUP BY 1
+         ORDER BY sessions DESC
+         LIMIT 10`,
+        [days]
+      ),
+      query(
+        `SELECT ip_address,
+                TO_CHAR(${KST_TS}::date, 'YYYY-MM-DD') AS date,
+                COUNT(DISTINCT session_id) AS sessions
+         FROM page_views
+         WHERE ${inRange} AND ${HUMAN} AND ip_address IS NOT NULL AND ip_address <> ''
+         GROUP BY ip_address, 2
+         HAVING COUNT(DISTINCT session_id) > 20
+         ORDER BY date DESC, sessions DESC
+         LIMIT 50`,
+        [days]
+      ),
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        days,
+        daily: daily.rows,
+        referrers: referrers.rows,
+        top_pages: topPages.rows,
+        bots: bots.rows,
+        suspicious_ips: suspiciousIps.rows,
+      },
+    });
+  } catch (error) {
+    console.error('[Admin] 분석 통계 오류:', error);
+    res.status(500).json({ success: false, error: '분석 통계 조회 중 오류가 발생했습니다.' });
   }
 });
 
